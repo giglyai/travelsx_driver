@@ -64,42 +64,9 @@ class SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Builder(
           builder: (context) {
-             if (F.appFlavor == Flavor.kurinjidriver) {
+            if (F.appFlavor == Flavor.kurinjidriver) {
               return ImageLoader.assetImage(
                 imagePath: ImagePath.splashKurinjiIcon,
-                height: 110 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            }
-            else if (F.appFlavor == Flavor.bmdriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashBmtIcon,
-                height: 110 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            }
-            if (F.appFlavor == Flavor.oorugodriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashOorugoDriverIcon,
-                height: 110 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            }
-            if (F.appFlavor == Flavor.giglyaidriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.giglyDriverSplashLogoFinal,
-                height: 110 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.prithvidriver) {
-              return ImageLoader.assetImage(
-                imagePath: PrithviImagePath.splashIcon,
-                height: 110 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.jppdriver) {
-              return ImageLoader.assetImage(
-                imagePath: JpImagePath.splashIcon,
                 height: 110 * SizeConfig.heightMultiplier!,
                 width: 196 * SizeConfig.widthMultiplier!,
               );

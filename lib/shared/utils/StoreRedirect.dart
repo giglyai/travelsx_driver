@@ -6,27 +6,16 @@ import '../../flavors.dart';
 
 class StoreRedirect {
   static void openStore() {
-    if (F.appFlavor == Flavor.giglyaidriver) {
+    if (F.appFlavor == Flavor.kurinjidriver) {
       launchUrl(
-          Uri.parse(Platform.isAndroid
+        Uri.parse(
+          Platform.isAndroid
               ? "https://play.google.com/store/apps/details?id=" +
                   "com.byteplace.gigly.driver.ride"
-              : 'https://apps.apple.com/in/app/giglyai-driver/id6502331194'),
-          mode: LaunchMode.externalApplication);
-    } else if (F.appFlavor == Flavor.oorugodriver) {
-      launchUrl(
-          Uri.parse(Platform.isAndroid
-              ? "https://play.google.com/store/apps/details?id=" +
-                  "com.byteplace.gigly.driver.ride.bmtravels"
-              : 'https://apps.apple.com/in/app/giglyai-driver/id6502331194'),
-          mode: LaunchMode.externalApplication);
-    } else if (F.appFlavor == Flavor.bmdriver) {
-      launchUrl(
-          Uri.parse(Platform.isAndroid
-              ? "https://play.google.com/store/apps/details?id=" +
-                  "com.byteplace.gigly.driver.ride.bmtravels"
-              : 'https://apps.apple.com/in/app/giglyai-driver/id6502331194'),
-          mode: LaunchMode.externalApplication);
+              : 'https://apps.apple.com/in/app/giglyai-driver/id6502331194',
+        ),
+        mode: LaunchMode.externalApplication,
+      );
     }
   }
 }

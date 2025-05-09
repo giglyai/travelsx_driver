@@ -8,21 +8,6 @@ project 'Runner', {
   'Debug-kurinjidriver' => :debug,
   'Profile-kurinjidriver' => :release,
   'Release-kurinjidriver' => :release,
-  'Debug-bmdriver' => :debug,
-  'Profile-bmdriver' => :release,
-  'Release-bmdriver' => :release,
-  'Debug-oorugodriver' => :debug,
-  'Profile-oorugodriver' => :release,
-  'Release-oorugodriver' => :release,
-  'Debug-prithvidriver' => :debug,
-  'Profile-prithvidriver' => :release,
-  'Release-prithvidriver' => :release,
-  'Debug-jppdriver' => :debug,
-  'Profile-jppdriver' => :release,
-  'Release-jppdriver' => :release,
-  'Debug-giglyaidriver' => :debug,
-  'Profile-giglyaidriver' => :release,
-  'Release-giglyaidriver' => :release,
 }
 
 def flutter_root

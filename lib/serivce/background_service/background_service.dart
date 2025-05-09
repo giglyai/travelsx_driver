@@ -9,17 +9,20 @@ import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
 
-
 Future<void> initializeService() async {
   final service = FlutterBackgroundService();
   await service.configure(
-      iosConfiguration: IosConfiguration(
-        autoStart: true,
-        onForeground: onStart,
-        onBackground: onIosBackground,
-      ),
-      androidConfiguration: AndroidConfiguration(
-          onStart: onStart, isForegroundMode: true, autoStart: true));
+    iosConfiguration: IosConfiguration(
+      autoStart: true,
+      onForeground: onStart,
+      onBackground: onIosBackground,
+    ),
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      isForegroundMode: true,
+      autoStart: true,
+    ),
+  );
 }
 
 @pragma('vm:entry-point')
@@ -53,16 +56,8 @@ void onStart(ServiceInstance service) async {
 
         String title;
 
-        if (F.appFlavor == Flavor.bmdriver) {
-          title = "BM Driver";
-        } else if (F.appFlavor == Flavor.oorugodriver) {
-          title = "Oorugo Driver";
-        } else if (F.appFlavor == Flavor.prithvidriver) {
-          title = "Prithvi Driver";
-        } else if (F.appFlavor == Flavor.jppdriver) {
-          title = "JPP Driver";
-        } else if (F.appFlavor == Flavor.giglyaidriver) {
-          title = "Gigly Driver";
+        if (F.appFlavor == Flavor.kurinjidriver) {
+          title = "Kurinji Driver";
         } else {
           title = "Gigly Driver";
         }
@@ -71,16 +66,8 @@ void onStart(ServiceInstance service) async {
       } else {
         print("background service running");
         String title;
-        if (F.appFlavor == Flavor.bmdriver) {
-          title = "BM Driver";
-        } else if (F.appFlavor == Flavor.oorugodriver) {
-          title = "Oorugo Driver";
-        } else if (F.appFlavor == Flavor.prithvidriver) {
-          title = "Prithvi Driver";
-        } else if (F.appFlavor == Flavor.jppdriver) {
-          title = "JPP Driver";
-        } else if (F.appFlavor == Flavor.giglyaidriver) {
-          title = "Gigly Driver";
+        if (F.appFlavor == Flavor.kurinjidriver) {
+          title = "Kurinji Driver";
         } else {
           title = "Gigly Driver";
         }

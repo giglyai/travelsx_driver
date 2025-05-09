@@ -26,9 +26,11 @@ import '../../../shared/widgets/size_config/size_config.dart';
 import '../../../shared/widgets/text_form_field/pin_field.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
-  const VerifyOtpScreen(
-      {Key? key, required this.countryCode, required this.mobileController})
-      : super(key: key);
+  const VerifyOtpScreen({
+    Key? key,
+    required this.countryCode,
+    required this.mobileController,
+  }) : super(key: key);
 
   final String countryCode;
   final String mobileController;
@@ -64,9 +66,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   //   });
   // }
 
-  bool isPhone(String input) =>
-      RegExp(r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$')
-          .hasMatch(input);
+  bool isPhone(String input) => RegExp(
+    r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$',
+  ).hasMatch(input);
   late ServiceLoginCubit _loginCubit;
 
   bool changePhoneOrResendOtp = false;
@@ -108,16 +110,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-              ImagePath.splashScreenBack,
-            ),
+            image: AssetImage(ImagePath.splashScreenBack),
             fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(
-            bottom: 34 * SizeConfig.heightMultiplier!,
-          ),
+          padding: EdgeInsets.only(bottom: 34 * SizeConfig.heightMultiplier!),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -127,33 +125,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 height: 50 * SizeConfig.heightMultiplier!,
               ),
               const Spacer(),
-              if (F.appFlavor == Flavor.bmdriver)
+              if (F.appFlavor == Flavor.kurinjidriver)
                 ImageLoader.assetImage(
                   imagePath: ImagePath.splashBmtIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.oorugodriver)
-                ImageLoader.assetImage(
-                  imagePath: ImagePath.splashOorugoDriverIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.prithvidriver)
-                ImageLoader.assetImage(
-                  imagePath: PrithviImagePath.splashIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.jppdriver)
-                ImageLoader.assetImage(
-                  imagePath: JpImagePath.splashIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.giglyaidriver)
-                ImageLoader.assetImage(
-                  imagePath: ImagePath.giglyDriverSplashLogoFinal,
                   height: 110 * SizeConfig.heightMultiplier!,
                   width: 196 * SizeConfig.widthMultiplier!,
                 )
@@ -182,14 +156,15 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     obscureText: false,
                     onCompleted: (v) async {
                       _loginCubit.verifyOtp(
-                          platform: platform,
-                          countryCode: "91",
-                          phoneNumber: widget.mobileController,
-                          otp: textEditingController1.text,
-                          clientToken: AppConfig.getClientToken(),
-                          playerId: UserRepository.getDeviceToken,
-                          user: 'driver-ride',
-                          appName: AppName.getAppName());
+                        platform: platform,
+                        countryCode: "91",
+                        phoneNumber: widget.mobileController,
+                        otp: textEditingController1.text,
+                        clientToken: AppConfig.getClientToken(),
+                        playerId: UserRepository.getDeviceToken,
+                        user: 'driver-ride',
+                        appName: AppName.getAppName(),
+                      );
                       textEditingController1.clear();
                     },
                     pinMaxLength: 6,
@@ -200,9 +175,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     builder: (context, state) {
                       if (state is OtpFailure) {
                         return Center(
-                          child: Text(state.errorMessage ?? "",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyle.text15red534ADW400),
+                          child: Text(
+                            state.errorMessage ?? "",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.text15red534ADW400,
+                          ),
                         );
                       }
 
@@ -216,13 +193,16 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       if (state is OtpFailure) {
                         return Padding(
                           padding: EdgeInsets.only(
-                              left: 20 * SizeConfig.widthMultiplier!),
+                            left: 20 * SizeConfig.widthMultiplier!,
+                          ),
                           child: Row(
                             children: [
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, RouteName.mobileLoginScreen);
+                                    context,
+                                    RouteName.mobileLoginScreen,
+                                  );
                                 },
                                 child: ContainerWithBorder(
                                   borderColor: AppColors.kBlue3D6,
@@ -233,9 +213,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                   ),
                                 ),
                               ),
-                              CustomSizedBox(
-                                width: 10,
-                              ),
+                              CustomSizedBox(width: 10),
                               ContainerWithBorder(
                                 borderColor: AppColors.kRedDF0000,
                                 containerColor: AppColors.kRedDF0000,
@@ -243,11 +221,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                 child: GestureDetector(
                                   onTap: () {
                                     _loginCubit.loginWithMobileNumber(
-                                        countryCode: widget.countryCode,
-                                        phoneNumber: widget.mobileController);
+                                      countryCode: widget.countryCode,
+                                      phoneNumber: widget.mobileController,
+                                    );
                                   },
-                                  child: Text("Resend OTP ",
-                                      style: AppTextStyle.text12kWhiteW500),
+                                  child: Text(
+                                    "Resend OTP ",
+                                    style: AppTextStyle.text12kWhiteW500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -257,35 +238,40 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
                       return Padding(
                         padding: EdgeInsets.only(
-                            left: 20 * SizeConfig.widthMultiplier!),
+                          left: 20 * SizeConfig.widthMultiplier!,
+                        ),
                         child: Row(
                           children: [
                             ContainerWithBorder(
-                              borderColor:
-                                  AppColors.kBlackTextColor.withOpacity(0.40),
+                              borderColor: AppColors.kBlackTextColor
+                                  .withOpacity(0.40),
                               borderRadius: 6 * SizeConfig.widthMultiplier!,
                               child: Text(
                                 "Change phone number",
                                 style: TextStyle(
-                                    fontSize: 12 * SizeConfig.textMultiplier!,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.kBlackTextColor
-                                        .withOpacity(0.40)),
+                                  fontSize: 12 * SizeConfig.textMultiplier!,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.kBlackTextColor.withOpacity(
+                                    0.40,
+                                  ),
+                                ),
                               ),
                             ),
-                            CustomSizedBox(
-                              width: 10,
-                            ),
+                            CustomSizedBox(width: 10),
                             ContainerWithBorder(
-                              borderColor:
-                                  AppColors.kBlackTextColor.withOpacity(0.40),
+                              borderColor: AppColors.kBlackTextColor
+                                  .withOpacity(0.40),
                               borderRadius: 6 * SizeConfig.widthMultiplier!,
-                              child: Text("Resend OTP ",
-                                  style: TextStyle(
-                                      fontSize: 12 * SizeConfig.textMultiplier!,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.kBlackTextColor
-                                          .withOpacity(0.40))),
+                              child: Text(
+                                "Resend OTP ",
+                                style: TextStyle(
+                                  fontSize: 12 * SizeConfig.textMultiplier!,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.kBlackTextColor.withOpacity(
+                                    0.40,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -297,10 +283,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     listener: (context, state) {
                       if (state is OtpSuccess) {
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    NewHomeScreen()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => NewHomeScreen(),
+                          ),
+                        );
 
                         AuthRepository.instance.init();
                         UserRepository.instance.init();
@@ -311,11 +298,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     },
                   ),
 
-                  CustomSizedBox(
-                    height: 10,
-                  ),
+                  CustomSizedBox(height: 10),
                 ],
-              )
+              ),
             ],
           ),
         ),

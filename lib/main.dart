@@ -9,9 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_jppdriver.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_oorugodriver.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_prithvidriver.dart';
+import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:travelx_driver/core/remote_config/remote_config.dart';
 import 'package:travelx_driver/documents/bloc/document_cubit.dart';
 import 'package:travelx_driver/firebase_options.dart';
@@ -21,8 +20,6 @@ import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/cubit/hire_driver_cubit.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/search-rides/screens/booking_registration/cubit/booking_registration_cubit.dart';
-import 'package:travelx_driver/serivce/background_service/background_service.dart';
-import 'package:travelx_driver/serivce/notification_service.dart';
 import 'package:travelx_driver/shared/localization_part/local_string.dart';
 import 'package:travelx_driver/shared/notification/notification_service.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
@@ -34,11 +31,7 @@ import 'package:travelx_driver/user/my_agency/bloc/my_agency_cubit.dart';
 import 'package:travelx_driver/user/subscription/cubit/subscription_cubit.dart';
 import 'package:travelx_driver/user/trip/equatable/trip_equatable.dart';
 import 'package:travelx_driver/user/vehicle/bloc/add_vehicle_cubit.dart';
-import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
-import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
-import 'config/firebase/firebase_options_bmtravels.dart';
-import 'config/firebase/firebase_options_giglyaidriver.dart';
 import 'login/bloc/login_cubit.dart';
 import 'shared/widgets/size_config/size_config.dart';
 import 'user/earning/bloc/earning_cubit.dart';
@@ -57,35 +50,10 @@ Future<void> main({Flavor? flavor}) async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (flavor == Flavor.bmdriver) {
+  if (flavor == Flavor.kurinjidriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
-        options: FirebaseOptionsBMTravels.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.giglyaidriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: FirebaseOptionsGiglyaiDriver.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.oorugodriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: OorugoDriverFirebaseOptions.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.prithvidriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: PrithviDriverFirebaseOptions.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.jppdriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        name: "jpp-driver",
-        options: JPPDriverDefaultFirebaseOptions.currentPlatform,
+        options: DefaultFirebaseOptions.currentPlatform,
       );
     }
   } else {

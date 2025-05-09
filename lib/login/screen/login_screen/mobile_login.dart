@@ -62,16 +62,12 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-              ImagePath.splashScreenBack,
-            ),
+            image: AssetImage(ImagePath.splashScreenBack),
             fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(
-            bottom: 40 * SizeConfig.heightMultiplier!,
-          ),
+          padding: EdgeInsets.only(bottom: 40 * SizeConfig.heightMultiplier!),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -81,33 +77,9 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                 height: 50 * SizeConfig.heightMultiplier!,
               ),
               const Spacer(),
-              if (F.appFlavor == Flavor.bmdriver)
+              if (F.appFlavor == Flavor.kurinjidriver)
                 ImageLoader.assetImage(
                   imagePath: ImagePath.splashBmtIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.oorugodriver)
-                ImageLoader.assetImage(
-                  imagePath: ImagePath.splashOorugoDriverIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.prithvidriver)
-                ImageLoader.assetImage(
-                  imagePath: PrithviImagePath.splashIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-                else if (F.appFlavor == Flavor.jppdriver)
-                ImageLoader.assetImage(
-                  imagePath: JpImagePath.splashIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
-                  width: 196 * SizeConfig.widthMultiplier!,
-                )
-              else if (F.appFlavor == Flavor.giglyaidriver)
-                ImageLoader.assetImage(
-                  imagePath: ImagePath.giglyDriverSplashLogoFinal,
                   height: 110 * SizeConfig.heightMultiplier!,
                   width: 196 * SizeConfig.widthMultiplier!,
                 )
@@ -123,14 +95,15 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 20 * SizeConfig.widthMultiplier!),
-                    child: Text("Enter your phone number for Login",
-                        style: AppTextStyle.text20kWhiteW600),
+                    padding: EdgeInsets.only(
+                      left: 20 * SizeConfig.widthMultiplier!,
+                    ),
+                    child: Text(
+                      "Enter your phone number for Login",
+                      style: AppTextStyle.text20kWhiteW600,
+                    ),
                   ),
-                  CustomSizedBox(
-                    height: 20,
-                  ),
+                  CustomSizedBox(height: 20),
                   //username and password screen
                   Padding(
                     padding: EdgeInsets.only(
@@ -147,12 +120,10 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                       child: Form(
                         key: phoneNumberKey,
                         child: Theme(
-                          data: ThemeData(
-                            hintColor: const Color(0x33adadad),
-                          ),
+                          data: ThemeData(hintColor: const Color(0x33adadad)),
                           child: TextField(
                             autofillHints: const <String>[
-                              AutofillHints.username
+                              AutofillHints.username,
                             ],
                             onSubmitted: (value) {
                               phoneNumberKey.currentState?.validate();
@@ -170,10 +141,12 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                             textInputAction: TextInputAction.next,
                             controller: phoneNumber,
                             style: TextStyle(
-                                color:
-                                    AppColors.kBlackTextColor.withOpacity(0.87),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20 * SizeConfig.textMultiplier!),
+                              color: AppColors.kBlackTextColor.withOpacity(
+                                0.87,
+                              ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20 * SizeConfig.textMultiplier!,
+                            ),
                             decoration: InputDecoration(
                               prefix: SizedBox(
                                 width: 20 * SizeConfig.widthMultiplier!,
@@ -183,33 +156,45 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                               fillColor: AppColors.kWhiteFFFF,
                               filled: true,
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                    5 * SizeConfig.widthMultiplier!)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    5 * SizeConfig.widthMultiplier!,
+                                  ),
+                                ),
                                 borderSide: BorderSide(
-                                    color: AppColors.kWhiteFFFF, width: 1),
+                                  color: AppColors.kWhiteFFFF,
+                                  width: 1,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                    5 * SizeConfig.widthMultiplier!)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    5 * SizeConfig.widthMultiplier!,
+                                  ),
+                                ),
                                 borderSide: BorderSide(
-                                    color: AppColors.kWhiteFFFF, width: 1),
+                                  color: AppColors.kWhiteFFFF,
+                                  width: 1,
+                                ),
                               ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
-                                    4 * SizeConfig.widthMultiplier!),
+                                  4 * SizeConfig.widthMultiplier!,
+                                ),
                               ),
                               prefixIcon: Padding(
                                 padding: EdgeInsets.only(
-                                    top: 10 * SizeConfig.heightMultiplier!,
-                                    left: 15 * SizeConfig.widthMultiplier!),
+                                  top: 10 * SizeConfig.heightMultiplier!,
+                                  left: 15 * SizeConfig.widthMultiplier!,
+                                ),
                                 child: Text(
                                   "+91",
                                   style: TextStyle(
-                                      color: AppColors.kBlackTextColor
-                                          .withOpacity(0.87),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize:
-                                          20 * SizeConfig.textMultiplier!),
+                                    color: AppColors.kBlackTextColor
+                                        .withOpacity(0.87),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20 * SizeConfig.textMultiplier!,
+                                  ),
                                 ),
                               ),
                             ),
@@ -218,9 +203,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                       ),
                     ),
                   ),
-                  CustomSizedBox(
-                    height: 30,
-                  ),
+                  CustomSizedBox(height: 30),
 
                   //logIn button
                   BlocConsumer<ServiceLoginCubit, LoginState>(
@@ -231,11 +214,14 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                         //     context: context,
                         //     imagePath: ImagePath.successIcon,
                         //     toastColor: AppColors.kGreenSuccess);
-                        Navigator.pushNamed(context, RouteName.otpScreen,
-                            arguments: VerifyOtpScreen(
-                              countryCode: "$countryCode",
-                              mobileController: phoneNumber.text,
-                            ));
+                        Navigator.pushNamed(
+                          context,
+                          RouteName.otpScreen,
+                          arguments: VerifyOtpScreen(
+                            countryCode: "$countryCode",
+                            mobileController: phoneNumber.text,
+                          ),
+                        );
                       }
 
                       if (state is PhoneNumberFailure) {
@@ -257,15 +243,16 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                           FocusManager.instance.primaryFocus?.unfocus();
                           if (phoneNumberKey.currentState!.validate()) {
                             _loginCubit.loginWithMobileNumber(
-                                countryCode: "$countryCode",
-                                phoneNumber: phoneNumber.text);
+                              countryCode: "$countryCode",
+                              phoneNumber: phoneNumber.text,
+                            );
                           }
                         },
                       );
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
