@@ -1,6 +1,10 @@
 class ImagePath {
   static String mapPinIcon = 'images/location_pin_on_map 1.png';
   static String refreshLoader = 'images/home/refresh_loader.json';
+  static String onlyCallIcon = 'images/common_images/call_icons.svg';
+  static String timeNewIcon = 'images/common_images/timeNewIcon.svg';
+  static String stickyNotesIcon = 'images/common_images/stickyNotesIcon.svg';
+  static String billNotesIcon = 'images/common_images/billNotesIcon.svg';
 
   static String mainLogo = 'images/common_images/main_logo_driver.png';
   static String splashScreenBack = 'images/common_images/splash_agent.png';

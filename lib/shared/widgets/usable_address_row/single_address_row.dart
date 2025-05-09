@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../../home/widget/container_with_border/container_with_border.dart';
@@ -18,7 +16,7 @@ class UsableSingleAddressRow extends StatelessWidget {
     this.pickupImagePath,
     this.dropupImagePath,
     this.maxline,
-    this.textStyle
+    this.textStyle,
   });
 
   String? pickupAddress;
@@ -27,7 +25,6 @@ class UsableSingleAddressRow extends StatelessWidget {
   String? dropupImagePath;
   int? maxline;
   TextStyle? textStyle;
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +35,15 @@ class UsableSingleAddressRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageLoader.svgPictureAssetImage(
-                imagePath:pickupImagePath?? ImagePath.greenRadioIcon),
-            CustomSizedBox(width: 3,),
+              imagePath: pickupImagePath ?? ImagePath.greenRadioIcon,
+            ),
+            CustomSizedBox(width: 3),
             Expanded(
               child: Text(
                 pickupAddress ?? "",
-                style: textStyle ??AppTextStyle.text14black0000W400,
+                style: textStyle ?? AppTextStyle.text14black0000W400,
                 overflow: TextOverflow.ellipsis,
-                maxLines: maxline ??3,
+                maxLines: maxline ?? 3,
               ),
             ),
             ContainerWithBorder(
@@ -56,31 +54,25 @@ class UsableSingleAddressRow extends StatelessWidget {
               borderColor: AppColors.kWhite,
               borderRadius: 6 * SizeConfig.widthMultiplier!,
               child: Center(
-                child: Text(
-                  "Pickup",
-                  style: AppTextStyle.text12black0000W500,
-                ),
+                child: Text("Pickup", style: AppTextStyle.text12black0000W500),
               ),
             ),
           ],
         ),
-        CustomSizedBox(
-          height: 20,
-        ),
+        CustomSizedBox(height: 20),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageLoader.svgPictureAssetImage(
-                imagePath:dropupImagePath ?? ImagePath.greenRadioIcon),
-            CustomSizedBox(
-              width: 2,
+              imagePath: dropupImagePath ?? ImagePath.greenRadioIcon,
             ),
+            CustomSizedBox(width: 2),
             Expanded(
               child: Text(
                 dropUpAddress ?? "",
-                style:textStyle?? AppTextStyle.text14black0000W400,
+                style: textStyle ?? AppTextStyle.text14black0000W400,
                 overflow: TextOverflow.ellipsis,
-                maxLines: maxline ??3,
+                maxLines: maxline ?? 3,
               ),
             ),
             ContainerWithBorder(
@@ -100,6 +92,53 @@ class UsableSingleAddressRow extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class SingleUsableAddressRow extends StatelessWidget {
+  SingleUsableAddressRow({super.key, this.dropUpAddress, this.imagePath});
+
+  String? dropUpAddress;
+  String? imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 0 * SizeConfig.widthMultiplier!),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (imagePath?.isNotEmpty == true)
+                Container(
+                  width: 22 * SizeConfig.widthMultiplier!,
+                  height: 22 * SizeConfig.heightMultiplier!,
+                  padding: EdgeInsets.all(5 * SizeConfig.widthMultiplier!),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.kBlueF4F3FF,
+                  ),
+                  child: ImageLoader.svgPictureAssetImage(
+                    imagePath: imagePath ?? "",
+                    color: AppColors.kBlackTextColor,
+                  ),
+                ),
+              if (imagePath?.isNotEmpty == true) CustomSizedBox(width: 10),
+              Flexible(
+                child: Text(
+                  dropUpAddress ?? "",
+                  style: AppTextStyle.text14black0000W500,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

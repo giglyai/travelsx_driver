@@ -4,6 +4,41 @@ import '../../widgets/size_config/size_config.dart';
 import '../app_colors/app_colors.dart';
 
 class AppTextStyle {
+  static TextStyle? text18black0000W700 = TextStyle(
+    color: AppColors.kBlackTextColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 18 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text17black0000W800 = TextStyle(
+    color: AppColors.kBlackTextColor,
+    fontWeight: FontWeight.w800,
+    fontSize: 17 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text12darkGreen12B76AW700 = TextStyle(
+    color: AppColors.darkGreen12B76A,
+    fontWeight: FontWeight.w700,
+    fontSize: 12 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text14kBlue0644AAW300 = TextStyle(
+    color: AppColors.kBlue0644AA,
+    fontWeight: FontWeight.w300,
+    fontSize: 14 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text50kBlue0644AAW900 = TextStyle(
+    color: AppColors.kBlue0644AA,
+    fontWeight: FontWeight.w900,
+    fontSize: 50 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text14black0000W800 = TextStyle(
+    color: AppColors.kBlackTextColor,
+    fontWeight: FontWeight.w800,
+    fontSize: 14 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text14Black0000W800 = TextStyle(
+    color: AppColors.kBlackTextColor,
+    fontWeight: FontWeight.w800,
+    fontSize: 14 * SizeConfig.textMultiplier!,
+  );
   static TextStyle? text14kkBlue053688W300 = TextStyle(
     color: AppColors.kBlue053688,
     fontWeight: FontWeight.w300,

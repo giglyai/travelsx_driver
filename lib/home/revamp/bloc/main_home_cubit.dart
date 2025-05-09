@@ -39,6 +39,7 @@ import 'package:travelx_driver/shared/widgets/custom_sized_box/custom_sized_box.
 import 'package:travelx_driver/shared/widgets/image_loader/image_loader.dart';
 import 'package:travelx_driver/shared/widgets/outline_button/outline_button.dart';
 import 'package:travelx_driver/shared/widgets/size_config/size_config.dart';
+import 'package:travelx_driver/shared/widgets/usable_address_row/single_address_row.dart';
 import 'package:travelx_driver/user/account/enitity/profile_model.dart';
 import 'package:travelx_driver/user/user_details/user_details_data.dart';
 
@@ -1147,1528 +1148,675 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     return DraggableScrollableSheet(
       controller: guestController,
       snap: false,
-      minChildSize: 0.12,
-      initialChildSize: 0.65,
-      maxChildSize: 0.65,
+      minChildSize: 0.3 * SizeConfig.heightMultiplier!,
+      initialChildSize: 0.3 * SizeConfig.heightMultiplier!,
+      maxChildSize: 0.68 * SizeConfig.heightMultiplier!,
       builder: (context, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.kBlackTextColor.withOpacity(0.20),
-                blurRadius: 4, // soften the shadow
-                spreadRadius: 1.0, //extend the shadow
-              ),
-            ],
-            color: AppColors.kWhite,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(10 * SizeConfig.widthMultiplier!),
-            ),
-          ),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: BlocBuilder<MainHomeCubit, MainHomeState>(
-              builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CustomSizedBox(height: 20),
-                    Center(
-                      child: Container(
-                        width: 63 * SizeConfig.widthMultiplier!,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            50 * SizeConfig.widthMultiplier!,
-                          ),
-                          color: AppColors.kBlackTextColor.withOpacity(0.21),
-                          border: Border.all(
-                            color: AppColors.kBlackTextColor.withOpacity(0.21),
-                            width: 2 * SizeConfig.widthMultiplier!,
-                          ),
-                        ),
+        return StatefulBuilder(
+          builder: (context, setState1) {
+            final newDeliveryCount =
+                state.upComingRideData?.data?.upcomingRide?.length ?? 0;
+            final upcomingDeliveryCount =
+                state.upComingRideData?.data?.newRide?.length ?? 0;
+
+            if (newDeliveryCount == 0 && upcomingDeliveryCount == 0) {
+              return SizedBox(); // Don't render the Positioned widget at all
+            }
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.kBlackTextColor.withOpacity(0.20),
+                        blurRadius: 4, // soften the shadow
+                        spreadRadius: 1.0, //extend the shadow
                       ),
+                    ],
+                    color: AppColors.kWhite,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(10 * SizeConfig.widthMultiplier!),
                     ),
-                    CustomSizedBox(height: 10),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          CustomSizedBox(width: 10),
-                          ...List.generate(
-                            state
-                                    .upComingRideData
-                                    ?.data
-                                    ?.upcomingRide
-                                    ?.length ??
-                                0,
-                            (index) {
-                              final acceptedRide =
-                                  state
-                                      .upComingRideData
-                                      ?.data
-                                      ?.upcomingRide?[index];
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  right: 10 * SizeConfig.widthMultiplier!,
+                  ),
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: BlocBuilder<MainHomeCubit, MainHomeState>(
+                      builder: (context, state) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomSizedBox(height: 20),
+                            Center(
+                              child: Container(
+                                width: 63 * SizeConfig.widthMultiplier!,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    50 * SizeConfig.widthMultiplier!,
+                                  ),
+                                  color: AppColors.kBlackTextColor.withOpacity(
+                                    0.21,
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.kBlackTextColor
+                                        .withOpacity(0.21),
+                                    width: 2 * SizeConfig.widthMultiplier!,
+                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "upcoming_rides".tr,
-                                        style: AppTextStyle.text18black0000W600,
-                                      ),
-                                    ),
-                                    CustomSizedBox(height: 10),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: AppColors.kBlackTextColor
-                                              .withOpacity(0.19),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 3,
-                                            color: AppColors.kBlackTextColor
-                                                .withOpacity(0.19),
+                              ),
+                            ),
+                            CustomSizedBox(height: 10),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  CustomSizedBox(width: 5),
+                                  ...List.generate(
+                                    state
+                                            .upComingRideData
+                                            ?.data
+                                            ?.upcomingRide
+                                            ?.length ??
+                                        0,
+                                    (index) {
+                                      final acceptedRide =
+                                          state
+                                              .upComingRideData
+                                              ?.data
+                                              ?.upcomingRide?[index];
+                                      return SizedBox(
+                                        width:
+                                            380 * SizeConfig.widthMultiplier!,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left:
+                                                10 *
+                                                SizeConfig.widthMultiplier!,
+                                            right:
+                                                20 *
+                                                SizeConfig.widthMultiplier!,
                                           ),
-                                        ],
-                                        color: AppColors.kWhite,
-                                        borderRadius: BorderRadius.circular(
-                                          8 * SizeConfig.widthMultiplier!,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left:
-                                              12 * SizeConfig.widthMultiplier!,
-                                          top:
-                                              12 * SizeConfig.heightMultiplier!,
-                                          bottom:
-                                              12 * SizeConfig.heightMultiplier!,
-                                          right:
-                                              12 * SizeConfig.widthMultiplier!,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            CustomSizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                ContainerWithBorder(
-                                                  wantPadding: true,
-                                                  containerColor:
-                                                      acceptedRide?.rideFeature ==
-                                                              "Ride"
-                                                          ? AppColors
-                                                              .kBlack1E2E2E
-                                                          : AppColors
-                                                              .kGreen40B59F,
-                                                  borderColor:
-                                                      acceptedRide?.rideFeature ==
-                                                              "Ride"
-                                                          ? AppColors
-                                                              .kBlack1E2E2E
-                                                          : AppColors
-                                                              .kGreen40B59F,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      left:
-                                                          15 *
-                                                          SizeConfig
-                                                              .widthMultiplier!,
-                                                      right:
-                                                          15 *
-                                                          SizeConfig
-                                                              .widthMultiplier!,
-                                                      top:
-                                                          2 *
-                                                          SizeConfig
-                                                              .heightMultiplier!,
-                                                      bottom:
-                                                          2 *
-                                                          SizeConfig
-                                                              .heightMultiplier!,
-                                                    ),
-                                                    child: Text(
-                                                      acceptedRide
-                                                              ?.rideFeature ??
-                                                          "",
-                                                      style:
-                                                          acceptedRide?.rideFeature ==
-                                                                  "Ride"
-                                                              ? AppTextStyle
-                                                                  .text12kWhiteFFW500
-                                                              : AppTextStyle
-                                                                  .text12Bblack0000W500,
-                                                    ),
-                                                  ),
-                                                ),
-                                                CustomSizedBox(
-                                                  width:
-                                                      150 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                ),
-                                                Text(
-                                                  "${acceptedRide?.payment?.amount.toString()} ${acceptedRide?.payment?.currency.toString()}",
-                                                  style:
-                                                      AppTextStyle
-                                                          .text20black0000W700,
-                                                ),
-                                                CustomSizedBox(width: 10),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 8),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "ID: ${acceptedRide?.rideId}",
-                                                  style: AppTextStyle
-                                                      .text12black0000W400
-                                                      ?.copyWith(
-                                                        color: AppColors
-                                                            .kBlackTextColor
-                                                            .withOpacity(0.50),
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 10),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                top:
-                                                    4 *
-                                                    SizeConfig
-                                                        .heightMultiplier!,
-                                                bottom:
-                                                    4 *
-                                                    SizeConfig
-                                                        .heightMultiplier!,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: AppColors.kGreyD5DDE0,
-                                                ),
-                                                color: AppColors.kWhite,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      10 *
-                                                          SizeConfig
-                                                              .widthMultiplier!,
-                                                    ),
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  left:
-                                                      11 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  right:
-                                                      5 *
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CustomSizedBox(height: 10),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      14 *
                                                       SizeConfig
                                                           .widthMultiplier!,
                                                 ),
                                                 child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
                                                   children: [
                                                     Text(
-                                                      "${acceptedRide?.tripDetails?.distance.toString() ?? ""} ${acceptedRide?.tripDetails?.distanceUnit.toString() ?? ""}",
-                                                      style:
-                                                          AppTextStyle
-                                                              .text12kRed907171W500,
-                                                    ),
-                                                    CustomSizedBox(width: 3),
-                                                    SizedBox(
-                                                      height:
-                                                          10 *
-                                                          SizeConfig
-                                                              .heightMultiplier!,
-                                                      child: VerticalDivider(
-                                                        thickness: 1,
-                                                        color: AppColors
-                                                            .kBlackTextColor
-                                                            .withOpacity(0.18),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "${acceptedRide?.tripDetails?.duration.toString() ?? ""} ${acceptedRide?.tripDetails?.durationUnit.toString() ?? ""}",
-                                                      style:
-                                                          AppTextStyle
-                                                              .text12kRed907171W500,
-                                                    ),
-                                                    if (acceptedRide
-                                                                ?.tripDetails
-                                                                ?.noOfTolls !=
-                                                            null &&
-                                                        acceptedRide!
-                                                                .tripDetails!
-                                                                .noOfTolls! >
-                                                            0)
-                                                      SizedBox(
-                                                        height:
-                                                            10 *
-                                                            SizeConfig
-                                                                .heightMultiplier!,
-                                                        child: VerticalDivider(
-                                                          thickness: 1,
-                                                          color: AppColors
-                                                              .kBlackTextColor
-                                                              .withOpacity(
-                                                                0.18,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    acceptedRide
-                                                                    ?.tripDetails
-                                                                    ?.noOfTolls !=
-                                                                null &&
-                                                            acceptedRide!
-                                                                    .tripDetails!
-                                                                    .noOfTolls! >
-                                                                0
-                                                        ? Container(
-                                                          padding: EdgeInsets.all(
-                                                            5 *
-                                                                SizeConfig
-                                                                    .widthMultiplier!,
-                                                          ),
-                                                          decoration: BoxDecoration(
-                                                            color:
-                                                                AppColors
-                                                                    .kWhiteFFFF,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  21 *
-                                                                      SizeConfig
-                                                                          .widthMultiplier!,
+                                                      "ID: ${acceptedRide?.rideId}",
+                                                      style: AppTextStyle
+                                                          .text14Black0000W800
+                                                          ?.copyWith(
+                                                            color: AppColors
+                                                                .kBlackTextColor
+                                                                .withOpacity(
+                                                                  0.64,
                                                                 ),
                                                           ),
-                                                          child: Row(
-                                                            children: [
-                                                              ImageLoader.svgPictureAssetImage(
-                                                                imagePath:
-                                                                    ImagePath
-                                                                        .tollIcon,
-                                                              ),
-                                                              CustomSizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Text(
-                                                                "${acceptedRide.tripDetails?.noOfTolls.toString() ?? ""} tolls",
-                                                                style:
-                                                                    AppTextStyle
-                                                                        .text12kRed907171W500,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                        : const SizedBox.shrink(),
+                                                    ),
+                                                    // Spacer(),
+                                                    // ImageLoader.svgPictureAssetImage(
+                                                    //     imagePath: ImagePath
+                                                    //         .arrowRightDoubleLineIcon)
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                            CustomSizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                    left:
-                                                        9 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    right:
-                                                        9 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    top:
-                                                        5 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                    bottom:
-                                                        5 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors
-                                                        .kWhiteEAE4E4
-                                                        .withOpacity(0.48),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          16 *
+                                              CustomSizedBox(height: 10),
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  ConstrainedBox(
+                                                    constraints: BoxConstraints(
+                                                      maxWidth:
+                                                          140 *
+                                                          SizeConfig
+                                                              .widthMultiplier!, // Adjust this value as per your requirement
+                                                      // or set a specific maxWidth value if needed
+                                                    ),
+                                                    child: ContainerWithBorder(
+                                                      wantPadding: true,
+                                                      containerColor:
+                                                          AppColors
+                                                              .kLightYelFFF3F0,
+                                                      borderColor:
+                                                          AppColors
+                                                              .kLightYelFFF3F0,
+                                                      borderRadius:
+                                                          32 *
+                                                          SizeConfig
+                                                              .widthMultiplier!,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              16 *
                                                               SizeConfig
                                                                   .widthMultiplier!,
+                                                          vertical:
+                                                              8 *
+                                                              SizeConfig
+                                                                  .heightMultiplier!,
                                                         ),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      ImageLoader.svgPictureAssetImage(
-                                                        imagePath:
-                                                            ImagePath
-                                                                .checkRadioIcon,
+                                                        child: Text(
+                                                          "${acceptedRide?.createdBy?.name.toString()}",
+                                                          style:
+                                                              AppTextStyle
+                                                                  .text14black0000W800,
+                                                          maxLines: 2,
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                        ),
                                                       ),
-                                                      CustomSizedBox(width: 7),
+                                                    ),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      try {
+                                                        Utils.launchPhoneDialer(
+                                                          acceptedRide
+                                                                  ?.tripSequence?[0]
+                                                                  .phoneNumber ??
+                                                              '',
+                                                        );
+                                                      } catch (e) {}
+                                                    },
+                                                    child: Container(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            16 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        vertical:
+                                                            8 *
+                                                            SizeConfig
+                                                                .heightMultiplier!,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color:
+                                                            AppColors
+                                                                .kGreenE8FAF0,
+                                                      ),
+                                                      child:
+                                                          ImageLoader.svgPictureAssetImage(
+                                                            imagePath:
+                                                                ImagePath
+                                                                    .onlyCallIcon,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
                                                       Text(
-                                                        acceptedRide
-                                                                ?.rideType ??
-                                                            "",
+                                                        "${acceptedRide?.payment?.amount.toString()}",
+                                                        style: AppTextStyle
+                                                            .text50kBlue0644AAW900
+                                                            ?.copyWith(
+                                                              height: 0.8,
+                                                            ),
+                                                      ),
+                                                      Text(
+                                                        " ${acceptedRide?.payment?.currency.toString()}",
                                                         style:
                                                             AppTextStyle
-                                                                .text12black0000W500,
+                                                                .text14kBlue0644AAW300,
                                                       ),
                                                     ],
                                                   ),
-                                                ),
-                                                CustomSizedBox(width: 10),
-                                                if (acceptedRide?.rideFeature !=
-                                                    "Ride")
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                      left:
-                                                          9 *
-                                                          SizeConfig
-                                                              .widthMultiplier!,
-                                                      right:
-                                                          9 *
-                                                          SizeConfig
-                                                              .widthMultiplier!,
-                                                      top:
-                                                          5 *
-                                                          SizeConfig
-                                                              .heightMultiplier!,
-                                                      bottom:
-                                                          5 *
-                                                          SizeConfig
-                                                              .heightMultiplier!,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .kWhiteEAE4E4
-                                                          .withOpacity(0.48),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            16 *
-                                                                SizeConfig
-                                                                    .widthMultiplier!,
+                                                ],
+                                              ),
+                                              CustomSizedBox(height: 10),
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  ContainerWithBorder(
+                                                    wantPadding: true,
+                                                    containerColor: AppColors
+                                                        .kLightYelFE8C00
+                                                        .withOpacity(0.08),
+                                                    borderColor: AppColors
+                                                        .kLightYelFE8C00
+                                                        .withOpacity(0.08),
+                                                    borderRadius:
+                                                        8 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            10 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        vertical:
+                                                            10 *
+                                                            SizeConfig
+                                                                .heightMultiplier!,
+                                                      ),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          ImageLoader.svgPictureAssetImage(
+                                                            imagePath:
+                                                                ImagePath
+                                                                    .timeNewIcon,
+                                                            color:
+                                                                AppColors
+                                                                    .kBlackTextColor,
                                                           ),
+                                                          CustomSizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "Pickup Time",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .text14black0000W500,
+                                                              ),
+                                                              Text(
+                                                                acceptedRide
+                                                                        ?.tripSequence?[0]
+                                                                        .pickupTime ??
+                                                                    '',
+                                                                style: AppTextStyle
+                                                                    .text12darkGreen12B76AW700
+                                                                    ?.copyWith(
+                                                                      fontSize:
+                                                                          16 *
+                                                                          SizeConfig
+                                                                              .textMultiplier!,
+                                                                    ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  ContainerWithBorder(
+                                                    wantPadding: true,
+                                                    containerColor:
+                                                        AppColors
+                                                            .kLightYelFFF3F0,
+                                                    borderColor:
+                                                        AppColors
+                                                            .kLightYelFFF3F0,
+                                                    borderRadius:
+                                                        32 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            16 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        vertical:
+                                                            8 *
+                                                            SizeConfig
+                                                                .heightMultiplier!,
+                                                      ),
+                                                      child: Text(
+                                                        "Delivery Fee",
+                                                        style:
+                                                            AppTextStyle
+                                                                .text14Black0000W400,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              CustomSizedBox(height: 10),
+                                              Divider(
+                                                thickness:
+                                                    2 *
+                                                    SizeConfig.widthMultiplier!,
+                                                color: AppColors.kBlackTextColor
+                                                    .withOpacity(0.10),
+                                              ),
+                                              CustomSizedBox(height: 5),
+                                              Row(
+                                                children: [
+                                                  ImageLoader.svgPictureAssetImage(
+                                                    width:
+                                                        16 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    height:
+                                                        16 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    imagePath:
+                                                        ImagePath
+                                                            .locationFilledIcon,
+                                                    color:
+                                                        AppColors
+                                                            .kBlackTextColor,
+                                                  ),
+                                                  CustomSizedBox(width: 5),
+                                                  Text(
+                                                    "Pickup",
+                                                    style: AppTextStyle
+                                                        .text17black0000W800
+                                                        ?.copyWith(
+                                                          color: AppColors
+                                                              .kBlackTextColor
+                                                              .withOpacity(
+                                                                0.64,
+                                                              ),
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              CustomSizedBox(height: 5),
+                                              ContainerWithBorder(
+                                                wantPadding: true,
+                                                containerColor: AppColors
+                                                    .kBlack242424
+                                                    .withOpacity(0.04),
+                                                borderColor: AppColors
+                                                    .kBlack242424
+                                                    .withOpacity(0.08),
+                                                borderRadius:
+                                                    10 *
+                                                    SizeConfig.widthMultiplier!,
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        8 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    vertical:
+                                                        8 *
+                                                        SizeConfig
+                                                            .heightMultiplier!,
+                                                  ),
+                                                  child: SingleUsableAddressRow(
+                                                    dropUpAddress:
+                                                        "${acceptedRide?.tripSequence?[0].address}",
+                                                  ),
+                                                ),
+                                              ),
+                                              CustomSizedBox(height: 5),
+                                              Row(
+                                                children: [
+                                                  ImageLoader.svgPictureAssetImage(
+                                                    width:
+                                                        16 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    height:
+                                                        16 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    imagePath:
+                                                        ImagePath
+                                                            .dropFilledIcon,
+                                                    color:
+                                                        AppColors
+                                                            .kBlackTextColor,
+                                                  ),
+                                                  CustomSizedBox(width: 5),
+                                                  Text(
+                                                    "Delivery",
+                                                    style: AppTextStyle
+                                                        .text17black0000W800
+                                                        ?.copyWith(
+                                                          color: AppColors
+                                                              .kBlackTextColor
+                                                              .withOpacity(
+                                                                0.64,
+                                                              ),
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              CustomSizedBox(height: 5),
+                                              ContainerWithBorder(
+                                                wantPadding: true,
+                                                containerColor: AppColors
+                                                    .kBlack242424
+                                                    .withOpacity(0.04),
+                                                borderColor: AppColors
+                                                    .kBlack242424
+                                                    .withOpacity(0.08),
+                                                borderRadius:
+                                                    10 *
+                                                    SizeConfig.widthMultiplier!,
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        8 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    vertical:
+                                                        8 *
+                                                        SizeConfig
+                                                            .heightMultiplier!,
+                                                  ),
+                                                  child: SingleUsableAddressRow(
+                                                    dropUpAddress:
+                                                        "${acceptedRide?.tripSequence?[1].address}",
+                                                  ),
+                                                ),
+                                              ),
+                                              CustomSizedBox(height: 10),
+
+                                              CustomSizedBox(height: 10),
+                                              if (acceptedRide?.payment?.mode
+                                                      ?.toUpperCase() ==
+                                                  "CASH")
+                                                ContainerWithBorder(
+                                                  wantPadding: true,
+                                                  containerColor:
+                                                      AppColors.kGreenE8FAF0,
+                                                  borderColor:
+                                                      AppColors.kGreenE8FAF0,
+                                                  borderRadius:
+                                                      8 *
+                                                      SizeConfig
+                                                          .widthMultiplier!,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal:
+                                                          8 *
+                                                          SizeConfig
+                                                              .widthMultiplier!,
+                                                      vertical:
+                                                          8 *
+                                                          SizeConfig
+                                                              .heightMultiplier!,
                                                     ),
                                                     child: Row(
                                                       children: [
-                                                        ImageLoader.svgPictureAssetImage(
-                                                          imagePath:
-                                                              ImagePath
-                                                                  .checkRadioIcon,
+                                                        Row(
+                                                          children: [
+                                                            ImageLoader.svgPictureAssetImage(
+                                                              width:
+                                                                  18 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              height:
+                                                                  18 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              imagePath:
+                                                                  ImagePath
+                                                                      .billNotesIcon,
+                                                            ),
+                                                            CustomSizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Text(
+                                                              'Total Bill : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                              style:
+                                                                  AppTextStyle
+                                                                      .text18black0000W700,
+                                                            ),
+                                                          ],
                                                         ),
-                                                        CustomSizedBox(
-                                                          width: 7,
-                                                        ),
-                                                        Text(
-                                                          acceptedRide
-                                                                  ?.vehicleType ??
-                                                              "",
-                                                          style:
-                                                              AppTextStyle
-                                                                  .text12black0000W500,
+                                                        const Spacer(),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    10 *
+                                                                    SizeConfig
+                                                                        .widthMultiplier!,
+                                                              ),
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  16 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              vertical:
+                                                                  8 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                            ),
+                                                            decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                    10 *
+                                                                        SizeConfig
+                                                                            .widthMultiplier!,
+                                                                  ),
+                                                              color:
+                                                                  AppColors
+                                                                      .kLightYelDECF45,
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                acceptedRide
+                                                                            ?.payment
+                                                                            ?.mode
+                                                                            ?.toUpperCase() ==
+                                                                        "CASH"
+                                                                    ? "COD"
+                                                                    : "${acceptedRide?.payment?.mode?.toUpperCase()}",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .text14black0000W600,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                    left:
-                                                        9 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    right:
-                                                        9 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    top:
-                                                        5 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                    bottom:
-                                                        5 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors
-                                                        .kWhiteEAE4E4
-                                                        .withOpacity(0.48),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          16 *
-                                                              SizeConfig
-                                                                  .widthMultiplier!,
-                                                        ),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      ImageLoader.svgPictureAssetImage(
-                                                        imagePath:
-                                                            ImagePath
-                                                                .checkRadioIcon,
-                                                      ),
-                                                      CustomSizedBox(width: 7),
-                                                      Text(
-                                                        acceptedRide
-                                                                ?.rideVehicle ??
-                                                            "",
-                                                        style:
-                                                            AppTextStyle
-                                                                .text12black0000W500,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 14),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "pickup_time".tr,
-                                                  style:
-                                                      AppTextStyle
-                                                          .text14black0000W400,
-                                                ),
-                                                CustomSizedBox(width: 10),
-                                                Text(
-                                                  acceptedRide
-                                                          ?.tripSequence?[0]
-                                                          .pickupTime ??
-                                                      '',
-                                                  style:
-                                                      AppTextStyle
-                                                          .text16black0000W700,
-                                                ),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 14),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ImageLoader.svgPictureAssetImage(
-                                                  width:
-                                                      20 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  height:
-                                                      20 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  imagePath:
-                                                      ImagePath
-                                                          .locationIconGreen,
-                                                ),
-                                                CustomSizedBox(width: 10),
-                                                SizedBox(
-                                                  width:
-                                                      250 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  child: Text(
-                                                    "${acceptedRide?.tripSequence?[0].address} (Pickup)",
-                                                    style:
-                                                        AppTextStyle
-                                                            .text14black0000W400,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 10),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ImageLoader.svgPictureAssetImage(
-                                                  width:
-                                                      20 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  height:
-                                                      20 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  imagePath:
-                                                      ImagePath
-                                                          .locationIconGreen,
-                                                ),
-                                                CustomSizedBox(width: 10),
-                                                SizedBox(
-                                                  width:
-                                                      250 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  child: Text(
-                                                    "${acceptedRide?.tripSequence?[1].address} (Dropoff)",
-                                                    style:
-                                                        AppTextStyle
-                                                            .text14black0000W400,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 10),
-                                            GestureDetector(
-                                              onTap: () {
-                                                try {
-                                                  Utils.launchPhoneDialer(
-                                                    acceptedRide
-                                                            ?.tripSequence?[0]
-                                                            .phoneNumber ??
-                                                        '',
-                                                  );
-                                                } catch (e) {}
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                  vertical:
-                                                      5 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                  horizontal:
-                                                      10 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        8 *
-                                                            SizeConfig
-                                                                .widthMultiplier!,
-                                                      ),
-                                                  border: Border.all(
-                                                    color:
-                                                        AppColors
-                                                            .kBlackTextColor,
-                                                    width:
-                                                        1 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                  ),
-                                                ),
-                                                child: Row(
+                                                )
+                                              else
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
-                                                    ImageLoader.svgPictureAssetImage(
-                                                      imagePath:
-                                                          ImagePath.phoneNumber,
-                                                    ),
-                                                    Text(
-                                                      "${acceptedRide?.tripSequence?[0].countryCode} - ${acceptedRide?.tripSequence?[0].phoneNumber}",
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            16 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        vertical:
+                                                            8 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              10 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                            ),
+                                                        color:
+                                                            AppColors
+                                                                .darkGreen59BF70,
+                                                      ),
+                                                      child: Text(
+                                                        "${acceptedRide?.payment?.mode?.toUpperCase()}",
+                                                        style: AppTextStyle
+                                                            .text14kWhiteFFW500
+                                                            .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                            ),
-                                            CustomSizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                ImageLoader.svgPictureAssetImage(
-                                                  imagePath: ImagePath.userIcon,
-                                                  color:
-                                                      AppColors.kBlackTextColor,
-                                                ),
-                                                CustomSizedBox(width: 7),
-                                                Text(
-                                                  acceptedRide
-                                                          ?.tripSequence?[0]
-                                                          .firstName ??
-                                                      "",
-                                                  style:
-                                                      AppTextStyle
-                                                          .text14black0000W400,
-                                                ),
-                                              ],
-                                            ),
-                                            CustomSizedBox(height: 13),
-                                            Row(
-                                              children: [
-                                                BlueButton(
-                                                  width:
-                                                      150 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  wantMargin: false,
-                                                  height:
-                                                      40 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                  title: "start_now".tr,
-                                                  textColor:
-                                                      AppColors.kBlackTextColor,
-                                                  isLoading:
-                                                      state
-                                                          .driverMutateRideStatus
-                                                          .isLoading,
-                                                  buttonColor:
-                                                      AppColors.kGreen199675,
-                                                  onTap: () async {
-                                                    selectedRideIndex = index;
-
-                                                    await mutateHireDriverRides(
-                                                      index:
-                                                          selectedRideIndex ??
-                                                          0,
-                                                      bookedFor: "book_ride",
-                                                      rideID:
-                                                          acceptedRide
-                                                              ?.rideId ??
-                                                          '',
-                                                      rideStatus:
-                                                          RideStatus.started,
-                                                      userDeviceToken:
-                                                          acceptedRide
-                                                              ?.user
-                                                              ?.deviceToken ??
-                                                          '',
-                                                      userAmount:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.amount ??
-                                                          '',
-                                                      userCurrency:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.currency ??
-                                                          '',
-                                                      userMode:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.mode ??
-                                                          '',
-                                                      userPaymentStatus:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.status ??
-                                                          '',
-                                                      mutationReason: '',
-                                                    );
-                                                  },
-                                                ),
-                                                CustomSizedBox(width: 10),
-                                                CustomOutlineButton(
-                                                  width:
-                                                      140 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  onTap: () async {
-                                                    cancelRideUpComingConfirmationPop(
-                                                      context: context,
-                                                      bookedFor: "book_ride",
-                                                      tripId:
-                                                          acceptedRide
-                                                              ?.tripId ??
-                                                          '',
-                                                      rateID:
-                                                          acceptedRide
-                                                              ?.price
-                                                              ?.id ??
-                                                          "",
-                                                      rideId:
-                                                          acceptedRide
-                                                              ?.rideId ??
-                                                          '',
-                                                      rideStatus:
-                                                          RideStatus.cancel,
-                                                      userDeviceToken:
-                                                          acceptedRide
-                                                              ?.user
-                                                              ?.deviceToken ??
-                                                          '',
-                                                      userAmount:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.amount ??
-                                                          '',
-                                                      userCurrency:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.currency ??
-                                                          '',
-                                                      userMode:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.mode ??
-                                                          '',
-                                                      userPaymentStatus:
-                                                          acceptedRide
-                                                              ?.payment
-                                                              ?.status ??
-                                                          '',
-                                                      mutationReason: '',
-                                                    );
-
-                                                    // await showDialog(
-                                                    //     context: context,
-                                                    //     builder: (BuildContext
-                                                    //         context) {
-                                                    //       return AlertDialog(
-                                                    //         backgroundColor:
-                                                    //             AppColors
-                                                    //                 .kWhite,
-                                                    //         titlePadding:
-                                                    //             EdgeInsets
-                                                    //                 .zero,
-                                                    //         shape: RoundedRectangleBorder(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius.circular(10 *
-                                                    //                     SizeConfig
-                                                    //                         .widthMultiplier!)),
-                                                    //         title: Column(
-                                                    //           crossAxisAlignment:
-                                                    //               CrossAxisAlignment
-                                                    //                   .start,
-                                                    //           mainAxisSize:
-                                                    //               MainAxisSize
-                                                    //                   .min,
-                                                    //           children: [
-                                                    //             CustomSizedBox(
-                                                    //                 height: 10 *
-                                                    //                     SizeConfig
-                                                    //                         .heightMultiplier!),
-                                                    //             Padding(
-                                                    //               padding: EdgeInsets.only(
-                                                    //                   left: 16 *
-                                                    //                       SizeConfig.widthMultiplier!),
-                                                    //               child: Text(
-                                                    //                 "Do_you_want_to_cancel_this_ride"
-                                                    //                     .tr,
-                                                    //                 style: AppTextStyle
-                                                    //                     .text14Black0000W400,
-                                                    //                 textAlign:
-                                                    //                     TextAlign
-                                                    //                         .start,
-                                                    //               ),
-                                                    //             ),
-                                                    //             SizedBox(
-                                                    //                 height: 10 *
-                                                    //                     SizeConfig
-                                                    //                         .heightMultiplier!),
-                                                    //             Row(
-                                                    //               mainAxisAlignment:
-                                                    //                   MainAxisAlignment
-                                                    //                       .spaceBetween,
-                                                    //               children: [
-                                                    //                 CustomOutlineButton(
-                                                    //                   borderRadius:
-                                                    //                       5 * SizeConfig.widthMultiplier!,
-                                                    //                   width: 90 *
-                                                    //                       SizeConfig.widthMultiplier!,
-                                                    //                   height: 30 *
-                                                    //                       SizeConfig.heightMultiplier!,
-                                                    //                   borderColor:
-                                                    //                       AppColors.kBlackTextColor,
-                                                    //                   titleColor:
-                                                    //                       AppColors.kBlackTextColor,
-                                                    //                   title: "confirm"
-                                                    //                       .tr,
-                                                    //                   isLoading: state
-                                                    //                       .cancelDriverMutateRideStatus
-                                                    //                       .isLoading,
-                                                    //                   buttonIsEnabled:
-                                                    //                       acceptedRide?.cancelRide ==
-                                                    //                           true,
-                                                    //                   onTap:
-                                                    //                       () async {
-                                                    //                     bool? status = await canceMutateHireDriverRides(
-                                                    //                         bookedFor: "book_ride",
-                                                    //                         tripId: acceptedRide?.tripId ?? '',
-                                                    //                         rateID: acceptedRide?.price?.id ?? "",
-                                                    //                         rideID: acceptedRide?.rideId ?? '',
-                                                    //                         rideStatus: RideStatus.cancel,
-                                                    //                         userDeviceToken: acceptedRide?.user?.deviceToken ?? '',
-                                                    //                         userAmount: acceptedRide?.payment?.amount ?? '',
-                                                    //                         userCurrency: acceptedRide?.payment?.currency ?? '',
-                                                    //                         userMode: acceptedRide?.payment?.mode ?? '',
-                                                    //                         userPaymentStatus: acceptedRide?.payment?.status ?? '',
-                                                    //                         mutationReason: '');
-                                                    //                     if (status ==
-                                                    //                         true) {
-                                                    //                       await getUpcomingOnTripRideData();
-                                                    //                       AnywhereDoor.pop(context);
-                                                    //                     }
-                                                    //                   },
-                                                    //                 ),
-                                                    //                 CustomOutlineButton(
-                                                    //                   titleColor:
-                                                    //                       AppColors.kRed1,
-                                                    //                   borderColor:
-                                                    //                       AppColors.kRed1,
-                                                    //                   borderRadius:
-                                                    //                       5 * SizeConfig.widthMultiplier!,
-                                                    //                   width: 90 *
-                                                    //                       SizeConfig.widthMultiplier!,
-                                                    //                   height: 30 *
-                                                    //                       SizeConfig.heightMultiplier!,
-                                                    //                   title: "cancel"
-                                                    //                       .tr,
-                                                    //                   onTap:
-                                                    //                       () {
-                                                    //                     AnywhereDoor.pop(
-                                                    //                         context);
-                                                    //                   },
-                                                    //                 ),
-                                                    //               ],
-                                                    //             ),
-                                                    //             SizedBox(
-                                                    //                 height: 20 *
-                                                    //                     SizeConfig
-                                                    //                         .heightMultiplier!),
-                                                    //           ],
-                                                    //         ),
-                                                    //       );
-                                                    //     });
-                                                  },
-                                                  wantMargin: false,
-                                                  titleColor:
-                                                      AppColors.kBlackTextColor,
-                                                  borderColor:
-                                                      AppColors.kGreen00996,
-                                                  height:
-                                                      40 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                  borderRadius:
-                                                      10 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  title: "cancel".tr,
-                                                  buttonIsEnabled:
-                                                      acceptedRide
-                                                          ?.cancelRide ==
-                                                      true,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          ...List.generate(state.upComingRideData?.data?.newRide?.length ?? 0, (
-                            index,
-                          ) {
-                            final acceptedRide =
-                                state.upComingRideData?.data?.newRide?[index];
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                right: 10 * SizeConfig.widthMultiplier!,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      "New Ride".tr,
-                                      style: AppTextStyle.text18black0000W600,
-                                    ),
-                                  ),
-                                  CustomSizedBox(height: 10),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: AppColors.kBlackTextColor
-                                            .withOpacity(0.19),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 3,
-                                          color: AppColors.kBlackTextColor
-                                              .withOpacity(0.19),
-                                        ),
-                                      ],
-                                      color: AppColors.kWhite,
-                                      borderRadius: BorderRadius.circular(
-                                        8 * SizeConfig.widthMultiplier!,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 12 * SizeConfig.widthMultiplier!,
-                                        top: 12 * SizeConfig.heightMultiplier!,
-                                        bottom:
-                                            12 * SizeConfig.heightMultiplier!,
-                                        right: 12 * SizeConfig.widthMultiplier!,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          CustomSizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              ContainerWithBorder(
-                                                wantPadding: true,
-                                                containerColor:
-                                                    acceptedRide?.rideFeature ==
-                                                            "Ride"
-                                                        ? AppColors.kBlack1E2E2E
-                                                        : AppColors
-                                                            .kGreen40B59F,
-                                                borderColor:
-                                                    acceptedRide?.rideFeature ==
-                                                            "Ride"
-                                                        ? AppColors.kBlack1E2E2E
-                                                        : AppColors
-                                                            .kGreen40B59F,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left:
-                                                        15 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    right:
-                                                        15 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    top:
-                                                        2 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                    bottom:
-                                                        2 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                  ),
-                                                  child: Text(
-                                                    acceptedRide?.rideFeature ??
-                                                        "",
-                                                    style:
-                                                        acceptedRide?.rideFeature ==
-                                                                "Ride"
-                                                            ? AppTextStyle
-                                                                .text12kWhiteFFW500
-                                                            : AppTextStyle
-                                                                .text12Bblack0000W500,
-                                                  ),
-                                                ),
-                                              ),
-                                              CustomSizedBox(
-                                                width:
-                                                    150 *
-                                                    SizeConfig.widthMultiplier!,
-                                              ),
-                                              Text(
-                                                "${acceptedRide?.payment?.amount.toString()} ${acceptedRide?.payment?.currency.toString()}",
-                                                style:
-                                                    AppTextStyle
-                                                        .text20black0000W700,
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 8),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "ID: ${acceptedRide?.rideId}",
-                                                style: AppTextStyle
-                                                    .text12black0000W400
-                                                    ?.copyWith(
-                                                      color: AppColors
-                                                          .kBlackTextColor
-                                                          .withOpacity(0.50),
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 10),
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                              top:
-                                                  4 *
-                                                  SizeConfig.heightMultiplier!,
-                                              bottom:
-                                                  4 *
-                                                  SizeConfig.heightMultiplier!,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.kGreyD5DDE0,
-                                              ),
-                                              color: AppColors.kWhite,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                    10 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                  ),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                left:
-                                                    11 *
-                                                    SizeConfig.widthMultiplier!,
-                                                right:
-                                                    5 *
-                                                    SizeConfig.widthMultiplier!,
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
+                                              CustomSizedBox(height: 20),
+                                              Row(
                                                 children: [
-                                                  Text(
-                                                    "${acceptedRide?.tripDetails?.distance.toString() ?? ""} ${acceptedRide?.tripDetails?.distanceUnit.toString() ?? ""}",
-                                                    style:
-                                                        AppTextStyle
-                                                            .text12kRed907171W500,
-                                                  ),
-                                                  CustomSizedBox(width: 3),
-                                                  SizedBox(
+                                                  CustomSizedBox(width: 5),
+                                                  BlueButton(
+                                                    wantMargin: false,
                                                     height:
-                                                        10 *
+                                                        50 *
                                                         SizeConfig
                                                             .heightMultiplier!,
-                                                    child: VerticalDivider(
-                                                      thickness: 1,
-                                                      color: AppColors
-                                                          .kBlackTextColor
-                                                          .withOpacity(0.18),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "${acceptedRide?.tripDetails?.duration.toString() ?? ""} ${acceptedRide?.tripDetails?.durationUnit.toString() ?? ""}",
-                                                    style:
-                                                        AppTextStyle
-                                                            .text12kRed907171W500,
-                                                  ),
-                                                  if (acceptedRide
-                                                              ?.tripDetails
-                                                              ?.noOfTolls !=
-                                                          null &&
-                                                      acceptedRide!
-                                                              .tripDetails!
-                                                              .noOfTolls! >
-                                                          0)
-                                                    SizedBox(
-                                                      height:
-                                                          10 *
-                                                          SizeConfig
-                                                              .heightMultiplier!,
-                                                      child: VerticalDivider(
-                                                        thickness: 1,
-                                                        color: AppColors
-                                                            .kBlackTextColor
-                                                            .withOpacity(0.18),
-                                                      ),
-                                                    ),
-                                                  acceptedRide
-                                                                  ?.tripDetails
-                                                                  ?.noOfTolls !=
-                                                              null &&
-                                                          acceptedRide!
-                                                                  .tripDetails!
-                                                                  .noOfTolls! >
-                                                              0
-                                                      ? Container(
-                                                        padding: EdgeInsets.all(
-                                                          5 *
-                                                              SizeConfig
-                                                                  .widthMultiplier!,
-                                                        ),
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                              AppColors
-                                                                  .kWhiteFFFF,
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                21 *
-                                                                    SizeConfig
-                                                                        .widthMultiplier!,
-                                                              ),
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            ImageLoader.svgPictureAssetImage(
-                                                              imagePath:
-                                                                  ImagePath
-                                                                      .tollIcon,
-                                                            ),
-                                                            CustomSizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Text(
-                                                              "${acceptedRide.tripDetails?.noOfTolls.toString() ?? ""} tolls",
-                                                              style:
-                                                                  AppTextStyle
-                                                                      .text12kRed907171W500,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      )
-                                                      : const SizedBox.shrink(),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          CustomSizedBox(height: 10),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                  left:
-                                                      9 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  right:
-                                                      9 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  top:
-                                                      5 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                  bottom:
-                                                      5 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.kWhiteEAE4E4
-                                                      .withOpacity(0.48),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        16 *
-                                                            SizeConfig
-                                                                .widthMultiplier!,
-                                                      ),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    ImageLoader.svgPictureAssetImage(
-                                                      imagePath:
-                                                          ImagePath
-                                                              .checkRadioIcon,
-                                                    ),
-                                                    CustomSizedBox(width: 7),
-                                                    Text(
-                                                      acceptedRide?.rideType ??
-                                                          "",
-                                                      style:
-                                                          AppTextStyle
-                                                              .text12black0000W500,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              CustomSizedBox(width: 10),
-                                              if (acceptedRide?.rideFeature !=
-                                                  "Ride")
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                    left:
-                                                        9 *
+                                                    width:
+                                                        200 *
                                                         SizeConfig
                                                             .widthMultiplier!,
-                                                    right:
-                                                        9 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    top:
-                                                        5 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                    bottom:
-                                                        5 *
-                                                        SizeConfig
-                                                            .heightMultiplier!,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors
-                                                        .kWhiteEAE4E4
-                                                        .withOpacity(0.48),
+                                                    buttonColor:
+                                                        AppColors.kGreen489D5B,
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                          16 *
-                                                              SizeConfig
-                                                                  .widthMultiplier!,
-                                                        ),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      ImageLoader.svgPictureAssetImage(
-                                                        imagePath:
-                                                            ImagePath
-                                                                .checkRadioIcon,
-                                                      ),
-                                                      CustomSizedBox(width: 7),
-                                                      Text(
-                                                        acceptedRide
-                                                                ?.vehicleType ??
-                                                            "",
-                                                        style:
-                                                            AppTextStyle
-                                                                .text12black0000W500,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                  left:
-                                                      9 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  right:
-                                                      9 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                  top:
-                                                      5 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                  bottom:
-                                                      5 *
-                                                      SizeConfig
-                                                          .heightMultiplier!,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.kWhiteEAE4E4
-                                                      .withOpacity(0.48),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        16 *
-                                                            SizeConfig
-                                                                .widthMultiplier!,
-                                                      ),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    ImageLoader.svgPictureAssetImage(
-                                                      imagePath:
-                                                          ImagePath
-                                                              .checkRadioIcon,
-                                                    ),
-                                                    CustomSizedBox(width: 7),
-                                                    Text(
-                                                      acceptedRide
-                                                              ?.rideVehicle ??
-                                                          "",
-                                                      style:
-                                                          AppTextStyle
-                                                              .text12black0000W500,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 14),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "pickup_time".tr,
-                                                style:
-                                                    AppTextStyle
-                                                        .text14black0000W400,
-                                              ),
-                                              CustomSizedBox(width: 10),
-                                              Text(
-                                                acceptedRide
-                                                        ?.tripSequence?[0]
-                                                        .pickupTime ??
-                                                    '',
-                                                style:
-                                                    AppTextStyle
-                                                        .text16black0000W700,
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 14),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              ImageLoader.svgPictureAssetImage(
-                                                width:
-                                                    20 *
-                                                    SizeConfig.widthMultiplier!,
-                                                height:
-                                                    20 *
-                                                    SizeConfig.widthMultiplier!,
-                                                imagePath:
-                                                    ImagePath.locationIconGreen,
-                                              ),
-                                              CustomSizedBox(width: 10),
-                                              SizedBox(
-                                                width:
-                                                    250 *
-                                                    SizeConfig.widthMultiplier!,
-                                                child: Text(
-                                                  "${acceptedRide?.tripSequence?[0].address} (Pickup)",
-                                                  style:
-                                                      AppTextStyle
-                                                          .text14black0000W400,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 10),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              ImageLoader.svgPictureAssetImage(
-                                                width:
-                                                    20 *
-                                                    SizeConfig.widthMultiplier!,
-                                                height:
-                                                    20 *
-                                                    SizeConfig.widthMultiplier!,
-                                                imagePath:
-                                                    ImagePath.locationIconGreen,
-                                              ),
-                                              CustomSizedBox(width: 10),
-                                              SizedBox(
-                                                width:
-                                                    250 *
-                                                    SizeConfig.widthMultiplier!,
-                                                child: Text(
-                                                  "${acceptedRide?.tripSequence?[1].address} (Dropoff)",
-                                                  style:
-                                                      AppTextStyle
-                                                          .text14black0000W400,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 10),
-                                          GestureDetector(
-                                            onTap: () {
-                                              try {
-                                                Utils.launchPhoneDialer(
-                                                  acceptedRide
-                                                          ?.tripSequence?[0]
-                                                          .phoneNumber ??
-                                                      '',
-                                                );
-                                              } catch (e) {}
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical:
-                                                    5 *
-                                                    SizeConfig
-                                                        .heightMultiplier!,
-                                                horizontal:
-                                                    10 *
-                                                    SizeConfig.widthMultiplier!,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      8 *
-                                                          SizeConfig
-                                                              .widthMultiplier!,
-                                                    ),
-                                                border: Border.all(
-                                                  color:
-                                                      AppColors.kBlackTextColor,
-                                                  width:
-                                                      1 *
-                                                      SizeConfig
-                                                          .widthMultiplier!,
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  ImageLoader.svgPictureAssetImage(
-                                                    imagePath:
-                                                        ImagePath.phoneNumber,
-                                                  ),
-                                                  Text(
-                                                    "${acceptedRide?.tripSequence?[0].countryCode} - ${acceptedRide?.tripSequence?[0].phoneNumber}",
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          CustomSizedBox(height: 10),
-                                          Row(
-                                            children: [
-                                              ImageLoader.svgPictureAssetImage(
-                                                imagePath: ImagePath.userIcon,
-                                                color:
-                                                    AppColors.kBlackTextColor,
-                                              ),
-                                              CustomSizedBox(width: 7),
-                                              Text(
-                                                acceptedRide
-                                                        ?.tripSequence?[0]
-                                                        .firstName ??
-                                                    "",
-                                                style:
-                                                    AppTextStyle
-                                                        .text14black0000W400,
-                                              ),
-                                            ],
-                                          ),
-                                          CustomSizedBox(height: 13),
-                                          Row(
-                                            children: [
-                                              BlueButton(
-                                                width:
-                                                    150 *
-                                                    SizeConfig.widthMultiplier!,
-                                                wantMargin: false,
-                                                height:
-                                                    40 *
-                                                    SizeConfig
-                                                        .heightMultiplier!,
-                                                title: "Accept".tr,
-                                                isLoading:
-                                                    state
-                                                        .driverMutateRideStatus
-                                                        .isLoading,
-                                                onTap: () async {
-                                                  selectedRideIndex = index;
+                                                        20 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    title: "start_now".tr,
+                                                    fontSize:
+                                                        22 *
+                                                        SizeConfig
+                                                            .textMultiplier!,
+                                                    isLoading:
+                                                        state
+                                                            .driverMutateRideStatus
+                                                            .isLoading,
+                                                    onTap: () async {
+                                                      selectedRideIndex = index;
 
-                                                  bool? getValue =
-                                                      await mutateHireDriverRides(
+                                                      bool?
+                                                      getValue = await mutateHireDriverRides(
                                                         index:
                                                             selectedRideIndex ??
                                                             0,
@@ -2678,7 +1826,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                 ?.rideId ??
                                                             '',
                                                         rideStatus:
-                                                            RideStatus.accepted,
+                                                            RideStatus.started,
                                                         userDeviceToken:
                                                             acceptedRide
                                                                 ?.user
@@ -2707,220 +1855,2732 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                         mutationReason: '',
                                                       );
 
-                                                  if (getValue == true) {
-                                                    await getUpcomingOnTripRideData();
-                                                  }
-                                                },
+                                                      if (getValue == true) {
+                                                        await getUpcomingOnTripRideData();
+                                                      }
+                                                    },
+                                                  ),
+                                                  CustomSizedBox(width: 10),
+                                                  CustomOutlineButton(
+                                                    borderColor:
+                                                        AppColors.kredFA4A0C,
+                                                    borderWidth: 0.5,
+                                                    titleColor:
+                                                        AppColors
+                                                            .kBlackTextColor,
+                                                    wantMargin: false,
+                                                    height:
+                                                        50 *
+                                                        SizeConfig
+                                                            .heightMultiplier!,
+                                                    width:
+                                                        109 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    buttonColor:
+                                                        AppColors.kWhiteFFFF,
+                                                    borderRadius:
+                                                        20 *
+                                                        SizeConfig
+                                                            .widthMultiplier!,
+                                                    onTap: () async {
+                                                      cancelRideUpComingConfirmationPop(
+                                                        context: context,
+                                                        bookedFor: "book_ride",
+                                                        tripId:
+                                                            acceptedRide
+                                                                ?.tripId ??
+                                                            '',
+                                                        rateID:
+                                                            acceptedRide
+                                                                ?.price
+                                                                ?.id ??
+                                                            "",
+                                                        rideId:
+                                                            acceptedRide
+                                                                ?.rideId ??
+                                                            '',
+                                                        rideStatus:
+                                                            RideStatus.cancel,
+                                                        userDeviceToken:
+                                                            acceptedRide
+                                                                ?.user
+                                                                ?.deviceToken ??
+                                                            '',
+                                                        userAmount:
+                                                            acceptedRide
+                                                                ?.payment
+                                                                ?.amount ??
+                                                            '',
+                                                        userCurrency:
+                                                            acceptedRide
+                                                                ?.payment
+                                                                ?.currency ??
+                                                            '',
+                                                        userMode:
+                                                            acceptedRide
+                                                                ?.payment
+                                                                ?.mode ??
+                                                            '',
+                                                        userPaymentStatus:
+                                                            acceptedRide
+                                                                ?.payment
+                                                                ?.status ??
+                                                            '',
+                                                        mutationReason: '',
+                                                      );
+                                                    },
+                                                    title: "cancel".tr,
+                                                    buttonIsEnabled:
+                                                        acceptedRide
+                                                            ?.cancelRide ==
+                                                        true,
+                                                  ),
+                                                ],
                                               ),
-                                              CustomSizedBox(width: 10),
-                                              CustomOutlineButton(
-                                                width:
-                                                    130 *
-                                                    SizeConfig.widthMultiplier!,
-                                                onTap: () async {
-                                                  cancelRideNewRideConfirmationPop(
-                                                    context: context,
-                                                    bookedFor: "book_ride",
-                                                    tripId:
-                                                        acceptedRide?.tripId ??
-                                                        '',
-                                                    rateID:
-                                                        acceptedRide
-                                                            ?.price
-                                                            ?.id ??
-                                                        "",
-                                                    rideId:
-                                                        acceptedRide?.rideId ??
-                                                        '',
-                                                    rideStatus:
-                                                        RideStatus.cancel,
-                                                    userDeviceToken:
-                                                        acceptedRide
-                                                            ?.user
-                                                            ?.deviceToken ??
-                                                        '',
-                                                    userAmount:
-                                                        acceptedRide
+                                              CustomSizedBox(height: 20),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+
+                                  /// this is new order list (accept order)
+                                  ...List.generate(
+                                    state
+                                            .upComingRideData
+                                            ?.data
+                                            ?.newRide
+                                            ?.length ??
+                                        0,
+                                    (index) {
+                                      final acceptedRide =
+                                          state
+                                              .upComingRideData
+                                              ?.data
+                                              ?.newRide?[index];
+                                      return SizedBox(
+                                        width:
+                                            380 * SizeConfig.widthMultiplier!,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left:
+                                                10 *
+                                                SizeConfig.widthMultiplier!,
+                                            right:
+                                                10 *
+                                                SizeConfig.widthMultiplier!,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CustomSizedBox(height: 10),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      14 *
+                                                      SizeConfig
+                                                          .widthMultiplier!,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "ID: ${acceptedRide?.rideId}",
+                                                      style: AppTextStyle
+                                                          .text14Black0000W800
+                                                          ?.copyWith(
+                                                            color: AppColors
+                                                                .kBlackTextColor
+                                                                .withOpacity(
+                                                                  0.64,
+                                                                ),
+                                                          ),
+                                                    ),
+
+                                                    // Spacer(),
+                                                    // ImageLoader.svgPictureAssetImage(
+                                                    //     imagePath: ImagePath
+                                                    //         .arrowRightDoubleLineIcon)
+                                                  ],
+                                                ),
+                                              ),
+                                              CustomSizedBox(height: 10),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                  left:
+                                                      14 *
+                                                      SizeConfig
+                                                          .widthMultiplier!,
+                                                  right:
+                                                      16 *
+                                                      SizeConfig
+                                                          .widthMultiplier!,
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        ConstrainedBox(
+                                                          constraints: BoxConstraints(
+                                                            maxWidth:
+                                                                140 *
+                                                                SizeConfig
+                                                                    .widthMultiplier!, // Adjust this value as per your requirement
+                                                            // or set a specific maxWidth value if needed
+                                                          ),
+                                                          child: ContainerWithBorder(
+                                                            wantPadding: true,
+                                                            containerColor:
+                                                                AppColors
+                                                                    .kLightYelFFF3F0,
+                                                            borderColor:
+                                                                AppColors
+                                                                    .kLightYelFFF3F0,
+                                                            borderRadius:
+                                                                32 *
+                                                                SizeConfig
+                                                                    .widthMultiplier!,
+                                                            child: Padding(
+                                                              padding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    16 *
+                                                                    SizeConfig
+                                                                        .widthMultiplier!,
+                                                                vertical:
+                                                                    8 *
+                                                                    SizeConfig
+                                                                        .heightMultiplier!,
+                                                              ),
+                                                              child: Text(
+                                                                "${acceptedRide?.createdBy?.name.toString()}",
+                                                                style:
+                                                                    AppTextStyle
+                                                                        .text14black0000W800,
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            try {
+                                                              Utils.launchPhoneDialer(
+                                                                acceptedRide
+                                                                        ?.tripSequence?[0]
+                                                                        .phoneNumber ??
+                                                                    '',
+                                                              );
+                                                            } catch (e) {}
+                                                          },
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  16 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              vertical:
+                                                                  8 *
+                                                                  SizeConfig
+                                                                      .heightMultiplier!,
+                                                            ),
+                                                            decoration: BoxDecoration(
+                                                              shape:
+                                                                  BoxShape
+                                                                      .circle,
+                                                              color:
+                                                                  AppColors
+                                                                      .kGreenE8FAF0,
+                                                            ),
+                                                            child: ImageLoader.svgPictureAssetImage(
+                                                              imagePath:
+                                                                  ImagePath
+                                                                      .onlyCallIcon,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "${acceptedRide?.payment?.amount.toString()}",
+                                                              style: AppTextStyle
+                                                                  .text50kBlue0644AAW900
+                                                                  ?.copyWith(
+                                                                    height: 0.8,
+                                                                  ),
+                                                            ),
+                                                            Text(
+                                                              " ${acceptedRide?.payment?.currency.toString()}",
+                                                              style:
+                                                                  AppTextStyle
+                                                                      .text14kBlue0644AAW300,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    CustomSizedBox(height: 10),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        ContainerWithBorder(
+                                                          wantPadding: true,
+                                                          containerColor:
+                                                              AppColors
+                                                                  .kLightYelFE8C00
+                                                                  .withOpacity(
+                                                                    0.08,
+                                                                  ),
+                                                          borderColor: AppColors
+                                                              .kLightYelFE8C00
+                                                              .withOpacity(
+                                                                0.08,
+                                                              ),
+                                                          borderRadius:
+                                                              8 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  10 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              vertical:
+                                                                  10 *
+                                                                  SizeConfig
+                                                                      .heightMultiplier!,
+                                                            ),
+                                                            child: Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                ImageLoader.svgPictureAssetImage(
+                                                                  imagePath:
+                                                                      ImagePath
+                                                                          .timeNewIcon,
+                                                                  color:
+                                                                      AppColors
+                                                                          .kBlackTextColor,
+                                                                ),
+                                                                CustomSizedBox(
+                                                                  width: 8,
+                                                                ),
+                                                                Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      "Pickup Time",
+                                                                      style:
+                                                                          AppTextStyle
+                                                                              .text14black0000W500,
+                                                                    ),
+                                                                    Text(
+                                                                      acceptedRide
+                                                                              ?.tripSequence?[0]
+                                                                              .pickupTime ??
+                                                                          '',
+                                                                      style: AppTextStyle.text12darkGreen12B76AW700?.copyWith(
+                                                                        fontSize:
+                                                                            16 *
+                                                                            SizeConfig.textMultiplier!,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        ContainerWithBorder(
+                                                          wantPadding: true,
+                                                          containerColor:
+                                                              AppColors
+                                                                  .kLightYelFFF3F0,
+                                                          borderColor:
+                                                              AppColors
+                                                                  .kLightYelFFF3F0,
+                                                          borderRadius:
+                                                              32 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  16 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              vertical:
+                                                                  8 *
+                                                                  SizeConfig
+                                                                      .heightMultiplier!,
+                                                            ),
+                                                            child: Text(
+                                                              "Delivery Fee",
+                                                              style:
+                                                                  AppTextStyle
+                                                                      .text14Black0000W400,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    CustomSizedBox(height: 10),
+                                                    Divider(
+                                                      thickness:
+                                                          2 *
+                                                          SizeConfig
+                                                              .widthMultiplier!,
+                                                      color: AppColors
+                                                          .kBlackTextColor
+                                                          .withOpacity(0.10),
+                                                    ),
+                                                    CustomSizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        ImageLoader.svgPictureAssetImage(
+                                                          width:
+                                                              16 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          height:
+                                                              16 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          imagePath:
+                                                              ImagePath
+                                                                  .locationFilledIcon,
+                                                          color:
+                                                              AppColors
+                                                                  .kBlackTextColor,
+                                                        ),
+                                                        CustomSizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "Pickup",
+                                                          style: AppTextStyle
+                                                              .text17black0000W800
+                                                              ?.copyWith(
+                                                                color: AppColors
+                                                                    .kBlackTextColor
+                                                                    .withOpacity(
+                                                                      0.64,
+                                                                    ),
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    CustomSizedBox(height: 5),
+                                                    ContainerWithBorder(
+                                                      wantPadding: true,
+                                                      containerColor: AppColors
+                                                          .kBlack242424
+                                                          .withOpacity(0.04),
+                                                      borderColor: AppColors
+                                                          .kBlack242424
+                                                          .withOpacity(0.08),
+                                                      borderRadius:
+                                                          10 *
+                                                          SizeConfig
+                                                              .widthMultiplier!,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              8 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          vertical:
+                                                              8 *
+                                                              SizeConfig
+                                                                  .heightMultiplier!,
+                                                        ),
+                                                        child: SingleUsableAddressRow(
+                                                          dropUpAddress:
+                                                              "${acceptedRide?.tripSequence?[0].address}",
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    CustomSizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        ImageLoader.svgPictureAssetImage(
+                                                          width:
+                                                              16 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          height:
+                                                              16 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          imagePath:
+                                                              ImagePath
+                                                                  .dropFilledIcon,
+                                                          color:
+                                                              AppColors
+                                                                  .kBlackTextColor,
+                                                        ),
+                                                        CustomSizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "Delivery",
+                                                          style: AppTextStyle
+                                                              .text17black0000W800
+                                                              ?.copyWith(
+                                                                color: AppColors
+                                                                    .kBlackTextColor
+                                                                    .withOpacity(
+                                                                      0.64,
+                                                                    ),
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    CustomSizedBox(height: 5),
+                                                    ContainerWithBorder(
+                                                      wantPadding: true,
+                                                      containerColor: AppColors
+                                                          .kBlack242424
+                                                          .withOpacity(0.04),
+                                                      borderColor: AppColors
+                                                          .kBlack242424
+                                                          .withOpacity(0.08),
+                                                      borderRadius:
+                                                          10 *
+                                                          SizeConfig
+                                                              .widthMultiplier!,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              8 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          vertical:
+                                                              8 *
+                                                              SizeConfig
+                                                                  .heightMultiplier!,
+                                                        ),
+                                                        child: SingleUsableAddressRow(
+                                                          dropUpAddress:
+                                                              "${acceptedRide?.tripSequence?[1].address}",
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    CustomSizedBox(height: 10),
+                                                    if (acceptedRide
                                                             ?.payment
-                                                            ?.amount ??
-                                                        '',
-                                                    userCurrency:
-                                                        acceptedRide
-                                                            ?.payment
-                                                            ?.currency ??
-                                                        '',
-                                                    userMode:
-                                                        acceptedRide
-                                                            ?.payment
-                                                            ?.mode ??
-                                                        '',
-                                                    userPaymentStatus:
-                                                        acceptedRide
-                                                            ?.payment
-                                                            ?.status ??
-                                                        '',
-                                                    mutationReason: '',
-                                                  );
-                                                  // await showDialog(
-                                                  //     context: context,
-                                                  //     builder: (BuildContext
-                                                  //         context) {
-                                                  //       return AlertDialog(
-                                                  //         backgroundColor:
-                                                  //             AppColors
-                                                  //                 .kWhite,
-                                                  //         titlePadding:
-                                                  //             EdgeInsets
-                                                  //                 .zero,
-                                                  //         shape: RoundedRectangleBorder(
-                                                  //             borderRadius:
-                                                  //                 BorderRadius.circular(10 *
-                                                  //                     SizeConfig
-                                                  //                         .widthMultiplier!)),
-                                                  //         title: Column(
-                                                  //           crossAxisAlignment:
-                                                  //               CrossAxisAlignment
-                                                  //                   .start,
-                                                  //           mainAxisSize:
-                                                  //               MainAxisSize
-                                                  //                   .min,
-                                                  //           children: [
-                                                  //             CustomSizedBox(
-                                                  //                 height: 10 *
-                                                  //                     SizeConfig
-                                                  //                         .heightMultiplier!),
-                                                  //             Padding(
-                                                  //               padding: EdgeInsets.only(
-                                                  //                   left: 16 *
-                                                  //                       SizeConfig.widthMultiplier!),
-                                                  //               child: Text(
-                                                  //                 "Do_you_want_to_cancel_this_ride"
-                                                  //                     .tr,
-                                                  //                 style: AppTextStyle
-                                                  //                     .text14Black0000W400,
-                                                  //                 textAlign:
-                                                  //                     TextAlign
-                                                  //                         .start,
-                                                  //               ),
-                                                  //             ),
-                                                  //             SizedBox(
-                                                  //                 height: 10 *
-                                                  //                     SizeConfig
-                                                  //                         .heightMultiplier!),
-                                                  //             Row(
-                                                  //               mainAxisAlignment:
-                                                  //                   MainAxisAlignment
-                                                  //                       .spaceBetween,
-                                                  //               children: [
-                                                  //                 CustomOutlineButton(
-                                                  //                   borderRadius:
-                                                  //                       5 * SizeConfig.widthMultiplier!,
-                                                  //                   width: 90 *
-                                                  //                       SizeConfig.widthMultiplier!,
-                                                  //                   height: 30 *
-                                                  //                       SizeConfig.heightMultiplier!,
-                                                  //                   borderColor:
-                                                  //                       AppColors.kBlackTextColor,
-                                                  //                   titleColor:
-                                                  //                       AppColors.kBlackTextColor,
-                                                  //                   title: "confirm"
-                                                  //                       .tr,
-                                                  //                   isLoading: state
-                                                  //                       .cancelDriverMutateRideStatus
-                                                  //                       .isLoading,
-                                                  //                   buttonIsEnabled:
-                                                  //                       acceptedRide?.cancelRide ==
-                                                  //                           true,
-                                                  //                   onTap:
-                                                  //                       () async {
-                                                  //                     bool? status = await canceMutateHireDriverRides(
-                                                  //                         bookedFor: "book_ride",
-                                                  //                         tripId: acceptedRide?.tripId ?? '',
-                                                  //                         rateID: acceptedRide?.price?.id ?? "",
-                                                  //                         rideID: acceptedRide?.rideId ?? '',
-                                                  //                         rideStatus: RideStatus.cancel,
-                                                  //                         userDeviceToken: acceptedRide?.user?.deviceToken ?? '',
-                                                  //                         userAmount: acceptedRide?.payment?.amount ?? '',
-                                                  //                         userCurrency: acceptedRide?.payment?.currency ?? '',
-                                                  //                         userMode: acceptedRide?.payment?.mode ?? '',
-                                                  //                         userPaymentStatus: acceptedRide?.payment?.status ?? '',
-                                                  //                         mutationReason: '');
-                                                  //                     if (status ==
-                                                  //                         true) {
-                                                  //                       await getUpcomingOnTripRideData();
-                                                  //                       AnywhereDoor.pop(context);
-                                                  //                     }
-                                                  //                   },
-                                                  //                 ),
-                                                  //                 CustomOutlineButton(
-                                                  //                   titleColor:
-                                                  //                       AppColors.kRed1,
-                                                  //                   borderColor:
-                                                  //                       AppColors.kRed1,
-                                                  //                   borderRadius:
-                                                  //                       5 * SizeConfig.widthMultiplier!,
-                                                  //                   width: 90 *
-                                                  //                       SizeConfig.widthMultiplier!,
-                                                  //                   height: 30 *
-                                                  //                       SizeConfig.heightMultiplier!,
-                                                  //                   title: "cancel"
-                                                  //                       .tr,
-                                                  //                   onTap:
-                                                  //                       () {
-                                                  //                     AnywhereDoor.pop(
-                                                  //                         context);
-                                                  //                   },
-                                                  //                 ),
-                                                  //               ],
-                                                  //             ),
-                                                  //             SizedBox(
-                                                  //                 height: 20 *
-                                                  //                     SizeConfig
-                                                  //                         .heightMultiplier!),
-                                                  //           ],
-                                                  //         ),
-                                                  //       );
-                                                  //     });
-                                                },
-                                                wantMargin: false,
-                                                titleColor:
-                                                    AppColors.kBlackTextColor,
-                                                borderColor:
-                                                    AppColors.kGreen00996,
-                                                height:
-                                                    40 *
-                                                    SizeConfig
-                                                        .heightMultiplier!,
-                                                borderRadius:
-                                                    10 *
-                                                    SizeConfig.widthMultiplier!,
-                                                title: "cancel".tr,
-                                                buttonIsEnabled:
-                                                    acceptedRide?.cancelRide ==
-                                                    true,
+                                                            ?.mode
+                                                            ?.toUpperCase() ==
+                                                        "CASH")
+                                                      ContainerWithBorder(
+                                                        wantPadding: true,
+                                                        containerColor:
+                                                            AppColors
+                                                                .kGreenE8FAF0,
+                                                        borderColor:
+                                                            AppColors
+                                                                .kGreenE8FAF0,
+                                                        borderRadius:
+                                                            8 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        child: Padding(
+                                                          padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                8 *
+                                                                SizeConfig
+                                                                    .widthMultiplier!,
+                                                            vertical:
+                                                                8 *
+                                                                SizeConfig
+                                                                    .heightMultiplier!,
+                                                          ),
+                                                          child: Row(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  ImageLoader.svgPictureAssetImage(
+                                                                    width:
+                                                                        18 *
+                                                                        SizeConfig
+                                                                            .widthMultiplier!,
+                                                                    height:
+                                                                        18 *
+                                                                        SizeConfig
+                                                                            .widthMultiplier!,
+                                                                    imagePath:
+                                                                        ImagePath
+                                                                            .billNotesIcon,
+                                                                  ),
+                                                                  CustomSizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  Text(
+                                                                    'Total Bill : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                                    style:
+                                                                        AppTextStyle
+                                                                            .text18black0000W700,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              const Spacer(),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                  horizontal:
+                                                                      10 *
+                                                                      SizeConfig
+                                                                          .widthMultiplier!,
+                                                                ),
+                                                                child: Container(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                    horizontal:
+                                                                        16 *
+                                                                        SizeConfig
+                                                                            .widthMultiplier!,
+                                                                    vertical:
+                                                                        8 *
+                                                                        SizeConfig
+                                                                            .widthMultiplier!,
+                                                                  ),
+                                                                  decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                          10 *
+                                                                              SizeConfig.widthMultiplier!,
+                                                                        ),
+                                                                    color:
+                                                                        AppColors
+                                                                            .kLightYelDECF45,
+                                                                  ),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      acceptedRide?.payment?.mode?.toUpperCase() ==
+                                                                              "CASH"
+                                                                          ? "COD"
+                                                                          : "${acceptedRide?.payment?.mode?.toUpperCase()}",
+                                                                      style:
+                                                                          AppTextStyle
+                                                                              .text14black0000W600,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )
+                                                    else
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Container(
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  16 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              vertical:
+                                                                  8 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                            ),
+                                                            decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                    10 *
+                                                                        SizeConfig
+                                                                            .widthMultiplier!,
+                                                                  ),
+                                                              color:
+                                                                  AppColors
+                                                                      .darkGreen59BF70,
+                                                            ),
+                                                            child: Text(
+                                                              "${acceptedRide?.payment?.mode?.toUpperCase()}",
+                                                              style: AppTextStyle
+                                                                  .text14kWhiteFFW500
+                                                                  .copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    CustomSizedBox(height: 20),
+                                                    Row(
+                                                      children: [
+                                                        BlueButton(
+                                                          wantMargin: false,
+                                                          height:
+                                                              50 *
+                                                              SizeConfig
+                                                                  .heightMultiplier!,
+                                                          width:
+                                                              200 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          buttonColor:
+                                                              AppColors
+                                                                  .kBlue3D6,
+                                                          fontSize:
+                                                              22 *
+                                                              SizeConfig
+                                                                  .textMultiplier!,
+                                                          borderRadius:
+                                                              20 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          title: "Accept".tr,
+                                                          isLoading:
+                                                              state
+                                                                  .driverMutateRideStatus
+                                                                  .isLoading,
+                                                          onTap: () async {
+                                                            selectedRideIndex =
+                                                                index;
+
+                                                            bool?
+                                                            getValue = await mutateHireDriverRides(
+                                                              index:
+                                                                  selectedRideIndex ??
+                                                                  0,
+                                                              bookedFor:
+                                                                  "book_ride",
+                                                              rideID:
+                                                                  acceptedRide
+                                                                      ?.rideId ??
+                                                                  '',
+                                                              rideStatus:
+                                                                  RideStatus
+                                                                      .accepted,
+                                                              userDeviceToken:
+                                                                  acceptedRide
+                                                                      ?.user
+                                                                      ?.deviceToken ??
+                                                                  '',
+                                                              userAmount:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.amount ??
+                                                                  '',
+                                                              userCurrency:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.currency ??
+                                                                  '',
+                                                              userMode:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.mode ??
+                                                                  '',
+                                                              userPaymentStatus:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.status ??
+                                                                  '',
+                                                              mutationReason:
+                                                                  '',
+                                                            );
+
+                                                            if (getValue ==
+                                                                true) {
+                                                              await getUpcomingOnTripRideData();
+                                                            }
+                                                          },
+                                                        ),
+                                                        CustomSizedBox(
+                                                          width: 20,
+                                                        ),
+                                                        CustomOutlineButton(
+                                                          borderColor:
+                                                              AppColors
+                                                                  .kredFA4A0C,
+                                                          borderWidth: 0.5,
+                                                          titleColor:
+                                                              AppColors
+                                                                  .kBlackTextColor,
+                                                          wantMargin: false,
+                                                          height:
+                                                              50 *
+                                                              SizeConfig
+                                                                  .heightMultiplier!,
+                                                          width:
+                                                              109 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          buttonColor:
+                                                              AppColors
+                                                                  .kWhiteFFFF,
+                                                          borderRadius:
+                                                              20 *
+                                                              SizeConfig
+                                                                  .widthMultiplier!,
+                                                          onTap: () async {
+                                                            cancelRideNewRideConfirmationPop(
+                                                              context: context,
+                                                              bookedFor:
+                                                                  "book_ride",
+                                                              tripId:
+                                                                  acceptedRide
+                                                                      ?.tripId ??
+                                                                  '',
+                                                              rateID:
+                                                                  acceptedRide
+                                                                      ?.price
+                                                                      ?.id ??
+                                                                  "",
+                                                              rideId:
+                                                                  acceptedRide
+                                                                      ?.rideId ??
+                                                                  '',
+                                                              rideStatus:
+                                                                  RideStatus
+                                                                      .cancel,
+                                                              userDeviceToken:
+                                                                  acceptedRide
+                                                                      ?.user
+                                                                      ?.deviceToken ??
+                                                                  '',
+                                                              userAmount:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.amount ??
+                                                                  '',
+                                                              userCurrency:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.currency ??
+                                                                  '',
+                                                              userMode:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.mode ??
+                                                                  '',
+                                                              userPaymentStatus:
+                                                                  acceptedRide
+                                                                      ?.payment
+                                                                      ?.status ??
+                                                                  '',
+                                                              mutationReason:
+                                                                  '',
+                                                            );
+                                                          },
+                                                          title: "cancel".tr,
+                                                          buttonIsEnabled:
+                                                              acceptedRide
+                                                                  ?.cancelRide ==
+                                                              true,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    CustomSizedBox(height: 20),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
-                            );
-                          }),
-                        ],
-                      ),
+                            ),
+                            CustomSizedBox(height: 30),
+                          ],
+                        );
+                      },
                     ),
-                  ],
-                );
-              },
-            ),
-          ),
+                  ),
+                ),
+                Positioned(
+                  top: -20 * SizeConfig.heightMultiplier!,
+                  right: 10 * SizeConfig.widthMultiplier!,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12 * SizeConfig.widthMultiplier!,
+                      vertical: 5 * SizeConfig.heightMultiplier!,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.kGreenE8FAF0,
+                      borderRadius: BorderRadius.circular(
+                        16 * SizeConfig.widthMultiplier!,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.kBlackTextColor.withOpacity(0.1),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          newDeliveryCount > 0
+                              ? "New Delivery"
+                              : "Ready To Pickup",
+                          style: AppTextStyle.text12black0000W600,
+                        ),
+                        CustomSizedBox(width: 5),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 6 * SizeConfig.heightMultiplier!,
+                            horizontal: 10 * SizeConfig.widthMultiplier!,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.kBlue2C6DFF,
+                            borderRadius: BorderRadius.circular(
+                              11 * SizeConfig.widthMultiplier!,
+                            ),
+                          ),
+                          child: Text(
+                            (newDeliveryCount > 0
+                                    ? newDeliveryCount
+                                    : upcomingDeliveryCount)
+                                .toString(),
+                            style: AppTextStyle.text16white0000W600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         );
       },
     );
   }
+
+  // DraggableScrollableSheet showAcceptedRideBottomSheet() {
+  //   DraggableScrollableController guestController =
+  //       DraggableScrollableController();
+  //   int? selectedRideIndex;
+  //   return DraggableScrollableSheet(
+  //     controller: guestController,
+  //     snap: false,
+  //     minChildSize: 0.12,
+  //     initialChildSize: 0.65,
+  //     maxChildSize: 0.65,
+  //     builder: (context, scrollController) {
+  //       return Container(
+  //         decoration: BoxDecoration(
+  //           boxShadow: [
+  //             BoxShadow(
+  //               color: AppColors.kBlackTextColor.withOpacity(0.20),
+  //               blurRadius: 4, // soften the shadow
+  //               spreadRadius: 1.0, //extend the shadow
+  //             ),
+  //           ],
+  //           color: AppColors.kWhite,
+  //           borderRadius: BorderRadius.vertical(
+  //             top: Radius.circular(10 * SizeConfig.widthMultiplier!),
+  //           ),
+  //         ),
+  //         child: SingleChildScrollView(
+  //           controller: scrollController,
+  //           child: BlocBuilder<MainHomeCubit, MainHomeState>(
+  //             builder: (context, state) {
+  //               return Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 children: [
+  //                   CustomSizedBox(height: 20),
+  //                   Center(
+  //                     child: Container(
+  //                       width: 63 * SizeConfig.widthMultiplier!,
+  //                       decoration: BoxDecoration(
+  //                         borderRadius: BorderRadius.circular(
+  //                           50 * SizeConfig.widthMultiplier!,
+  //                         ),
+  //                         color: AppColors.kBlackTextColor.withOpacity(0.21),
+  //                         border: Border.all(
+  //                           color: AppColors.kBlackTextColor.withOpacity(0.21),
+  //                           width: 2 * SizeConfig.widthMultiplier!,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   CustomSizedBox(height: 10),
+  //                   SingleChildScrollView(
+  //                     scrollDirection: Axis.horizontal,
+  //                     child: Row(
+  //                       children: [
+  //                         CustomSizedBox(width: 10),
+  //                         ...List.generate(
+  //                           state
+  //                                   .upComingRideData
+  //                                   ?.data
+  //                                   ?.upcomingRide
+  //                                   ?.length ??
+  //                               0,
+  //                           (index) {
+  //                             final acceptedRide =
+  //                                 state
+  //                                     .upComingRideData
+  //                                     ?.data
+  //                                     ?.upcomingRide?[index];
+  //                             return Padding(
+  //                               padding: EdgeInsets.only(
+  //                                 right: 10 * SizeConfig.widthMultiplier!,
+  //                               ),
+  //                               child: Column(
+  //                                 mainAxisSize: MainAxisSize.min,
+  //                                 children: [
+  //                                   Center(
+  //                                     child: Text(
+  //                                       "upcoming_rides".tr,
+  //                                       style: AppTextStyle.text18black0000W600,
+  //                                     ),
+  //                                   ),
+  //                                   CustomSizedBox(height: 10),
+  //                                   Container(
+  //                                     decoration: BoxDecoration(
+  //                                       border: Border.all(
+  //                                         color: AppColors.kBlackTextColor
+  //                                             .withOpacity(0.19),
+  //                                       ),
+  //                                       boxShadow: [
+  //                                         BoxShadow(
+  //                                           blurRadius: 3,
+  //                                           color: AppColors.kBlackTextColor
+  //                                               .withOpacity(0.19),
+  //                                         ),
+  //                                       ],
+  //                                       color: AppColors.kWhite,
+  //                                       borderRadius: BorderRadius.circular(
+  //                                         8 * SizeConfig.widthMultiplier!,
+  //                                       ),
+  //                                     ),
+  //                                     child: Padding(
+  //                                       padding: EdgeInsets.only(
+  //                                         left:
+  //                                             12 * SizeConfig.widthMultiplier!,
+  //                                         top:
+  //                                             12 * SizeConfig.heightMultiplier!,
+  //                                         bottom:
+  //                                             12 * SizeConfig.heightMultiplier!,
+  //                                         right:
+  //                                             12 * SizeConfig.widthMultiplier!,
+  //                                       ),
+  //                                       child: Column(
+  //                                         mainAxisAlignment:
+  //                                             MainAxisAlignment.start,
+  //                                         crossAxisAlignment:
+  //                                             CrossAxisAlignment.start,
+  //                                         mainAxisSize: MainAxisSize.min,
+  //                                         children: [
+  //                                           CustomSizedBox(height: 10),
+  //                                           Row(
+  //                                             children: [
+  //                                               ContainerWithBorder(
+  //                                                 wantPadding: true,
+  //                                                 containerColor:
+  //                                                     acceptedRide?.rideFeature ==
+  //                                                             "Ride"
+  //                                                         ? AppColors
+  //                                                             .kBlack1E2E2E
+  //                                                         : AppColors
+  //                                                             .kGreen40B59F,
+  //                                                 borderColor:
+  //                                                     acceptedRide?.rideFeature ==
+  //                                                             "Ride"
+  //                                                         ? AppColors
+  //                                                             .kBlack1E2E2E
+  //                                                         : AppColors
+  //                                                             .kGreen40B59F,
+  //                                                 child: Padding(
+  //                                                   padding: EdgeInsets.only(
+  //                                                     left:
+  //                                                         15 *
+  //                                                         SizeConfig
+  //                                                             .widthMultiplier!,
+  //                                                     right:
+  //                                                         15 *
+  //                                                         SizeConfig
+  //                                                             .widthMultiplier!,
+  //                                                     top:
+  //                                                         2 *
+  //                                                         SizeConfig
+  //                                                             .heightMultiplier!,
+  //                                                     bottom:
+  //                                                         2 *
+  //                                                         SizeConfig
+  //                                                             .heightMultiplier!,
+  //                                                   ),
+  //                                                   child: Text(
+  //                                                     acceptedRide
+  //                                                             ?.rideFeature ??
+  //                                                         "",
+  //                                                     style:
+  //                                                         acceptedRide?.rideFeature ==
+  //                                                                 "Ride"
+  //                                                             ? AppTextStyle
+  //                                                                 .text12kWhiteFFW500
+  //                                                             : AppTextStyle
+  //                                                                 .text12Bblack0000W500,
+  //                                                   ),
+  //                                                 ),
+  //                                               ),
+  //                                               CustomSizedBox(
+  //                                                 width:
+  //                                                     150 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                               ),
+  //                                               Text(
+  //                                                 "${acceptedRide?.payment?.amount.toString()} ${acceptedRide?.payment?.currency.toString()}",
+  //                                                 style:
+  //                                                     AppTextStyle
+  //                                                         .text20black0000W700,
+  //                                               ),
+  //                                               CustomSizedBox(width: 10),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 8),
+  //                                           Row(
+  //                                             mainAxisAlignment:
+  //                                                 MainAxisAlignment.start,
+  //                                             children: [
+  //                                               Text(
+  //                                                 "ID: ${acceptedRide?.rideId}",
+  //                                                 style: AppTextStyle
+  //                                                     .text12black0000W400
+  //                                                     ?.copyWith(
+  //                                                       color: AppColors
+  //                                                           .kBlackTextColor
+  //                                                           .withOpacity(0.50),
+  //                                                     ),
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 10),
+  //                                           Container(
+  //                                             padding: EdgeInsets.only(
+  //                                               top:
+  //                                                   4 *
+  //                                                   SizeConfig
+  //                                                       .heightMultiplier!,
+  //                                               bottom:
+  //                                                   4 *
+  //                                                   SizeConfig
+  //                                                       .heightMultiplier!,
+  //                                             ),
+  //                                             decoration: BoxDecoration(
+  //                                               border: Border.all(
+  //                                                 color: AppColors.kGreyD5DDE0,
+  //                                               ),
+  //                                               color: AppColors.kWhite,
+  //                                               borderRadius:
+  //                                                   BorderRadius.circular(
+  //                                                     10 *
+  //                                                         SizeConfig
+  //                                                             .widthMultiplier!,
+  //                                                   ),
+  //                                             ),
+  //                                             child: Padding(
+  //                                               padding: EdgeInsets.only(
+  //                                                 left:
+  //                                                     11 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 right:
+  //                                                     5 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                               ),
+  //                                               child: Row(
+  //                                                 crossAxisAlignment:
+  //                                                     CrossAxisAlignment.center,
+  //                                                 mainAxisSize:
+  //                                                     MainAxisSize.min,
+  //                                                 children: [
+  //                                                   Text(
+  //                                                     "${acceptedRide?.tripDetails?.distance.toString() ?? ""} ${acceptedRide?.tripDetails?.distanceUnit.toString() ?? ""}",
+  //                                                     style:
+  //                                                         AppTextStyle
+  //                                                             .text12kRed907171W500,
+  //                                                   ),
+  //                                                   CustomSizedBox(width: 3),
+  //                                                   SizedBox(
+  //                                                     height:
+  //                                                         10 *
+  //                                                         SizeConfig
+  //                                                             .heightMultiplier!,
+  //                                                     child: VerticalDivider(
+  //                                                       thickness: 1,
+  //                                                       color: AppColors
+  //                                                           .kBlackTextColor
+  //                                                           .withOpacity(0.18),
+  //                                                     ),
+  //                                                   ),
+  //                                                   Text(
+  //                                                     "${acceptedRide?.tripDetails?.duration.toString() ?? ""} ${acceptedRide?.tripDetails?.durationUnit.toString() ?? ""}",
+  //                                                     style:
+  //                                                         AppTextStyle
+  //                                                             .text12kRed907171W500,
+  //                                                   ),
+  //                                                   if (acceptedRide
+  //                                                               ?.tripDetails
+  //                                                               ?.noOfTolls !=
+  //                                                           null &&
+  //                                                       acceptedRide!
+  //                                                               .tripDetails!
+  //                                                               .noOfTolls! >
+  //                                                           0)
+  //                                                     SizedBox(
+  //                                                       height:
+  //                                                           10 *
+  //                                                           SizeConfig
+  //                                                               .heightMultiplier!,
+  //                                                       child: VerticalDivider(
+  //                                                         thickness: 1,
+  //                                                         color: AppColors
+  //                                                             .kBlackTextColor
+  //                                                             .withOpacity(
+  //                                                               0.18,
+  //                                                             ),
+  //                                                       ),
+  //                                                     ),
+  //                                                   acceptedRide
+  //                                                                   ?.tripDetails
+  //                                                                   ?.noOfTolls !=
+  //                                                               null &&
+  //                                                           acceptedRide!
+  //                                                                   .tripDetails!
+  //                                                                   .noOfTolls! >
+  //                                                               0
+  //                                                       ? Container(
+  //                                                         padding: EdgeInsets.all(
+  //                                                           5 *
+  //                                                               SizeConfig
+  //                                                                   .widthMultiplier!,
+  //                                                         ),
+  //                                                         decoration: BoxDecoration(
+  //                                                           color:
+  //                                                               AppColors
+  //                                                                   .kWhiteFFFF,
+  //                                                           borderRadius:
+  //                                                               BorderRadius.circular(
+  //                                                                 21 *
+  //                                                                     SizeConfig
+  //                                                                         .widthMultiplier!,
+  //                                                               ),
+  //                                                         ),
+  //                                                         child: Row(
+  //                                                           children: [
+  //                                                             ImageLoader.svgPictureAssetImage(
+  //                                                               imagePath:
+  //                                                                   ImagePath
+  //                                                                       .tollIcon,
+  //                                                             ),
+  //                                                             CustomSizedBox(
+  //                                                               width: 5,
+  //                                                             ),
+  //                                                             Text(
+  //                                                               "${acceptedRide.tripDetails?.noOfTolls.toString() ?? ""} tolls",
+  //                                                               style:
+  //                                                                   AppTextStyle
+  //                                                                       .text12kRed907171W500,
+  //                                                             ),
+  //                                                           ],
+  //                                                         ),
+  //                                                       )
+  //                                                       : const SizedBox.shrink(),
+  //                                                 ],
+  //                                               ),
+  //                                             ),
+  //                                           ),
+  //                                           CustomSizedBox(height: 10),
+  //                                           Row(
+  //                                             children: [
+  //                                               Container(
+  //                                                 padding: EdgeInsets.only(
+  //                                                   left:
+  //                                                       9 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   right:
+  //                                                       9 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   top:
+  //                                                       5 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                   bottom:
+  //                                                       5 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                 ),
+  //                                                 decoration: BoxDecoration(
+  //                                                   color: AppColors
+  //                                                       .kWhiteEAE4E4
+  //                                                       .withOpacity(0.48),
+  //                                                   borderRadius:
+  //                                                       BorderRadius.circular(
+  //                                                         16 *
+  //                                                             SizeConfig
+  //                                                                 .widthMultiplier!,
+  //                                                       ),
+  //                                                 ),
+  //                                                 child: Row(
+  //                                                   children: [
+  //                                                     ImageLoader.svgPictureAssetImage(
+  //                                                       imagePath:
+  //                                                           ImagePath
+  //                                                               .checkRadioIcon,
+  //                                                     ),
+  //                                                     CustomSizedBox(width: 7),
+  //                                                     Text(
+  //                                                       acceptedRide
+  //                                                               ?.rideType ??
+  //                                                           "",
+  //                                                       style:
+  //                                                           AppTextStyle
+  //                                                               .text12black0000W500,
+  //                                                     ),
+  //                                                   ],
+  //                                                 ),
+  //                                               ),
+  //                                               CustomSizedBox(width: 10),
+  //                                               if (acceptedRide?.rideFeature !=
+  //                                                   "Ride")
+  //                                                 Container(
+  //                                                   padding: EdgeInsets.only(
+  //                                                     left:
+  //                                                         9 *
+  //                                                         SizeConfig
+  //                                                             .widthMultiplier!,
+  //                                                     right:
+  //                                                         9 *
+  //                                                         SizeConfig
+  //                                                             .widthMultiplier!,
+  //                                                     top:
+  //                                                         5 *
+  //                                                         SizeConfig
+  //                                                             .heightMultiplier!,
+  //                                                     bottom:
+  //                                                         5 *
+  //                                                         SizeConfig
+  //                                                             .heightMultiplier!,
+  //                                                   ),
+  //                                                   decoration: BoxDecoration(
+  //                                                     color: AppColors
+  //                                                         .kWhiteEAE4E4
+  //                                                         .withOpacity(0.48),
+  //                                                     borderRadius:
+  //                                                         BorderRadius.circular(
+  //                                                           16 *
+  //                                                               SizeConfig
+  //                                                                   .widthMultiplier!,
+  //                                                         ),
+  //                                                   ),
+  //                                                   child: Row(
+  //                                                     children: [
+  //                                                       ImageLoader.svgPictureAssetImage(
+  //                                                         imagePath:
+  //                                                             ImagePath
+  //                                                                 .checkRadioIcon,
+  //                                                       ),
+  //                                                       CustomSizedBox(
+  //                                                         width: 7,
+  //                                                       ),
+  //                                                       Text(
+  //                                                         acceptedRide
+  //                                                                 ?.vehicleType ??
+  //                                                             "",
+  //                                                         style:
+  //                                                             AppTextStyle
+  //                                                                 .text12black0000W500,
+  //                                                       ),
+  //                                                     ],
+  //                                                   ),
+  //                                                 ),
+  //                                               Container(
+  //                                                 padding: EdgeInsets.only(
+  //                                                   left:
+  //                                                       9 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   right:
+  //                                                       9 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   top:
+  //                                                       5 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                   bottom:
+  //                                                       5 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                 ),
+  //                                                 decoration: BoxDecoration(
+  //                                                   color: AppColors
+  //                                                       .kWhiteEAE4E4
+  //                                                       .withOpacity(0.48),
+  //                                                   borderRadius:
+  //                                                       BorderRadius.circular(
+  //                                                         16 *
+  //                                                             SizeConfig
+  //                                                                 .widthMultiplier!,
+  //                                                       ),
+  //                                                 ),
+  //                                                 child: Row(
+  //                                                   children: [
+  //                                                     ImageLoader.svgPictureAssetImage(
+  //                                                       imagePath:
+  //                                                           ImagePath
+  //                                                               .checkRadioIcon,
+  //                                                     ),
+  //                                                     CustomSizedBox(width: 7),
+  //                                                     Text(
+  //                                                       acceptedRide
+  //                                                               ?.rideVehicle ??
+  //                                                           "",
+  //                                                       style:
+  //                                                           AppTextStyle
+  //                                                               .text12black0000W500,
+  //                                                     ),
+  //                                                   ],
+  //                                                 ),
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 14),
+  //                                           Row(
+  //                                             children: [
+  //                                               Text(
+  //                                                 "pickup_time".tr,
+  //                                                 style:
+  //                                                     AppTextStyle
+  //                                                         .text14black0000W400,
+  //                                               ),
+  //                                               CustomSizedBox(width: 10),
+  //                                               Text(
+  //                                                 acceptedRide
+  //                                                         ?.tripSequence?[0]
+  //                                                         .pickupTime ??
+  //                                                     '',
+  //                                                 style:
+  //                                                     AppTextStyle
+  //                                                         .text16black0000W700,
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 14),
+  //                                           Row(
+  //                                             crossAxisAlignment:
+  //                                                 CrossAxisAlignment.start,
+  //                                             children: [
+  //                                               ImageLoader.svgPictureAssetImage(
+  //                                                 width:
+  //                                                     20 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 height:
+  //                                                     20 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 imagePath:
+  //                                                     ImagePath
+  //                                                         .locationIconGreen,
+  //                                               ),
+  //                                               CustomSizedBox(width: 10),
+  //                                               SizedBox(
+  //                                                 width:
+  //                                                     250 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 child: Text(
+  //                                                   "${acceptedRide?.tripSequence?[0].address} (Pickup)",
+  //                                                   style:
+  //                                                       AppTextStyle
+  //                                                           .text14black0000W400,
+  //                                                   maxLines: 2,
+  //                                                   overflow:
+  //                                                       TextOverflow.ellipsis,
+  //                                                 ),
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 10),
+  //                                           Row(
+  //                                             crossAxisAlignment:
+  //                                                 CrossAxisAlignment.start,
+  //                                             children: [
+  //                                               ImageLoader.svgPictureAssetImage(
+  //                                                 width:
+  //                                                     20 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 height:
+  //                                                     20 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 imagePath:
+  //                                                     ImagePath
+  //                                                         .locationIconGreen,
+  //                                               ),
+  //                                               CustomSizedBox(width: 10),
+  //                                               SizedBox(
+  //                                                 width:
+  //                                                     250 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 child: Text(
+  //                                                   "${acceptedRide?.tripSequence?[1].address} (Dropoff)",
+  //                                                   style:
+  //                                                       AppTextStyle
+  //                                                           .text14black0000W400,
+  //                                                   maxLines: 2,
+  //                                                   overflow:
+  //                                                       TextOverflow.ellipsis,
+  //                                                 ),
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 10),
+  //                                           GestureDetector(
+  //                                             onTap: () {
+  //                                               try {
+  //                                                 Utils.launchPhoneDialer(
+  //                                                   acceptedRide
+  //                                                           ?.tripSequence?[0]
+  //                                                           .phoneNumber ??
+  //                                                       '',
+  //                                                 );
+  //                                               } catch (e) {}
+  //                                             },
+  //                                             child: Container(
+  //                                               padding: EdgeInsets.symmetric(
+  //                                                 vertical:
+  //                                                     5 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                                 horizontal:
+  //                                                     10 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                               ),
+  //                                               decoration: BoxDecoration(
+  //                                                 borderRadius:
+  //                                                     BorderRadius.circular(
+  //                                                       8 *
+  //                                                           SizeConfig
+  //                                                               .widthMultiplier!,
+  //                                                     ),
+  //                                                 border: Border.all(
+  //                                                   color:
+  //                                                       AppColors
+  //                                                           .kBlackTextColor,
+  //                                                   width:
+  //                                                       1 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                 ),
+  //                                               ),
+  //                                               child: Row(
+  //                                                 mainAxisSize:
+  //                                                     MainAxisSize.min,
+  //                                                 children: [
+  //                                                   ImageLoader.svgPictureAssetImage(
+  //                                                     imagePath:
+  //                                                         ImagePath.phoneNumber,
+  //                                                   ),
+  //                                                   Text(
+  //                                                     "${acceptedRide?.tripSequence?[0].countryCode} - ${acceptedRide?.tripSequence?[0].phoneNumber}",
+  //                                                   ),
+  //                                                 ],
+  //                                               ),
+  //                                             ),
+  //                                           ),
+  //                                           CustomSizedBox(height: 10),
+  //                                           Row(
+  //                                             children: [
+  //                                               ImageLoader.svgPictureAssetImage(
+  //                                                 imagePath: ImagePath.userIcon,
+  //                                                 color:
+  //                                                     AppColors.kBlackTextColor,
+  //                                               ),
+  //                                               CustomSizedBox(width: 7),
+  //                                               Text(
+  //                                                 acceptedRide
+  //                                                         ?.tripSequence?[0]
+  //                                                         .firstName ??
+  //                                                     "",
+  //                                                 style:
+  //                                                     AppTextStyle
+  //                                                         .text14black0000W400,
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                           CustomSizedBox(height: 13),
+  //                                           Row(
+  //                                             children: [
+  //                                               BlueButton(
+  //                                                 width:
+  //                                                     150 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 wantMargin: false,
+  //                                                 height:
+  //                                                     40 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                                 title: "start_now".tr,
+  //                                                 textColor:
+  //                                                     AppColors.kBlackTextColor,
+  //                                                 isLoading:
+  //                                                     state
+  //                                                         .driverMutateRideStatus
+  //                                                         .isLoading,
+  //                                                 buttonColor:
+  //                                                     AppColors.kGreen199675,
+  //                                                 onTap: () async {
+  //                                                   selectedRideIndex = index;
+  //
+  //                                                   await mutateHireDriverRides(
+  //                                                     index:
+  //                                                         selectedRideIndex ??
+  //                                                         0,
+  //                                                     bookedFor: "book_ride",
+  //                                                     rideID:
+  //                                                         acceptedRide
+  //                                                             ?.rideId ??
+  //                                                         '',
+  //                                                     rideStatus:
+  //                                                         RideStatus.started,
+  //                                                     userDeviceToken:
+  //                                                         acceptedRide
+  //                                                             ?.user
+  //                                                             ?.deviceToken ??
+  //                                                         '',
+  //                                                     userAmount:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.amount ??
+  //                                                         '',
+  //                                                     userCurrency:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.currency ??
+  //                                                         '',
+  //                                                     userMode:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.mode ??
+  //                                                         '',
+  //                                                     userPaymentStatus:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.status ??
+  //                                                         '',
+  //                                                     mutationReason: '',
+  //                                                   );
+  //                                                 },
+  //                                               ),
+  //                                               CustomSizedBox(width: 10),
+  //                                               CustomOutlineButton(
+  //                                                 width:
+  //                                                     140 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 onTap: () async {
+  //                                                   cancelRideUpComingConfirmationPop(
+  //                                                     context: context,
+  //                                                     bookedFor: "book_ride",
+  //                                                     tripId:
+  //                                                         acceptedRide
+  //                                                             ?.tripId ??
+  //                                                         '',
+  //                                                     rateID:
+  //                                                         acceptedRide
+  //                                                             ?.price
+  //                                                             ?.id ??
+  //                                                         "",
+  //                                                     rideId:
+  //                                                         acceptedRide
+  //                                                             ?.rideId ??
+  //                                                         '',
+  //                                                     rideStatus:
+  //                                                         RideStatus.cancel,
+  //                                                     userDeviceToken:
+  //                                                         acceptedRide
+  //                                                             ?.user
+  //                                                             ?.deviceToken ??
+  //                                                         '',
+  //                                                     userAmount:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.amount ??
+  //                                                         '',
+  //                                                     userCurrency:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.currency ??
+  //                                                         '',
+  //                                                     userMode:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.mode ??
+  //                                                         '',
+  //                                                     userPaymentStatus:
+  //                                                         acceptedRide
+  //                                                             ?.payment
+  //                                                             ?.status ??
+  //                                                         '',
+  //                                                     mutationReason: '',
+  //                                                   );
+  //
+  //                                                   // await showDialog(
+  //                                                   //     context: context,
+  //                                                   //     builder: (BuildContext
+  //                                                   //         context) {
+  //                                                   //       return AlertDialog(
+  //                                                   //         backgroundColor:
+  //                                                   //             AppColors
+  //                                                   //                 .kWhite,
+  //                                                   //         titlePadding:
+  //                                                   //             EdgeInsets
+  //                                                   //                 .zero,
+  //                                                   //         shape: RoundedRectangleBorder(
+  //                                                   //             borderRadius:
+  //                                                   //                 BorderRadius.circular(10 *
+  //                                                   //                     SizeConfig
+  //                                                   //                         .widthMultiplier!)),
+  //                                                   //         title: Column(
+  //                                                   //           crossAxisAlignment:
+  //                                                   //               CrossAxisAlignment
+  //                                                   //                   .start,
+  //                                                   //           mainAxisSize:
+  //                                                   //               MainAxisSize
+  //                                                   //                   .min,
+  //                                                   //           children: [
+  //                                                   //             CustomSizedBox(
+  //                                                   //                 height: 10 *
+  //                                                   //                     SizeConfig
+  //                                                   //                         .heightMultiplier!),
+  //                                                   //             Padding(
+  //                                                   //               padding: EdgeInsets.only(
+  //                                                   //                   left: 16 *
+  //                                                   //                       SizeConfig.widthMultiplier!),
+  //                                                   //               child: Text(
+  //                                                   //                 "Do_you_want_to_cancel_this_ride"
+  //                                                   //                     .tr,
+  //                                                   //                 style: AppTextStyle
+  //                                                   //                     .text14Black0000W400,
+  //                                                   //                 textAlign:
+  //                                                   //                     TextAlign
+  //                                                   //                         .start,
+  //                                                   //               ),
+  //                                                   //             ),
+  //                                                   //             SizedBox(
+  //                                                   //                 height: 10 *
+  //                                                   //                     SizeConfig
+  //                                                   //                         .heightMultiplier!),
+  //                                                   //             Row(
+  //                                                   //               mainAxisAlignment:
+  //                                                   //                   MainAxisAlignment
+  //                                                   //                       .spaceBetween,
+  //                                                   //               children: [
+  //                                                   //                 CustomOutlineButton(
+  //                                                   //                   borderRadius:
+  //                                                   //                       5 * SizeConfig.widthMultiplier!,
+  //                                                   //                   width: 90 *
+  //                                                   //                       SizeConfig.widthMultiplier!,
+  //                                                   //                   height: 30 *
+  //                                                   //                       SizeConfig.heightMultiplier!,
+  //                                                   //                   borderColor:
+  //                                                   //                       AppColors.kBlackTextColor,
+  //                                                   //                   titleColor:
+  //                                                   //                       AppColors.kBlackTextColor,
+  //                                                   //                   title: "confirm"
+  //                                                   //                       .tr,
+  //                                                   //                   isLoading: state
+  //                                                   //                       .cancelDriverMutateRideStatus
+  //                                                   //                       .isLoading,
+  //                                                   //                   buttonIsEnabled:
+  //                                                   //                       acceptedRide?.cancelRide ==
+  //                                                   //                           true,
+  //                                                   //                   onTap:
+  //                                                   //                       () async {
+  //                                                   //                     bool? status = await canceMutateHireDriverRides(
+  //                                                   //                         bookedFor: "book_ride",
+  //                                                   //                         tripId: acceptedRide?.tripId ?? '',
+  //                                                   //                         rateID: acceptedRide?.price?.id ?? "",
+  //                                                   //                         rideID: acceptedRide?.rideId ?? '',
+  //                                                   //                         rideStatus: RideStatus.cancel,
+  //                                                   //                         userDeviceToken: acceptedRide?.user?.deviceToken ?? '',
+  //                                                   //                         userAmount: acceptedRide?.payment?.amount ?? '',
+  //                                                   //                         userCurrency: acceptedRide?.payment?.currency ?? '',
+  //                                                   //                         userMode: acceptedRide?.payment?.mode ?? '',
+  //                                                   //                         userPaymentStatus: acceptedRide?.payment?.status ?? '',
+  //                                                   //                         mutationReason: '');
+  //                                                   //                     if (status ==
+  //                                                   //                         true) {
+  //                                                   //                       await getUpcomingOnTripRideData();
+  //                                                   //                       AnywhereDoor.pop(context);
+  //                                                   //                     }
+  //                                                   //                   },
+  //                                                   //                 ),
+  //                                                   //                 CustomOutlineButton(
+  //                                                   //                   titleColor:
+  //                                                   //                       AppColors.kRed1,
+  //                                                   //                   borderColor:
+  //                                                   //                       AppColors.kRed1,
+  //                                                   //                   borderRadius:
+  //                                                   //                       5 * SizeConfig.widthMultiplier!,
+  //                                                   //                   width: 90 *
+  //                                                   //                       SizeConfig.widthMultiplier!,
+  //                                                   //                   height: 30 *
+  //                                                   //                       SizeConfig.heightMultiplier!,
+  //                                                   //                   title: "cancel"
+  //                                                   //                       .tr,
+  //                                                   //                   onTap:
+  //                                                   //                       () {
+  //                                                   //                     AnywhereDoor.pop(
+  //                                                   //                         context);
+  //                                                   //                   },
+  //                                                   //                 ),
+  //                                                   //               ],
+  //                                                   //             ),
+  //                                                   //             SizedBox(
+  //                                                   //                 height: 20 *
+  //                                                   //                     SizeConfig
+  //                                                   //                         .heightMultiplier!),
+  //                                                   //           ],
+  //                                                   //         ),
+  //                                                   //       );
+  //                                                   //     });
+  //                                                 },
+  //                                                 wantMargin: false,
+  //                                                 titleColor:
+  //                                                     AppColors.kBlackTextColor,
+  //                                                 borderColor:
+  //                                                     AppColors.kGreen00996,
+  //                                                 height:
+  //                                                     40 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                                 borderRadius:
+  //                                                     10 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 title: "cancel".tr,
+  //                                                 buttonIsEnabled:
+  //                                                     acceptedRide
+  //                                                         ?.cancelRide ==
+  //                                                     true,
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                         ],
+  //                                       ),
+  //                                     ),
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                             );
+  //                           },
+  //                         ),
+  //                         ...List.generate(state.upComingRideData?.data?.newRide?.length ?? 0, (
+  //                           index,
+  //                         ) {
+  //                           final acceptedRide =
+  //                               state.upComingRideData?.data?.newRide?[index];
+  //                           return Padding(
+  //                             padding: EdgeInsets.only(
+  //                               right: 10 * SizeConfig.widthMultiplier!,
+  //                             ),
+  //                             child: Column(
+  //                               mainAxisSize: MainAxisSize.min,
+  //                               children: [
+  //                                 Center(
+  //                                   child: Text(
+  //                                     "New Ride".tr,
+  //                                     style: AppTextStyle.text18black0000W600,
+  //                                   ),
+  //                                 ),
+  //                                 CustomSizedBox(height: 10),
+  //                                 Container(
+  //                                   decoration: BoxDecoration(
+  //                                     border: Border.all(
+  //                                       color: AppColors.kBlackTextColor
+  //                                           .withOpacity(0.19),
+  //                                     ),
+  //                                     boxShadow: [
+  //                                       BoxShadow(
+  //                                         blurRadius: 3,
+  //                                         color: AppColors.kBlackTextColor
+  //                                             .withOpacity(0.19),
+  //                                       ),
+  //                                     ],
+  //                                     color: AppColors.kWhite,
+  //                                     borderRadius: BorderRadius.circular(
+  //                                       8 * SizeConfig.widthMultiplier!,
+  //                                     ),
+  //                                   ),
+  //                                   child: Padding(
+  //                                     padding: EdgeInsets.only(
+  //                                       left: 12 * SizeConfig.widthMultiplier!,
+  //                                       top: 12 * SizeConfig.heightMultiplier!,
+  //                                       bottom:
+  //                                           12 * SizeConfig.heightMultiplier!,
+  //                                       right: 12 * SizeConfig.widthMultiplier!,
+  //                                     ),
+  //                                     child: Column(
+  //                                       mainAxisAlignment:
+  //                                           MainAxisAlignment.start,
+  //                                       crossAxisAlignment:
+  //                                           CrossAxisAlignment.start,
+  //                                       mainAxisSize: MainAxisSize.min,
+  //                                       children: [
+  //                                         CustomSizedBox(height: 10),
+  //                                         Row(
+  //                                           mainAxisAlignment:
+  //                                               MainAxisAlignment.spaceBetween,
+  //                                           crossAxisAlignment:
+  //                                               CrossAxisAlignment.start,
+  //                                           children: [
+  //                                             ContainerWithBorder(
+  //                                               wantPadding: true,
+  //                                               containerColor:
+  //                                                   acceptedRide?.rideFeature ==
+  //                                                           "Ride"
+  //                                                       ? AppColors.kBlack1E2E2E
+  //                                                       : AppColors
+  //                                                           .kGreen40B59F,
+  //                                               borderColor:
+  //                                                   acceptedRide?.rideFeature ==
+  //                                                           "Ride"
+  //                                                       ? AppColors.kBlack1E2E2E
+  //                                                       : AppColors
+  //                                                           .kGreen40B59F,
+  //                                               child: Padding(
+  //                                                 padding: EdgeInsets.only(
+  //                                                   left:
+  //                                                       15 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   right:
+  //                                                       15 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   top:
+  //                                                       2 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                   bottom:
+  //                                                       2 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                 ),
+  //                                                 child: Text(
+  //                                                   acceptedRide?.rideFeature ??
+  //                                                       "",
+  //                                                   style:
+  //                                                       acceptedRide?.rideFeature ==
+  //                                                               "Ride"
+  //                                                           ? AppTextStyle
+  //                                                               .text12kWhiteFFW500
+  //                                                           : AppTextStyle
+  //                                                               .text12Bblack0000W500,
+  //                                                 ),
+  //                                               ),
+  //                                             ),
+  //                                             CustomSizedBox(
+  //                                               width:
+  //                                                   150 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                             ),
+  //                                             Text(
+  //                                               "${acceptedRide?.payment?.amount.toString()} ${acceptedRide?.payment?.currency.toString()}",
+  //                                               style:
+  //                                                   AppTextStyle
+  //                                                       .text20black0000W700,
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 8),
+  //                                         Row(
+  //                                           mainAxisAlignment:
+  //                                               MainAxisAlignment.start,
+  //                                           children: [
+  //                                             Text(
+  //                                               "ID: ${acceptedRide?.rideId}",
+  //                                               style: AppTextStyle
+  //                                                   .text12black0000W400
+  //                                                   ?.copyWith(
+  //                                                     color: AppColors
+  //                                                         .kBlackTextColor
+  //                                                         .withOpacity(0.50),
+  //                                                   ),
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 10),
+  //                                         Container(
+  //                                           padding: EdgeInsets.only(
+  //                                             top:
+  //                                                 4 *
+  //                                                 SizeConfig.heightMultiplier!,
+  //                                             bottom:
+  //                                                 4 *
+  //                                                 SizeConfig.heightMultiplier!,
+  //                                           ),
+  //                                           decoration: BoxDecoration(
+  //                                             border: Border.all(
+  //                                               color: AppColors.kGreyD5DDE0,
+  //                                             ),
+  //                                             color: AppColors.kWhite,
+  //                                             borderRadius:
+  //                                                 BorderRadius.circular(
+  //                                                   10 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                 ),
+  //                                           ),
+  //                                           child: Padding(
+  //                                             padding: EdgeInsets.only(
+  //                                               left:
+  //                                                   11 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               right:
+  //                                                   5 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                             ),
+  //                                             child: Row(
+  //                                               crossAxisAlignment:
+  //                                                   CrossAxisAlignment.center,
+  //                                               mainAxisSize: MainAxisSize.min,
+  //                                               children: [
+  //                                                 Text(
+  //                                                   "${acceptedRide?.tripDetails?.distance.toString() ?? ""} ${acceptedRide?.tripDetails?.distanceUnit.toString() ?? ""}",
+  //                                                   style:
+  //                                                       AppTextStyle
+  //                                                           .text12kRed907171W500,
+  //                                                 ),
+  //                                                 CustomSizedBox(width: 3),
+  //                                                 SizedBox(
+  //                                                   height:
+  //                                                       10 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                   child: VerticalDivider(
+  //                                                     thickness: 1,
+  //                                                     color: AppColors
+  //                                                         .kBlackTextColor
+  //                                                         .withOpacity(0.18),
+  //                                                   ),
+  //                                                 ),
+  //                                                 Text(
+  //                                                   "${acceptedRide?.tripDetails?.duration.toString() ?? ""} ${acceptedRide?.tripDetails?.durationUnit.toString() ?? ""}",
+  //                                                   style:
+  //                                                       AppTextStyle
+  //                                                           .text12kRed907171W500,
+  //                                                 ),
+  //                                                 if (acceptedRide
+  //                                                             ?.tripDetails
+  //                                                             ?.noOfTolls !=
+  //                                                         null &&
+  //                                                     acceptedRide!
+  //                                                             .tripDetails!
+  //                                                             .noOfTolls! >
+  //                                                         0)
+  //                                                   SizedBox(
+  //                                                     height:
+  //                                                         10 *
+  //                                                         SizeConfig
+  //                                                             .heightMultiplier!,
+  //                                                     child: VerticalDivider(
+  //                                                       thickness: 1,
+  //                                                       color: AppColors
+  //                                                           .kBlackTextColor
+  //                                                           .withOpacity(0.18),
+  //                                                     ),
+  //                                                   ),
+  //                                                 acceptedRide
+  //                                                                 ?.tripDetails
+  //                                                                 ?.noOfTolls !=
+  //                                                             null &&
+  //                                                         acceptedRide!
+  //                                                                 .tripDetails!
+  //                                                                 .noOfTolls! >
+  //                                                             0
+  //                                                     ? Container(
+  //                                                       padding: EdgeInsets.all(
+  //                                                         5 *
+  //                                                             SizeConfig
+  //                                                                 .widthMultiplier!,
+  //                                                       ),
+  //                                                       decoration: BoxDecoration(
+  //                                                         color:
+  //                                                             AppColors
+  //                                                                 .kWhiteFFFF,
+  //                                                         borderRadius:
+  //                                                             BorderRadius.circular(
+  //                                                               21 *
+  //                                                                   SizeConfig
+  //                                                                       .widthMultiplier!,
+  //                                                             ),
+  //                                                       ),
+  //                                                       child: Row(
+  //                                                         children: [
+  //                                                           ImageLoader.svgPictureAssetImage(
+  //                                                             imagePath:
+  //                                                                 ImagePath
+  //                                                                     .tollIcon,
+  //                                                           ),
+  //                                                           CustomSizedBox(
+  //                                                             width: 5,
+  //                                                           ),
+  //                                                           Text(
+  //                                                             "${acceptedRide.tripDetails?.noOfTolls.toString() ?? ""} tolls",
+  //                                                             style:
+  //                                                                 AppTextStyle
+  //                                                                     .text12kRed907171W500,
+  //                                                           ),
+  //                                                         ],
+  //                                                       ),
+  //                                                     )
+  //                                                     : const SizedBox.shrink(),
+  //                                               ],
+  //                                             ),
+  //                                           ),
+  //                                         ),
+  //                                         CustomSizedBox(height: 10),
+  //                                         Row(
+  //                                           children: [
+  //                                             Container(
+  //                                               padding: EdgeInsets.only(
+  //                                                 left:
+  //                                                     9 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 right:
+  //                                                     9 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 top:
+  //                                                     5 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                                 bottom:
+  //                                                     5 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                               ),
+  //                                               decoration: BoxDecoration(
+  //                                                 color: AppColors.kWhiteEAE4E4
+  //                                                     .withOpacity(0.48),
+  //                                                 borderRadius:
+  //                                                     BorderRadius.circular(
+  //                                                       16 *
+  //                                                           SizeConfig
+  //                                                               .widthMultiplier!,
+  //                                                     ),
+  //                                               ),
+  //                                               child: Row(
+  //                                                 children: [
+  //                                                   ImageLoader.svgPictureAssetImage(
+  //                                                     imagePath:
+  //                                                         ImagePath
+  //                                                             .checkRadioIcon,
+  //                                                   ),
+  //                                                   CustomSizedBox(width: 7),
+  //                                                   Text(
+  //                                                     acceptedRide?.rideType ??
+  //                                                         "",
+  //                                                     style:
+  //                                                         AppTextStyle
+  //                                                             .text12black0000W500,
+  //                                                   ),
+  //                                                 ],
+  //                                               ),
+  //                                             ),
+  //                                             CustomSizedBox(width: 10),
+  //                                             if (acceptedRide?.rideFeature !=
+  //                                                 "Ride")
+  //                                               Container(
+  //                                                 padding: EdgeInsets.only(
+  //                                                   left:
+  //                                                       9 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   right:
+  //                                                       9 *
+  //                                                       SizeConfig
+  //                                                           .widthMultiplier!,
+  //                                                   top:
+  //                                                       5 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                   bottom:
+  //                                                       5 *
+  //                                                       SizeConfig
+  //                                                           .heightMultiplier!,
+  //                                                 ),
+  //                                                 decoration: BoxDecoration(
+  //                                                   color: AppColors
+  //                                                       .kWhiteEAE4E4
+  //                                                       .withOpacity(0.48),
+  //                                                   borderRadius:
+  //                                                       BorderRadius.circular(
+  //                                                         16 *
+  //                                                             SizeConfig
+  //                                                                 .widthMultiplier!,
+  //                                                       ),
+  //                                                 ),
+  //                                                 child: Row(
+  //                                                   children: [
+  //                                                     ImageLoader.svgPictureAssetImage(
+  //                                                       imagePath:
+  //                                                           ImagePath
+  //                                                               .checkRadioIcon,
+  //                                                     ),
+  //                                                     CustomSizedBox(width: 7),
+  //                                                     Text(
+  //                                                       acceptedRide
+  //                                                               ?.vehicleType ??
+  //                                                           "",
+  //                                                       style:
+  //                                                           AppTextStyle
+  //                                                               .text12black0000W500,
+  //                                                     ),
+  //                                                   ],
+  //                                                 ),
+  //                                               ),
+  //                                             Container(
+  //                                               padding: EdgeInsets.only(
+  //                                                 left:
+  //                                                     9 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 right:
+  //                                                     9 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                                 top:
+  //                                                     5 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                                 bottom:
+  //                                                     5 *
+  //                                                     SizeConfig
+  //                                                         .heightMultiplier!,
+  //                                               ),
+  //                                               decoration: BoxDecoration(
+  //                                                 color: AppColors.kWhiteEAE4E4
+  //                                                     .withOpacity(0.48),
+  //                                                 borderRadius:
+  //                                                     BorderRadius.circular(
+  //                                                       16 *
+  //                                                           SizeConfig
+  //                                                               .widthMultiplier!,
+  //                                                     ),
+  //                                               ),
+  //                                               child: Row(
+  //                                                 children: [
+  //                                                   ImageLoader.svgPictureAssetImage(
+  //                                                     imagePath:
+  //                                                         ImagePath
+  //                                                             .checkRadioIcon,
+  //                                                   ),
+  //                                                   CustomSizedBox(width: 7),
+  //                                                   Text(
+  //                                                     acceptedRide
+  //                                                             ?.rideVehicle ??
+  //                                                         "",
+  //                                                     style:
+  //                                                         AppTextStyle
+  //                                                             .text12black0000W500,
+  //                                                   ),
+  //                                                 ],
+  //                                               ),
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 14),
+  //                                         Row(
+  //                                           children: [
+  //                                             Text(
+  //                                               "pickup_time".tr,
+  //                                               style:
+  //                                                   AppTextStyle
+  //                                                       .text14black0000W400,
+  //                                             ),
+  //                                             CustomSizedBox(width: 10),
+  //                                             Text(
+  //                                               acceptedRide
+  //                                                       ?.tripSequence?[0]
+  //                                                       .pickupTime ??
+  //                                                   '',
+  //                                               style:
+  //                                                   AppTextStyle
+  //                                                       .text16black0000W700,
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 14),
+  //                                         Row(
+  //                                           crossAxisAlignment:
+  //                                               CrossAxisAlignment.start,
+  //                                           children: [
+  //                                             ImageLoader.svgPictureAssetImage(
+  //                                               width:
+  //                                                   20 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               height:
+  //                                                   20 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               imagePath:
+  //                                                   ImagePath.locationIconGreen,
+  //                                             ),
+  //                                             CustomSizedBox(width: 10),
+  //                                             SizedBox(
+  //                                               width:
+  //                                                   250 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               child: Text(
+  //                                                 "${acceptedRide?.tripSequence?[0].address} (Pickup)",
+  //                                                 style:
+  //                                                     AppTextStyle
+  //                                                         .text14black0000W400,
+  //                                                 maxLines: 2,
+  //                                                 overflow:
+  //                                                     TextOverflow.ellipsis,
+  //                                               ),
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 10),
+  //                                         Row(
+  //                                           crossAxisAlignment:
+  //                                               CrossAxisAlignment.start,
+  //                                           children: [
+  //                                             ImageLoader.svgPictureAssetImage(
+  //                                               width:
+  //                                                   20 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               height:
+  //                                                   20 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               imagePath:
+  //                                                   ImagePath.locationIconGreen,
+  //                                             ),
+  //                                             CustomSizedBox(width: 10),
+  //                                             SizedBox(
+  //                                               width:
+  //                                                   250 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               child: Text(
+  //                                                 "${acceptedRide?.tripSequence?[1].address} (Dropoff)",
+  //                                                 style:
+  //                                                     AppTextStyle
+  //                                                         .text14black0000W400,
+  //                                                 maxLines: 2,
+  //                                                 overflow:
+  //                                                     TextOverflow.ellipsis,
+  //                                               ),
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 10),
+  //                                         GestureDetector(
+  //                                           onTap: () {
+  //                                             try {
+  //                                               Utils.launchPhoneDialer(
+  //                                                 acceptedRide
+  //                                                         ?.tripSequence?[0]
+  //                                                         .phoneNumber ??
+  //                                                     '',
+  //                                               );
+  //                                             } catch (e) {}
+  //                                           },
+  //                                           child: Container(
+  //                                             padding: EdgeInsets.symmetric(
+  //                                               vertical:
+  //                                                   5 *
+  //                                                   SizeConfig
+  //                                                       .heightMultiplier!,
+  //                                               horizontal:
+  //                                                   10 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                             ),
+  //                                             decoration: BoxDecoration(
+  //                                               borderRadius:
+  //                                                   BorderRadius.circular(
+  //                                                     8 *
+  //                                                         SizeConfig
+  //                                                             .widthMultiplier!,
+  //                                                   ),
+  //                                               border: Border.all(
+  //                                                 color:
+  //                                                     AppColors.kBlackTextColor,
+  //                                                 width:
+  //                                                     1 *
+  //                                                     SizeConfig
+  //                                                         .widthMultiplier!,
+  //                                               ),
+  //                                             ),
+  //                                             child: Row(
+  //                                               mainAxisSize: MainAxisSize.min,
+  //                                               children: [
+  //                                                 ImageLoader.svgPictureAssetImage(
+  //                                                   imagePath:
+  //                                                       ImagePath.phoneNumber,
+  //                                                 ),
+  //                                                 Text(
+  //                                                   "${acceptedRide?.tripSequence?[0].countryCode} - ${acceptedRide?.tripSequence?[0].phoneNumber}",
+  //                                                 ),
+  //                                               ],
+  //                                             ),
+  //                                           ),
+  //                                         ),
+  //                                         CustomSizedBox(height: 10),
+  //                                         Row(
+  //                                           children: [
+  //                                             ImageLoader.svgPictureAssetImage(
+  //                                               imagePath: ImagePath.userIcon,
+  //                                               color:
+  //                                                   AppColors.kBlackTextColor,
+  //                                             ),
+  //                                             CustomSizedBox(width: 7),
+  //                                             Text(
+  //                                               acceptedRide
+  //                                                       ?.tripSequence?[0]
+  //                                                       .firstName ??
+  //                                                   "",
+  //                                               style:
+  //                                                   AppTextStyle
+  //                                                       .text14black0000W400,
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         CustomSizedBox(height: 13),
+  //                                         Row(
+  //                                           children: [
+  //                                             BlueButton(
+  //                                               width:
+  //                                                   150 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               wantMargin: false,
+  //                                               height:
+  //                                                   40 *
+  //                                                   SizeConfig
+  //                                                       .heightMultiplier!,
+  //                                               title: "Accept".tr,
+  //                                               isLoading:
+  //                                                   state
+  //                                                       .driverMutateRideStatus
+  //                                                       .isLoading,
+  //                                               onTap: () async {
+  //                                                 selectedRideIndex = index;
+  //
+  //                                                 bool? getValue =
+  //                                                     await mutateHireDriverRides(
+  //                                                       index:
+  //                                                           selectedRideIndex ??
+  //                                                           0,
+  //                                                       bookedFor: "book_ride",
+  //                                                       rideID:
+  //                                                           acceptedRide
+  //                                                               ?.rideId ??
+  //                                                           '',
+  //                                                       rideStatus:
+  //                                                           RideStatus.accepted,
+  //                                                       userDeviceToken:
+  //                                                           acceptedRide
+  //                                                               ?.user
+  //                                                               ?.deviceToken ??
+  //                                                           '',
+  //                                                       userAmount:
+  //                                                           acceptedRide
+  //                                                               ?.payment
+  //                                                               ?.amount ??
+  //                                                           '',
+  //                                                       userCurrency:
+  //                                                           acceptedRide
+  //                                                               ?.payment
+  //                                                               ?.currency ??
+  //                                                           '',
+  //                                                       userMode:
+  //                                                           acceptedRide
+  //                                                               ?.payment
+  //                                                               ?.mode ??
+  //                                                           '',
+  //                                                       userPaymentStatus:
+  //                                                           acceptedRide
+  //                                                               ?.payment
+  //                                                               ?.status ??
+  //                                                           '',
+  //                                                       mutationReason: '',
+  //                                                     );
+  //
+  //                                                 if (getValue == true) {
+  //                                                   await getUpcomingOnTripRideData();
+  //                                                 }
+  //                                               },
+  //                                             ),
+  //                                             CustomSizedBox(width: 10),
+  //                                             CustomOutlineButton(
+  //                                               width:
+  //                                                   130 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               onTap: () async {
+  //                                                 cancelRideNewRideConfirmationPop(
+  //                                                   context: context,
+  //                                                   bookedFor: "book_ride",
+  //                                                   tripId:
+  //                                                       acceptedRide?.tripId ??
+  //                                                       '',
+  //                                                   rateID:
+  //                                                       acceptedRide
+  //                                                           ?.price
+  //                                                           ?.id ??
+  //                                                       "",
+  //                                                   rideId:
+  //                                                       acceptedRide?.rideId ??
+  //                                                       '',
+  //                                                   rideStatus:
+  //                                                       RideStatus.cancel,
+  //                                                   userDeviceToken:
+  //                                                       acceptedRide
+  //                                                           ?.user
+  //                                                           ?.deviceToken ??
+  //                                                       '',
+  //                                                   userAmount:
+  //                                                       acceptedRide
+  //                                                           ?.payment
+  //                                                           ?.amount ??
+  //                                                       '',
+  //                                                   userCurrency:
+  //                                                       acceptedRide
+  //                                                           ?.payment
+  //                                                           ?.currency ??
+  //                                                       '',
+  //                                                   userMode:
+  //                                                       acceptedRide
+  //                                                           ?.payment
+  //                                                           ?.mode ??
+  //                                                       '',
+  //                                                   userPaymentStatus:
+  //                                                       acceptedRide
+  //                                                           ?.payment
+  //                                                           ?.status ??
+  //                                                       '',
+  //                                                   mutationReason: '',
+  //                                                 );
+  //                                                 // await showDialog(
+  //                                                 //     context: context,
+  //                                                 //     builder: (BuildContext
+  //                                                 //         context) {
+  //                                                 //       return AlertDialog(
+  //                                                 //         backgroundColor:
+  //                                                 //             AppColors
+  //                                                 //                 .kWhite,
+  //                                                 //         titlePadding:
+  //                                                 //             EdgeInsets
+  //                                                 //                 .zero,
+  //                                                 //         shape: RoundedRectangleBorder(
+  //                                                 //             borderRadius:
+  //                                                 //                 BorderRadius.circular(10 *
+  //                                                 //                     SizeConfig
+  //                                                 //                         .widthMultiplier!)),
+  //                                                 //         title: Column(
+  //                                                 //           crossAxisAlignment:
+  //                                                 //               CrossAxisAlignment
+  //                                                 //                   .start,
+  //                                                 //           mainAxisSize:
+  //                                                 //               MainAxisSize
+  //                                                 //                   .min,
+  //                                                 //           children: [
+  //                                                 //             CustomSizedBox(
+  //                                                 //                 height: 10 *
+  //                                                 //                     SizeConfig
+  //                                                 //                         .heightMultiplier!),
+  //                                                 //             Padding(
+  //                                                 //               padding: EdgeInsets.only(
+  //                                                 //                   left: 16 *
+  //                                                 //                       SizeConfig.widthMultiplier!),
+  //                                                 //               child: Text(
+  //                                                 //                 "Do_you_want_to_cancel_this_ride"
+  //                                                 //                     .tr,
+  //                                                 //                 style: AppTextStyle
+  //                                                 //                     .text14Black0000W400,
+  //                                                 //                 textAlign:
+  //                                                 //                     TextAlign
+  //                                                 //                         .start,
+  //                                                 //               ),
+  //                                                 //             ),
+  //                                                 //             SizedBox(
+  //                                                 //                 height: 10 *
+  //                                                 //                     SizeConfig
+  //                                                 //                         .heightMultiplier!),
+  //                                                 //             Row(
+  //                                                 //               mainAxisAlignment:
+  //                                                 //                   MainAxisAlignment
+  //                                                 //                       .spaceBetween,
+  //                                                 //               children: [
+  //                                                 //                 CustomOutlineButton(
+  //                                                 //                   borderRadius:
+  //                                                 //                       5 * SizeConfig.widthMultiplier!,
+  //                                                 //                   width: 90 *
+  //                                                 //                       SizeConfig.widthMultiplier!,
+  //                                                 //                   height: 30 *
+  //                                                 //                       SizeConfig.heightMultiplier!,
+  //                                                 //                   borderColor:
+  //                                                 //                       AppColors.kBlackTextColor,
+  //                                                 //                   titleColor:
+  //                                                 //                       AppColors.kBlackTextColor,
+  //                                                 //                   title: "confirm"
+  //                                                 //                       .tr,
+  //                                                 //                   isLoading: state
+  //                                                 //                       .cancelDriverMutateRideStatus
+  //                                                 //                       .isLoading,
+  //                                                 //                   buttonIsEnabled:
+  //                                                 //                       acceptedRide?.cancelRide ==
+  //                                                 //                           true,
+  //                                                 //                   onTap:
+  //                                                 //                       () async {
+  //                                                 //                     bool? status = await canceMutateHireDriverRides(
+  //                                                 //                         bookedFor: "book_ride",
+  //                                                 //                         tripId: acceptedRide?.tripId ?? '',
+  //                                                 //                         rateID: acceptedRide?.price?.id ?? "",
+  //                                                 //                         rideID: acceptedRide?.rideId ?? '',
+  //                                                 //                         rideStatus: RideStatus.cancel,
+  //                                                 //                         userDeviceToken: acceptedRide?.user?.deviceToken ?? '',
+  //                                                 //                         userAmount: acceptedRide?.payment?.amount ?? '',
+  //                                                 //                         userCurrency: acceptedRide?.payment?.currency ?? '',
+  //                                                 //                         userMode: acceptedRide?.payment?.mode ?? '',
+  //                                                 //                         userPaymentStatus: acceptedRide?.payment?.status ?? '',
+  //                                                 //                         mutationReason: '');
+  //                                                 //                     if (status ==
+  //                                                 //                         true) {
+  //                                                 //                       await getUpcomingOnTripRideData();
+  //                                                 //                       AnywhereDoor.pop(context);
+  //                                                 //                     }
+  //                                                 //                   },
+  //                                                 //                 ),
+  //                                                 //                 CustomOutlineButton(
+  //                                                 //                   titleColor:
+  //                                                 //                       AppColors.kRed1,
+  //                                                 //                   borderColor:
+  //                                                 //                       AppColors.kRed1,
+  //                                                 //                   borderRadius:
+  //                                                 //                       5 * SizeConfig.widthMultiplier!,
+  //                                                 //                   width: 90 *
+  //                                                 //                       SizeConfig.widthMultiplier!,
+  //                                                 //                   height: 30 *
+  //                                                 //                       SizeConfig.heightMultiplier!,
+  //                                                 //                   title: "cancel"
+  //                                                 //                       .tr,
+  //                                                 //                   onTap:
+  //                                                 //                       () {
+  //                                                 //                     AnywhereDoor.pop(
+  //                                                 //                         context);
+  //                                                 //                   },
+  //                                                 //                 ),
+  //                                                 //               ],
+  //                                                 //             ),
+  //                                                 //             SizedBox(
+  //                                                 //                 height: 20 *
+  //                                                 //                     SizeConfig
+  //                                                 //                         .heightMultiplier!),
+  //                                                 //           ],
+  //                                                 //         ),
+  //                                                 //       );
+  //                                                 //     });
+  //                                               },
+  //                                               wantMargin: false,
+  //                                               titleColor:
+  //                                                   AppColors.kBlackTextColor,
+  //                                               borderColor:
+  //                                                   AppColors.kGreen00996,
+  //                                               height:
+  //                                                   40 *
+  //                                                   SizeConfig
+  //                                                       .heightMultiplier!,
+  //                                               borderRadius:
+  //                                                   10 *
+  //                                                   SizeConfig.widthMultiplier!,
+  //                                               title: "cancel".tr,
+  //                                               buttonIsEnabled:
+  //                                                   acceptedRide?.cancelRide ==
+  //                                                   true,
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                       ],
+  //                                     ),
+  //                                   ),
+  //                                 ),
+  //                               ],
+  //                             ),
+  //                           );
+  //                         }),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ],
+  //               );
+  //             },
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   void cancelRideUpComingConfirmationPop({
     required BuildContext context,
