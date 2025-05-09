@@ -3,15 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
-import 'package:travelx_driver/shared/routes/navigator.dart';
 import 'package:travelx_driver/shared/utils/enums/common_enums.dart';
 import 'package:travelx_driver/user/trip/equatable/trip_equatable.dart';
 import 'package:travelx_driver/user/trip/models/trip_filter_model.dart'
     as filter;
 import 'package:travelx_driver/user/trip/widgets/trip_card.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../home/bloc/home_cubit.dart';
 import '../../../shared/constants/app_colors/app_colors.dart';
@@ -20,7 +18,6 @@ import '../../../shared/constants/imagePath/image_paths.dart';
 import '../../../shared/utils/image_loader/image_loader.dart';
 import '../../../shared/utils/utilities.dart';
 import '../../../shared/widgets/custom_sized_box/custom_sized_box.dart';
-import '../../../shared/widgets/ride_back_button/ride_back_button.dart';
 import '../../../shared/widgets/size_config/size_config.dart';
 import '../bloc/trip_cubit.dart';
 import '../models/trip_single_model.dart';
@@ -83,35 +80,44 @@ class _UserTripScreenState extends State<UserTripScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20 * SizeConfig.widthMultiplier!,
-                  vertical: 34 * SizeConfig.widthMultiplier!),
-              child: Row(
-                children: [
-                  RideBackButton(
-                    padding: EdgeInsets.zero,
-                    onTap: () {
-                      AnywhereDoor.pop(context);
-                      MainHomeCubit().getRidesMatrix();
-                    },
+            CustomSizedBox(height: 40),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+
+              children: [
+                Text(
+                  "trip".tr,
+                  style: TextStyle(
+                    color: AppColors.kBlackTextColor,
+                    fontSize: 20 * SizeConfig.widthMultiplier!,
+                    fontWeight: FontWeight.w700,
                   ),
-                  Expanded(
-                    flex: 10,
-                    child: Center(
-                      child: Text(
-                        "trip".tr,
-                        style: TextStyle(
-                            color: AppColors.kBlackTextColor,
-                            fontSize: 20 * SizeConfig.widthMultiplier!,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                ],
-              ),
+                ),
+                // RideBackButton(
+                //   padding: EdgeInsets.zero,
+                //   onTap: () {
+                //     AnywhereDoor.pop(context);
+                //     MainHomeCubit().getRidesMatrix();
+                //   },
+                // ),
+                // Expanded(
+                //   flex: 10,
+                //   child: Center(
+                //     child: Text(
+                //       "trip".tr,
+                //       style: TextStyle(
+                //           color: AppColors.kBlackTextColor,
+                //           fontSize: 20 * SizeConfig.widthMultiplier!,
+                //           fontWeight: FontWeight.w700),
+                //     ),
+                //   ),
+                // ),
+                // const Spacer(),
+              ],
             ),
+            CustomSizedBox(height: 10),
+
 
             BlocBuilder<TripEquatableCubit, TripEquatableState>(
               builder: (context, state) {
@@ -119,262 +125,285 @@ class _UserTripScreenState extends State<UserTripScreen>
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 6.0 * SizeConfig.widthMultiplier!,
-                          right: 6 * SizeConfig.widthMultiplier!),
+                        left: 6.0 * SizeConfig.widthMultiplier!,
+                        right: 6 * SizeConfig.widthMultiplier!,
+                      ),
                       child: SizedBox(
                         child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: AppColors
-                                  .kWhite, //background color of dropdown button
-                              border: Border.all(
-                                  color: AppColors.kblueDF0000,
-                                  width: 2 *
-                                      SizeConfig
-                                          .widthMultiplier!), //border of dropdown button
-                              borderRadius: BorderRadius.circular(
-                                  12 * SizeConfig.widthMultiplier!),
+                          decoration: BoxDecoration(
+                            color:
+                                AppColors
+                                    .kWhite, //background color of dropdown button
+                            border: Border.all(
+                              color: AppColors.kblueDF0000,
+                              width: 2 * SizeConfig.widthMultiplier!,
+                            ), //border of dropdown button
+                            borderRadius: BorderRadius.circular(
+                              12 * SizeConfig.widthMultiplier!,
                             ),
-                            child: DropdownButton(
-                              isExpanded: true,
-                              value: selectName,
-                              hint: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 6.0),
-                                    child: Text(
-                                      EarningActivity
-                                          .today.getEarningActivityString,
-                                      style: TextStyle(
-                                          color: AppColors.kblueDF0000,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize:
-                                              16 * SizeConfig.textMultiplier!),
+                          ),
+                          child: DropdownButton(
+                            isExpanded: true,
+                            value: selectName,
+                            hint: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 6.0),
+                                  child: Text(
+                                    EarningActivity
+                                        .today
+                                        .getEarningActivityString,
+                                    style: TextStyle(
+                                      color: AppColors.kblueDF0000,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16 * SizeConfig.textMultiplier!,
                                     ),
                                   ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    color: AppColors.kblueDF0000,
-                                    size: 20 * SizeConfig.imageSizeMultiplier!,
-                                  ),
-                                ],
-                              ),
-
-                              items: [
-                                DropdownMenuItem(
-                                  value: EarningActivity
-                                      .today.getEarningActivityString,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          EarningActivity
-                                              .today.getEarningActivityString,
-                                          style: TextStyle(
-                                              color: AppColors.kblueDF0000,
-                                              fontSize: 16 *
-                                                  SizeConfig.textMultiplier!,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.kblueDF0000,
-                                        size: 20 *
-                                            SizeConfig.imageSizeMultiplier!,
-                                      ),
-                                    ],
-                                  ),
                                 ),
-                                DropdownMenuItem(
-                                  value: EarningActivity
-                                      .yesterday.getEarningActivityString,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          EarningActivity.yesterday
-                                              .getEarningActivityString,
-                                          style: TextStyle(
-                                              color: AppColors.kblueDF0000,
-                                              fontSize: 16 *
-                                                  SizeConfig.textMultiplier!,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.kblueDF0000,
-                                        size: 20 *
-                                            SizeConfig.imageSizeMultiplier!,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: EarningActivity
-                                      .lastweek.getEarningActivityString,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          EarningActivity.lastweek
-                                              .getEarningActivityString,
-                                          style: TextStyle(
-                                              color: AppColors.kblueDF0000,
-                                              fontSize: 16 *
-                                                  SizeConfig.textMultiplier!,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.kblueDF0000,
-                                        size: 20 *
-                                            SizeConfig.imageSizeMultiplier!,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: EarningActivity
-                                      .thisWeek.getEarningActivityString,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          EarningActivity.thisWeek
-                                              .getEarningActivityString,
-                                          style: TextStyle(
-                                              color: AppColors.kblueDF0000,
-                                              fontSize: 16 *
-                                                  SizeConfig.textMultiplier!,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.kblueDF0000,
-                                        size: 20 *
-                                            SizeConfig.imageSizeMultiplier!,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: EarningActivity
-                                      .lastmonth.getEarningActivityString,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          EarningActivity.lastmonth
-                                              .getEarningActivityString,
-                                          style: TextStyle(
-                                              color: AppColors.kblueDF0000,
-                                              fontSize: 16 *
-                                                  SizeConfig.textMultiplier!,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.kblueDF0000,
-                                        size: 20 *
-                                            SizeConfig.imageSizeMultiplier!,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: EarningActivity
-                                      .thisMonth.getEarningActivityString,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          EarningActivity.thisMonth
-                                              .getEarningActivityString,
-                                          style: TextStyle(
-                                              color: AppColors.kblueDF0000,
-                                              fontSize: 16 *
-                                                  SizeConfig.textMultiplier!,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.kblueDF0000,
-                                        size: 20 *
-                                            SizeConfig.imageSizeMultiplier!,
-                                      ),
-                                    ],
-                                  ),
+                                Spacer(),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: AppColors.kblueDF0000,
+                                  size: 20 * SizeConfig.imageSizeMultiplier!,
                                 ),
                               ],
-                              onChanged: (value) {
-                                //get value when changed
-                                setState(() {
-                                  selectName = value;
-                                });
+                            ),
 
-                                tripEquatableCubit.getSingleTripData(
-                                    dateFilter: selectName,
-                                    status: state.selectedFilter);
-                              },
+                            items: [
+                              DropdownMenuItem(
+                                value:
+                                    EarningActivity
+                                        .today
+                                        .getEarningActivityString,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        EarningActivity
+                                            .today
+                                            .getEarningActivityString,
+                                        style: TextStyle(
+                                          color: AppColors.kblueDF0000,
+                                          fontSize:
+                                              16 * SizeConfig.textMultiplier!,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: AppColors.kblueDF0000,
+                                      size:
+                                          20 * SizeConfig.imageSizeMultiplier!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value:
+                                    EarningActivity
+                                        .yesterday
+                                        .getEarningActivityString,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        EarningActivity
+                                            .yesterday
+                                            .getEarningActivityString,
+                                        style: TextStyle(
+                                          color: AppColors.kblueDF0000,
+                                          fontSize:
+                                              16 * SizeConfig.textMultiplier!,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: AppColors.kblueDF0000,
+                                      size:
+                                          20 * SizeConfig.imageSizeMultiplier!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value:
+                                    EarningActivity
+                                        .lastweek
+                                        .getEarningActivityString,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        EarningActivity
+                                            .lastweek
+                                            .getEarningActivityString,
+                                        style: TextStyle(
+                                          color: AppColors.kblueDF0000,
+                                          fontSize:
+                                              16 * SizeConfig.textMultiplier!,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: AppColors.kblueDF0000,
+                                      size:
+                                          20 * SizeConfig.imageSizeMultiplier!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value:
+                                    EarningActivity
+                                        .thisWeek
+                                        .getEarningActivityString,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        EarningActivity
+                                            .thisWeek
+                                            .getEarningActivityString,
+                                        style: TextStyle(
+                                          color: AppColors.kblueDF0000,
+                                          fontSize:
+                                              16 * SizeConfig.textMultiplier!,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: AppColors.kblueDF0000,
+                                      size:
+                                          20 * SizeConfig.imageSizeMultiplier!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value:
+                                    EarningActivity
+                                        .lastmonth
+                                        .getEarningActivityString,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        EarningActivity
+                                            .lastmonth
+                                            .getEarningActivityString,
+                                        style: TextStyle(
+                                          color: AppColors.kblueDF0000,
+                                          fontSize:
+                                              16 * SizeConfig.textMultiplier!,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: AppColors.kblueDF0000,
+                                      size:
+                                          20 * SizeConfig.imageSizeMultiplier!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value:
+                                    EarningActivity
+                                        .thisMonth
+                                        .getEarningActivityString,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        EarningActivity
+                                            .thisMonth
+                                            .getEarningActivityString,
+                                        style: TextStyle(
+                                          color: AppColors.kblueDF0000,
+                                          fontSize:
+                                              16 * SizeConfig.textMultiplier!,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: AppColors.kblueDF0000,
+                                      size:
+                                          20 * SizeConfig.imageSizeMultiplier!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              //get value when changed
+                              setState(() {
+                                selectName = value;
+                              });
 
-                              iconEnabledColor: AppColors.kWhite, //Icon color
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16 * SizeConfig.textMultiplier!),
+                              tripEquatableCubit.getSingleTripData(
+                                dateFilter: selectName,
+                                status: state.selectedFilter,
+                              );
+                            },
 
-                              dropdownColor:
-                                  AppColors.kWhite, //dropdown background color
-                              underline: Container(), //remove underline
-                            )),
+                            iconEnabledColor: AppColors.kWhite, //Icon color
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16 * SizeConfig.textMultiplier!,
+                            ),
+
+                            dropdownColor:
+                                AppColors.kWhite, //dropdown background color
+                            underline: Container(), //remove underline
+                          ),
+                        ),
                       ),
                     ),
-                    CustomSizedBox(
-                      height: 20,
-                    ),
+                    CustomSizedBox(height: 20),
                     if (state.getAllTripDataApiStatus.success)
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         padding: EdgeInsets.only(
-                            left: 20 * SizeConfig.widthMultiplier!,
-                            right: 20 * SizeConfig.widthMultiplier!),
+                          left: 20 * SizeConfig.widthMultiplier!,
+                          right: 20 * SizeConfig.widthMultiplier!,
+                        ),
                         child: Row(
                           children: [
                             ...List.generate(
@@ -391,8 +420,9 @@ class _UserTripScreenState extends State<UserTripScreen>
                                   onTap: () {
                                     statusIndex = index;
                                     setState(() {});
-                                    tripEquatableCubit
-                                        .changeOrderFilter(allStatus[index]);
+                                    tripEquatableCubit.changeOrderFilter(
+                                      allStatus[index],
+                                    );
                                   },
                                 ),
                               ),
@@ -406,8 +436,9 @@ class _UserTripScreenState extends State<UserTripScreen>
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: 20 * SizeConfig.widthMultiplier!,
-                              right: 20 * SizeConfig.widthMultiplier!),
+                            left: 20 * SizeConfig.widthMultiplier!,
+                            right: 20 * SizeConfig.widthMultiplier!,
+                          ),
                           child: Row(
                             children: [
                               ...List.generate(allStatus.length, (index) {
@@ -418,9 +449,11 @@ class _UserTripScreenState extends State<UserTripScreen>
                                     width: SizeConfig.widthMultiplier! * 100,
                                     height: SizeConfig.heightMultiplier! * 30,
                                     decoration: BoxDecoration(
-                                        color: containerColor,
-                                        borderRadius: BorderRadius.circular(
-                                            10 * SizeConfig.widthMultiplier!)),
+                                      color: containerColor,
+                                      borderRadius: BorderRadius.circular(
+                                        10 * SizeConfig.widthMultiplier!,
+                                      ),
+                                    ),
                                   ),
                                 );
                               }),
@@ -428,57 +461,57 @@ class _UserTripScreenState extends State<UserTripScreen>
                           ),
                         ),
                       ),
-                    CustomSizedBox(
-                      height: 20,
-                    ),
+                    CustomSizedBox(height: 20),
                     if (state.tripAllData?.isNotEmpty == true)
                       Wrap(
-                        children: List.generate(state.tripAllData?.length ?? 0,
-                            (index) {
-                          final getData = state.tripAllData?[index];
-                          return TripRideCard(
-                            selectedIndex: selectedIndex ?? 0,
-                            manualRide: getData,
-                            isSelected: selectedIndex == index,
-                            tripStatus: state.selectedFilter,
-                            onTapCard: () {
-                              selectedIndex = index;
-                              setState(() {});
-                            },
-                            cancelOnTap: () {
-                              selectedIndex = index;
-                              setState(() {});
-                              tripEquatableCubit.cancelRideConfirmationPop(
+                        children: List.generate(
+                          state.tripAllData?.length ?? 0,
+                          (index) {
+                            final getData = state.tripAllData?[index];
+                            return TripRideCard(
+                              selectedIndex: selectedIndex ?? 0,
+                              manualRide: getData,
+                              isSelected: selectedIndex == index,
+                              tripStatus: state.selectedFilter,
+                              onTapCard: () {
+                                selectedIndex = index;
+                                setState(() {});
+                              },
+                              cancelOnTap: () {
+                                selectedIndex = index;
+                                setState(() {});
+                                tripEquatableCubit.cancelRideConfirmationPop(
                                   context: context,
-                                  rideId: state.tripAllData?[selectedIndex ?? 0]
+                                  rideId:
+                                      state
+                                          .tripAllData?[selectedIndex ?? 0]
                                           .rideId ??
                                       "",
-                                  status: state.selectedFilter);
-                            },
-                            assignTabOnTap: () {
-                              selectedIndex = index;
-                              setState(() {});
-                            },
-                          );
-                        }),
+                                  status: state.selectedFilter,
+                                );
+                              },
+                              assignTabOnTap: () {
+                                selectedIndex = index;
+                                setState(() {});
+                              },
+                            );
+                          },
+                        ),
                       )
                     else
                       Column(
                         children: [
-                          CustomSizedBox(
-                            height: 20,
-                          ),
+                          CustomSizedBox(height: 20),
                           ImageLoader.svgPictureAssetImage(
-                              imagePath: ImagePath.noDriver),
-                          CustomSizedBox(
-                            height: 20,
+                            imagePath: ImagePath.noDriver,
                           ),
+                          CustomSizedBox(height: 20),
                           Text(
                             "no_data_available".tr,
                             style: AppTextStyle.text14black0000W300,
-                          )
+                          ),
                         ],
-                      )
+                      ),
                   ],
                 );
               },
@@ -2639,9 +2672,9 @@ class _UserTripScreenState extends State<UserTripScreen>
             height: 32 * SizeConfig.widthMultiplier!,
             decoration: BoxDecoration(
               border: Border.all(
-                  color: isSelected
-                      ? AppColors.kBlue1A73E8
-                      : AppColors.kGreen198F52),
+                color:
+                    isSelected ? AppColors.kBlue1A73E8 : AppColors.kGreen198F52,
+              ),
               borderRadius: BorderRadius.circular(
                 10 * SizeConfig.widthMultiplier!,
               ),
@@ -2653,20 +2686,20 @@ class _UserTripScreenState extends State<UserTripScreen>
                   Text(
                     title ?? "",
                     style: AppTextStyle.text14Black0000W400?.copyWith(
-                      color: isSelected
-                          ? AppColors.kWhite
-                          : AppColors.kGreen198F52,
+                      color:
+                          isSelected
+                              ? AppColors.kWhite
+                              : AppColors.kGreen198F52,
                     ),
                   ),
-                  CustomSizedBox(
-                    width: 5,
-                  ),
+                  CustomSizedBox(width: 5),
                   Text(
                     "(${total.toString()})",
                     style: AppTextStyle.text14Black0000W400?.copyWith(
-                      color: isSelected
-                          ? AppColors.kWhite
-                          : AppColors.kGreen198F52,
+                      color:
+                          isSelected
+                              ? AppColors.kWhite
+                              : AppColors.kGreen198F52,
                     ),
                   ),
                 ],

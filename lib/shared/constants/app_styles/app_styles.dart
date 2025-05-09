@@ -4,6 +4,36 @@ import '../../widgets/size_config/size_config.dart';
 import '../app_colors/app_colors.dart';
 
 class AppTextStyle {
+  static TextStyle? text14kkBlue053688W300 = TextStyle(
+    color: AppColors.kBlue053688,
+    fontWeight: FontWeight.w300,
+    fontSize: 14 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text35kkBlue053688W700 = TextStyle(
+    color: AppColors.kBlue053688,
+    fontWeight: FontWeight.w700,
+    fontSize: 30 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text14kBlue4476D9W500 = TextStyle(
+    color: AppColors.kBlue4476D9,
+    fontWeight: FontWeight.w500,
+    fontSize: 14 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text10black0000W300 = TextStyle(
+    color: AppColors.kBlackTextColor,
+    fontWeight: FontWeight.w300,
+    fontSize: 10 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text12kGrey909093W400 = TextStyle(
+    color: AppColors.kGrey909093,
+    fontWeight: FontWeight.w400,
+    fontSize: 12 * SizeConfig.textMultiplier!,
+  );
+  static TextStyle? text24black0000W400 = TextStyle(
+    color: AppColors.kBlackTextColor,
+    fontWeight: FontWeight.w400,
+    fontSize: 24 * SizeConfig.textMultiplier!,
+  );
   static TextStyle? text28Black0000W700 = TextStyle(
     color: AppColors.kBlackTextColor,
     fontWeight: FontWeight.w700,
@@ -311,8 +341,8 @@ class AppTextStyle {
     color: AppColors.kBlackTextColor,
     fontWeight: FontWeight.w600,
     fontSize: 16 * SizeConfig.textMultiplier!,
-
-  ); static TextStyle? text16kBlack272727W600 = TextStyle(
+  );
+  static TextStyle? text16kBlack272727W600 = TextStyle(
     color: AppColors.kBlack272727,
     fontWeight: FontWeight.w600,
     fontSize: 16 * SizeConfig.textMultiplier!,

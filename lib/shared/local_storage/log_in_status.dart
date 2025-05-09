@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelx_driver/user/account/enitity/profile_model.dart';
 
 import '../../home/models/ride_response_model.dart';
@@ -40,14 +41,23 @@ class LogInStatus {
     storage.write(key: 'country_code', value: countryCode);
   }
 
+  Future<String?> driverStatus() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+
+    String? userId;
+    userId = storage.getString('driverStatus');
+    if (userId != null) {
+      userId = userId;
+    }
+    return userId;
+  }
+
   Future<void> setDeviceTokenFireBase({required String deviceToken}) async {
     getDeviceToken = deviceToken;
     storage.write(key: 'device_token', value: deviceToken);
   }
 
-  Future<void> savedPlayerId(
-    String playerId,
-  ) async {
+  Future<void> savedPlayerId(String playerId) async {
     getPlayerId = playerId;
     storage.write(key: 'player_id', value: playerId);
   }
@@ -141,9 +151,7 @@ class LogInStatus {
     }
   }
 
-  Future<void> savedDeviceToken(
-    String deviceToken,
-  ) async {
+  Future<void> savedDeviceToken(String deviceToken) async {
     getDeviceToken = deviceToken;
     storage.write(key: 'device_token', value: deviceToken);
   }
@@ -366,12 +374,15 @@ class LogInStatus {
 
   ///user profile data section
 
-  static Future<void> setUserProfileFirstName(
-      {String? profileFirstName}) async {
+  static Future<void> setUserProfileFirstName({
+    String? profileFirstName,
+  }) async {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (profileFirstName != null) {
       storage.write(
-          key: 'profile_first_name', value: profileFirstName.toString());
+        key: 'profile_first_name',
+        value: profileFirstName.toString(),
+      );
     }
   }
 
@@ -457,7 +468,9 @@ class LogInStatus {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (vehicleCategory != null) {
       storage.write(
-          key: 'profile_vehicle_category', value: vehicleCategory.toString());
+        key: 'profile_vehicle_category',
+        value: vehicleCategory.toString(),
+      );
     }
   }
 
@@ -465,7 +478,9 @@ class LogInStatus {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (vehicleModel != null) {
       storage.write(
-          key: 'profile_vehicle_model', value: vehicleModel.toString());
+        key: 'profile_vehicle_model',
+        value: vehicleModel.toString(),
+      );
     }
   }
 
@@ -473,7 +488,9 @@ class LogInStatus {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (isActingDriver != null) {
       storage.write(
-          key: 'profile_acting_driver', value: isActingDriver.toString());
+        key: 'profile_acting_driver',
+        value: isActingDriver.toString(),
+      );
     }
   }
 
@@ -488,7 +505,9 @@ class LogInStatus {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (vehicleNumber != null) {
       storage.write(
-          key: 'profile_vehicle_number', value: vehicleNumber.toString());
+        key: 'profile_vehicle_number',
+        value: vehicleNumber.toString(),
+      );
     }
   }
 
@@ -496,7 +515,9 @@ class LogInStatus {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (profileLastName != null) {
       storage.write(
-          key: 'profile_last_name', value: profileLastName.toString());
+        key: 'profile_last_name',
+        value: profileLastName.toString(),
+      );
     }
   }
 
@@ -531,8 +552,9 @@ class LogInStatus {
     return profileEmail;
   }
 
-  static Future<void> setUserProfileImageData(
-      {String? profileImageData}) async {
+  static Future<void> setUserProfileImageData({
+    String? profileImageData,
+  }) async {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (profileImageData != null) {
       storage.write(key: 'profile_image', value: profileImageData.toString());
@@ -563,13 +585,15 @@ class LogInStatus {
     return profileImageData;
   }
 
-  static Future<void> setUserProfileAccountStatus(
-      {String? profileAccountStatus}) async {
+  static Future<void> setUserProfileAccountStatus({
+    String? profileAccountStatus,
+  }) async {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (profileAccountStatus != null) {
       storage.write(
-          key: 'profile_account_status',
-          value: profileAccountStatus.toString());
+        key: 'profile_account_status',
+        value: profileAccountStatus.toString(),
+      );
     }
   }
 
@@ -585,13 +609,15 @@ class LogInStatus {
     return profileAccountStatus;
   }
 
-  static Future<void> setUserProfileAccountRating(
-      {String? profileAccountRating}) async {
+  static Future<void> setUserProfileAccountRating({
+    String? profileAccountRating,
+  }) async {
     FlutterSecureStorage storage = const FlutterSecureStorage();
     if (profileAccountRating != null) {
       storage.write(
-          key: 'profile_account_rating',
-          value: profileAccountRating.toString());
+        key: 'profile_account_rating',
+        value: profileAccountRating.toString(),
+      );
     }
   }
 

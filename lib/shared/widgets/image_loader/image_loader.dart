@@ -17,89 +17,96 @@ class ImageLoader {
     if (imagePath != null) {
       return wantScale == true
           ? Transform.scale(
-              scale: scale,
-              child: Lottie.asset(imagePath,
-                  frameRate: frameRate,
-                  filterQuality: filterQuality,
-                  height: height,
-                  width: width),
-            )
-          : Lottie.asset(imagePath,
+            scale: scale,
+            child: Lottie.asset(
+              imagePath,
               frameRate: frameRate,
               filterQuality: filterQuality,
               height: height,
-              width: width);
+              width: width,
+            ),
+          )
+          : Lottie.asset(
+            imagePath,
+            frameRate: frameRate,
+            filterQuality: filterQuality,
+            height: height,
+            width: width,
+          );
     }
 
     return Container();
   }
 
   // Network Lottie
-  static Widget networkLottie(
-      {String? imagePath,
-      FrameRate? frameRate,
-      FilterQuality? filterQuality,
-      double? height,
-      double? width}) {
+  static Widget networkLottie({
+    String? imagePath,
+    FrameRate? frameRate,
+    FilterQuality? filterQuality,
+    double? height,
+    double? width,
+  }) {
     if (imagePath != null) {
-      return Lottie.network(imagePath,
-          frameRate: frameRate,
-          filterQuality: filterQuality,
-          height: height,
-          width: width);
+      return Lottie.network(
+        imagePath,
+        frameRate: frameRate,
+        filterQuality: filterQuality,
+        height: height,
+        width: width,
+      );
     }
 
     return Container();
   }
 
   //Image Asset
-  static Widget assetImage(
-      {String? imagePath,
-      double? width,
-      double? height,
-      double? scale,
-      bool? wantsScale = false}) {
+  static Widget assetImage({
+    String? imagePath,
+    double? width,
+    double? height,
+    double? scale,
+    bool? wantsScale = false,
+    Color? color,
+    FilterQuality? filterQuality,
+  }) {
     if (imagePath != null) {
       return wantsScale == true
           ? Transform.scale(
-              scale: scale,
-              child: Image.asset(
-                imagePath,
-                width: width,
-                height: height,
-              ))
-          : Image.asset(
+            scale: scale,
+            child: Image.asset(
               imagePath,
               width: width,
               height: height,
-            );
+              color: color,
+            ),
+          )
+          : Image.asset(
+            imagePath,
+            width: width,
+            height: height,
+            color: color,
+            filterQuality: filterQuality ?? FilterQuality.high,
+          );
     }
 
     return Container();
   }
-
   //Image Network
 
-  static Widget networkAssetImage(
-      {String? imagePath,
-      double? width,
-      double? height,
-      double? scale,
-      bool? wantsScale = false}) {
+  static Widget networkAssetImage({
+    String? imagePath,
+    double? width,
+    double? height,
+    double? scale,
+    bool? wantsScale = false,
+  }) {
     if (imagePath != null) {
       return wantsScale == true
           ? Transform.scale(
-              scale: scale,
-              child: Image.network(
-                imagePath,
-                width: width,
-                height: height,
-              ))
-          : Image.network(
-              imagePath,
-              width: width,
-              height: height,
-            );
+            scale: scale,
+            child: Image.network(imagePath, width: width, height: height),
+          )
+          : Image.network(imagePath, width: width, height: height);
     }
 
     return Container();
@@ -127,17 +134,20 @@ class ImageLoader {
   //   return Container();
   // }
 
-  static ImageProvider svgImageProvider(
-      {required String imagePath,
-      double? scale,
-      Size? size,
-      Color? color,
-      svg_provider.SvgSource? source}) {
-    return svg_provider.Svg(imagePath,
-        scale: scale,
-        size: size,
-        color: color,
-        source: source ?? svg_provider.SvgSource.asset);
+  static ImageProvider svgImageProvider({
+    required String imagePath,
+    double? scale,
+    Size? size,
+    Color? color,
+    svg_provider.SvgSource? source,
+  }) {
+    return svg_provider.Svg(
+      imagePath,
+      scale: scale,
+      size: size,
+      color: color,
+      source: source ?? svg_provider.SvgSource.asset,
+    );
   }
 
   static ImageProvider networkImageProvider({
@@ -145,10 +155,7 @@ class ImageLoader {
     double? scale,
     Color? color,
   }) {
-    return Image.network(
-      imagePath,
-      color: color,
-    ).image;
+    return Image.network(imagePath, color: color).image;
   }
 
   static ImageProvider networkImage({
@@ -156,79 +163,81 @@ class ImageLoader {
     double? scale,
     Color? color,
   }) {
-    return NetworkImage(
+    return NetworkImage(imagePath, scale: scale ?? 1);
+  }
+
+  static ImageProvider svgNetworkImageProvider({
+    required String imagePath,
+    double? scale,
+    Size? size,
+    Color? color,
+    svg_provider.SvgSource? source,
+  }) {
+    return svg_provider.Svg(
       imagePath,
-      scale: scale ?? 1,
+      scale: scale,
+      size: size,
+      color: color,
+      source: source ?? svg_provider.SvgSource.network,
     );
   }
 
-  static ImageProvider svgNetworkImageProvider(
-      {required String imagePath,
-      double? scale,
-      Size? size,
-      Color? color,
-      svg_provider.SvgSource? source}) {
-    return svg_provider.Svg(imagePath,
-        scale: scale,
-        size: size,
-        color: color,
-        source: source ?? svg_provider.SvgSource.network);
-  }
-
-//Svg Picture asset
-  static Widget svgPictureAssetImage(
-      {String? imagePath,
-      double? width,
-      double? height,
-      Color? color,
-      double? scale,
-      bool? wantsScale = false}) {
+  //Svg Picture asset
+  static Widget svgPictureAssetImage({
+    String? imagePath,
+    double? width,
+    double? height,
+    Color? color,
+    double? scale,
+    bool? wantsScale = false,
+  }) {
     if (imagePath != null) {
       return wantsScale == true
           ? Transform.scale(
-              scale: scale,
-              child: SvgPicture.asset(
-                imagePath,
-                width: width,
-                height: height,
-                color: color,
-              ),
-            )
-          : SvgPicture.asset(
+            scale: scale,
+            child: SvgPicture.asset(
               imagePath,
               width: width,
               height: height,
               color: color,
-            );
+            ),
+          )
+          : SvgPicture.asset(
+            imagePath,
+            width: width,
+            height: height,
+            color: color,
+          );
     }
 
     return Container();
   }
 
-  static Widget svgPictureNetworkAssetImage(
-      {String? imagePath,
-      double? width,
-      double? height,
-      Color? color,
-      double? scale,
-      bool? wantsScale = false}) {
+  static Widget svgPictureNetworkAssetImage({
+    String? imagePath,
+    double? width,
+    double? height,
+    Color? color,
+    double? scale,
+    bool? wantsScale = false,
+  }) {
     if (imagePath != null) {
       return wantsScale == true
           ? Transform.scale(
-              scale: scale,
-              child: SvgPicture.network(
-                imagePath,
-                width: width,
-                height: height,
-                color: color,
-              ),
-            )
-          : SvgPicture.network(
+            scale: scale,
+            child: SvgPicture.network(
               imagePath,
               width: width,
               height: height,
               color: color,
-            );
+            ),
+          )
+          : SvgPicture.network(
+            imagePath,
+            width: width,
+            height: height,
+            color: color,
+          );
     }
 
     return Container();

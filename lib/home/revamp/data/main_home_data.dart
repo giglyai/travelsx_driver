@@ -1,12 +1,32 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travelx_driver/home/models/position_data_model.dart';
+import 'package:travelx_driver/home/models/post_userdata_params.dart' as Params;
 import 'package:travelx_driver/shared/api_client/api_client.dart';
 import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/routes/api_routes.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../hire_driver_bloc/entity/accepted_hire_ride.dart';
 
 class MainHomeData {
+  static Future<Map<String, dynamic>> getDlvyBusinessOverview({
+    required String lpId,
+    required String userId,
+    required String date,
+  }) async {
+    final response = await ApiClient().get(
+      ApiRoutes.getDlvyBusinessOverview,
+      queryParams: {
+        'lp_id': lpId,
+        'user_id': userId,
+        'user_type': AppNames.appName,
+        "date_filter": date,
+        "offset": 0,
+        "limit": 100,
+      },
+    );
+    return response as Map<String, dynamic>;
+  }
+
   static Future<Map<String, dynamic>> getRideHomeData({
     required LatLng currentPosition,
     required lpId,
@@ -22,22 +42,23 @@ class MainHomeData {
       "user_id": userId,
       "latitude": currentPosition.latitude,
       "longitude": currentPosition.longitude,
-      "user": AppNames.appName
+      "user": AppNames.appName,
     };
 
     final response = await ApiClient().getWithoutBottomSheet(
-        ApiRoutes.getDriverRideHomeData,
-        headers: requestHeaders,
-        queryParams: queryData);
+      ApiRoutes.getDriverRideHomeData,
+      headers: requestHeaders,
+      queryParams: queryData,
+    );
 
     return response as Map<String, dynamic>;
   }
 
   static Future<Map<String, dynamic>> getAppVersion() async {
-    final response = await ApiClient()
-        .getWithoutBottomSheet(ApiRoutes.appVersion, queryParams: {
-      "app_name": AppNames.appName,
-    });
+    final response = await ApiClient().getWithoutBottomSheet(
+      ApiRoutes.appVersion,
+      queryParams: {"app_name": AppNames.appName},
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -67,12 +88,10 @@ class MainHomeData {
     required String lpId,
     required String userId,
   }) async {
-    final response =
-        await ApiClient().get(ApiRoutes.getUpcomingOnTripRide, queryParams: {
-      'lp_id': lpId,
-      'user_id': userId,
-      'user': AppNames.appName,
-    });
+    final response = await ApiClient().get(
+      ApiRoutes.getUpcomingOnTripRide,
+      queryParams: {'lp_id': lpId, 'user_id': userId, 'user': AppNames.appName},
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -81,13 +100,15 @@ class MainHomeData {
     required String userId,
     required String date,
   }) async {
-    final response =
-        await ApiClient().get(ApiRoutes.getRidesMatrix, queryParams: {
-      'lp_id': lpId,
-      'user_id': userId,
-      'user': AppNames.appName,
-      "date_filter": date,
-    });
+    final response = await ApiClient().get(
+      ApiRoutes.getRidesMatrix,
+      queryParams: {
+        'lp_id': lpId,
+        'user_id': userId,
+        'user': AppNames.appName,
+        "date_filter": date,
+      },
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -132,6 +153,16 @@ class MainHomeData {
       },
     );
 
+    return response as Map<String, dynamic>;
+  }
+
+  static Future<Map<String, dynamic>> postUserData(
+    Params.PostUserDataParams params,
+  ) async {
+    final response = await ApiClient().postLocations(
+      ApiRoutes.updateUserLocation,
+      body: params.toJson(),
+    );
     return response as Map<String, dynamic>;
   }
 }

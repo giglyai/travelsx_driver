@@ -8,8 +8,6 @@ import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/home/screen/new_home_screen.dart';
 import 'package:travelx_driver/login/bloc/login_cubit.dart';
 import 'package:travelx_driver/login/bloc/login_state.dart';
-import 'package:travelx_driver/shared/constants/imagePath/jpdriver/jp_image_paths.dart';
-import 'package:travelx_driver/shared/constants/imagePath/prithavi/prithavi_image_paths.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 
 import '../../../config/config.dart';
@@ -127,7 +125,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               const Spacer(),
               if (F.appFlavor == Flavor.kurinjidriver)
                 ImageLoader.assetImage(
-                  imagePath: ImagePath.splashBmtIcon,
+                  imagePath: ImagePath.splashKurinjiIcon,
                   height: 110 * SizeConfig.heightMultiplier!,
                   width: 196 * SizeConfig.widthMultiplier!,
                 )

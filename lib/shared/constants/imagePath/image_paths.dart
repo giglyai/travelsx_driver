@@ -1,4 +1,7 @@
 class ImagePath {
+  static String mapPinIcon = 'images/location_pin_on_map 1.png';
+  static String refreshLoader = 'images/home/refresh_loader.json';
+
   static String mainLogo = 'images/common_images/main_logo_driver.png';
   static String splashScreenBack = 'images/common_images/splash_agent.png';
   static String giglyRideSplashLogo = 'images/common_images/driver_logo.png';
@@ -281,4 +284,6 @@ class ImagePath {
   static String rideTotalTime = 'images/common_images/ride_time.svg';
   static String noDriver = 'images/common_images/no_driver.svg';
   static String helpIcon = 'images/common_images/help_icon.svg';
+  static String noAdsCreateIcon =
+      'images/common_images/no_ads_created_icon.svg';
 }

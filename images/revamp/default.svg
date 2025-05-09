@@ -1,0 +1,10 @@
+<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="checkbox / default" clip-path="url(#clip0_432_339)">
+<path id="Vector" d="M16.2842 1.71577C17.0227 2.45419 17.4375 3.45571 17.4375 4.5V13.5C17.4375 14.5443 17.0227 15.5458 16.2842 16.2842C15.5458 17.0227 14.5443 17.4375 13.5 17.4375H4.5C3.45571 17.4375 2.45419 17.0227 1.71577 16.2842C0.977343 15.5458 0.5625 14.5443 0.5625 13.5V4.5C0.5625 3.45571 0.977343 2.45419 1.71577 1.71577C2.45419 0.977343 3.45571 0.5625 4.5 0.5625H13.5C14.5443 0.5625 15.5458 0.977343 16.2842 1.71577Z" stroke="#B4B4B4" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_432_339">
+<rect width="18" height="18" fill="white"/>
+</clipPath>
+</defs>
+</svg>

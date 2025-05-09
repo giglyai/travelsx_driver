@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/login/screen/login_screen/verify_otp.dart';
-import 'package:travelx_driver/shared/constants/imagePath/jpdriver/jp_image_paths.dart';
-import 'package:travelx_driver/shared/constants/imagePath/prithavi/prithavi_image_paths.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 
 import '../../../shared/constants/app_colors/app_colors.dart';
@@ -79,7 +77,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
               const Spacer(),
               if (F.appFlavor == Flavor.kurinjidriver)
                 ImageLoader.assetImage(
-                  imagePath: ImagePath.splashBmtIcon,
+                  imagePath: ImagePath.splashKurinjiIcon,
                   height: 110 * SizeConfig.heightMultiplier!,
                   width: 196 * SizeConfig.widthMultiplier!,
                 )

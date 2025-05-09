@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:travelx_driver/documents/screens/document_sceen.dart';
 import 'package:travelx_driver/documents/widgets/document_upload_screen.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/screen/hire_driver_direction_screen.dart';
-import 'package:travelx_driver/home/screen/new_home_screen.dart';
+import 'package:travelx_driver/home/revamp/screen/bottom_navigation_bar.dart';
 import 'package:travelx_driver/home/screen/ride.dart';
 import 'package:travelx_driver/login/screen/login_screen/mobile_login.dart';
 import 'package:travelx_driver/login/screen/login_screen/verify_otp.dart';
@@ -17,7 +18,6 @@ import 'package:travelx_driver/user/subscription/screen/Subscription_screen.dart
 import 'package:travelx_driver/user/vehicle/screen/add_vehicle_screen.dart';
 import 'package:travelx_driver/user/vehicle/screen/my_vehicle_screen.dart';
 import 'package:travelx_driver/user/vehicle/screen/select_vehicle.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../../home/screen/new_driver/new_user.dart';
 import '../../user/account/screen/driver_account_details/driver_account_screen.dart';
@@ -82,63 +82,84 @@ mixin GenerateRoute {
     switch (route) {
       case '/':
         return MaterialPageRoute(
-            builder: (context) => const SplashScreen(), settings: settings);
+          builder: (context) => const SplashScreen(),
+          settings: settings,
+        );
       case RouteName.homeScreen:
         return MaterialPageRoute(
-            builder: (context) => NewHomeScreen(), settings: settings);
+          builder: (context) => DriverBottomNavBar(),
+          settings: settings,
+        );
 
       case RouteName.rideScreen:
         final arguments = settings.arguments as RidesScreen;
 
         return MaterialPageRoute(
-            builder: (context) => RidesScreen(
-                  rides: arguments.rides,
-                ),
-            settings: settings);
+          builder: (context) => RidesScreen(rides: arguments.rides),
+          settings: settings,
+        );
 
       case RouteName.listRideScreen:
         final arguments = settings.arguments as ListRideScreen;
         return MaterialPageRoute(
-            builder: (context) => ListRideScreen(
-                  radiusManualRide: arguments.radiusManualRide,
-                  rideType: arguments.rideType,
-                  feature: arguments.feature,
-                ),
-            settings: settings);
+          builder:
+              (context) => ListRideScreen(
+                radiusManualRide: arguments.radiusManualRide,
+                rideType: arguments.rideType,
+                feature: arguments.feature,
+              ),
+          settings: settings,
+        );
       case RouteName.profileScreen:
         return MaterialPageRoute(
-            builder: (context) => const ProfileScreen(), settings: settings);
+          builder: (context) => const ProfileScreen(),
+          settings: settings,
+        );
       case RouteName.vehicleInfoScreen:
         return MaterialPageRoute(
-            builder: (context) => const VehicleInfoScreen(),
-            settings: settings);
+          builder: (context) => const VehicleInfoScreen(),
+          settings: settings,
+        );
       case RouteName.agencyListScreen:
         return MaterialPageRoute(
-            builder: (context) => const AgencyListScreen(), settings: settings);
+          builder: (context) => const AgencyListScreen(),
+          settings: settings,
+        );
 
       case RouteName.privacyAndPolicyScreen:
         return MaterialPageRoute(
-            builder: (context) => PrivacyAndPolicyScreen(), settings: settings);
+          builder: (context) => PrivacyAndPolicyScreen(),
+          settings: settings,
+        );
 
       case RouteName.mobileLoginScreen:
         return MaterialPageRoute(
-            builder: (context) => const MobileNumberLoginScreen(),
-            settings: settings);
+          builder: (context) => const MobileNumberLoginScreen(),
+          settings: settings,
+        );
       case RouteName.newDriverScreen:
         return MaterialPageRoute(
-            builder: (context) => const NewDriverScreen(), settings: settings);
+          builder: (context) => const NewDriverScreen(),
+          settings: settings,
+        );
 
       case RouteName.addVehicleScreen:
         return MaterialPageRoute(
-            builder: (context) => const AddVehicleScreen(), settings: settings);
+          builder: (context) => const AddVehicleScreen(),
+          settings: settings,
+        );
       case RouteName.driverVehicleMainScreen:
+        final arguments = settings.arguments as DriverVehicleScreen;
         return MaterialPageRoute(
-            builder: (context) => const DriverVehicleScreen(),
-            settings: settings);
+          builder:
+              (context) => DriverVehicleScreen(fromHome: arguments.fromHome),
+          settings: settings,
+        );
       case RouteName.selectVehicleScreen:
         return MaterialPageRoute(
-            builder: (context) => const SelectVehicleScreen(),
-            settings: settings);
+          builder: (context) => const SelectVehicleScreen(),
+          settings: settings,
+        );
 
       case RouteName.homeDrawer:
         return PageTransition(
@@ -150,94 +171,129 @@ mixin GenerateRoute {
 
       case RouteName.promotionScreen:
         return MaterialPageRoute(
-            builder: (context) => const PromotionScreen(), settings: settings);
+          builder: (context) => const PromotionScreen(),
+          settings: settings,
+        );
       case RouteName.noConnection:
         return MaterialPageRoute(
-            builder: (context) => const NoConnection(), settings: settings);
+          builder: (context) => const NoConnection(),
+          settings: settings,
+        );
       case RouteName.walletScreen:
         return MaterialPageRoute(
-            builder: (context) => const WalletScreen(), settings: settings);
+          builder: (context) => const WalletScreen(),
+          settings: settings,
+        );
       case RouteName.driverOnBoardingVehicleInfoScreen:
         final arguments =
             settings.arguments as DriverOnBoardingVehicleInfoScreen;
 
         return MaterialPageRoute(
-            builder: (context) => DriverOnBoardingVehicleInfoScreen(
-                  address: arguments.address,
-                  name: arguments.name,
-                  placeShortName: arguments.placeShortName,
-                  position: arguments.position,
-                ),
-            settings: settings);
+          builder:
+              (context) => DriverOnBoardingVehicleInfoScreen(
+                address: arguments.address,
+                name: arguments.name,
+                placeShortName: arguments.placeShortName,
+                position: arguments.position,
+              ),
+          settings: settings,
+        );
 
       case RouteName.driverAccountScreen:
         return MaterialPageRoute(
-            builder: (context) => DriverAccountScreen(), settings: settings);
+          builder: (context) => DriverAccountScreen(),
+          settings: settings,
+        );
 
       case RouteName.notificationsScreen:
         return MaterialPageRoute(
-            builder: (context) => const NotificationsScreen(),
-            settings: settings);
+          builder: (context) => const NotificationsScreen(),
+          settings: settings,
+        );
       case RouteName.shareQrScreen:
         return MaterialPageRoute(
-            builder: (context) => ShareQrScreen(), settings: settings);
+          builder: (context) => ShareQrScreen(),
+          settings: settings,
+        );
       case RouteName.subscriptionScreen:
         return MaterialPageRoute(
-            builder: (context) => const SubscriptionScreen(),
-            settings: settings);
+          builder: (context) => const SubscriptionScreen(),
+          settings: settings,
+        );
 
       case RouteName.earningsScreen:
+        final arguments = settings.arguments as Earnings;
         return MaterialPageRoute(
-            builder: (context) => const Earnings(), settings: settings);
+          builder:
+              (context) => Earnings(wantBackButton: arguments.wantBackButton),
+          settings: settings,
+        );
       case RouteName.userTripScreen:
         return MaterialPageRoute(
-            builder: (context) => const UserTripScreen(), settings: settings);
+          builder: (context) => const UserTripScreen(),
+          settings: settings,
+        );
       case RouteName.privacyPolicy:
         return MaterialPageRoute(
-            builder: (context) => PrivacyPolicy(), settings: settings);
+          builder: (context) => PrivacyPolicy(),
+          settings: settings,
+        );
       case RouteName.chooseLanguageScreen:
         return MaterialPageRoute(
-            builder: (context) => const ChooseLanguageScreen(),
-            settings: settings);
+          builder: (context) => const ChooseLanguageScreen(),
+          settings: settings,
+        );
       case RouteName.helpScreen:
         return MaterialPageRoute(
-            builder: (context) => const HelpScreen(), settings: settings);
+          builder: (context) => const HelpScreen(),
+          settings: settings,
+        );
 
       case RouteName.documentsScreen:
         return MaterialPageRoute(
-            builder: (context) => const DocumentsScreen(), settings: settings);
+          builder: (context) => const DocumentsScreen(),
+          settings: settings,
+        );
       case RouteName.documentUploadScreen:
         return MaterialPageRoute(
-            builder: (context) => const DocumentUploadScreen(),
-            settings: settings);
+          builder: (context) => const DocumentUploadScreen(),
+          settings: settings,
+        );
 
       case RouteName.hireDriverRideDirectionsScreen:
         return MaterialPageRoute(
-            builder: (context) => HireDriverRideDirectionsScreen(
-                  params: arguments as HireDriverRideDirectionsScreenParams,
-                ),
-            settings: settings);
+          builder:
+              (context) => HireDriverRideDirectionsScreen(
+                params: arguments as HireDriverRideDirectionsScreenParams,
+              ),
+          settings: settings,
+        );
 
       case RouteName.otpScreen:
         final arguments = settings.arguments as VerifyOtpScreen?;
 
         return MaterialPageRoute(
-            builder: (context) => VerifyOtpScreen(
-                  countryCode: arguments?.countryCode ?? "",
-                  mobileController: arguments?.mobileController ?? "",
-                ),
-            settings: settings);
+          builder:
+              (context) => VerifyOtpScreen(
+                countryCode: arguments?.countryCode ?? "",
+                mobileController: arguments?.mobileController ?? "",
+              ),
+          settings: settings,
+        );
 
       case RouteName.bookingScreen:
         return MaterialPageRoute(
-            builder: (context) => BookingsScreen(
-                  params: arguments as BookingsScreenParam,
-                ),
-            settings: settings);
+          builder:
+              (context) =>
+                  BookingsScreen(params: arguments as BookingsScreenParam),
+          settings: settings,
+        );
 
       default:
         return MaterialPageRoute(
-            builder: (context) => const SplashScreen(), settings: settings);
+          builder: (context) => const SplashScreen(),
+          settings: settings,
+        );
     }
   }
 }

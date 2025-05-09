@@ -1,0 +1,7 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="arrow-right-double-line">
+<rect x="0.5" y="0.5" width="33" height="33" rx="3.5" fill="#FEF6EB"/>
+<rect x="0.5" y="0.5" width="33" height="33" rx="3.5" stroke="#C7C7C7"/>
+<path id="Vector" d="M27.1492 17L18.3558 8.2066L16.3524 10.2101L23.1423 17L16.3524 23.7899L18.3558 25.7934L27.1492 17ZM19.1452 17L10.3519 8.2066L8.34839 10.2101L15.1383 17L8.34839 23.7899L10.3519 25.7934L19.1452 17Z" fill="black"/>
+</g>
+</svg>

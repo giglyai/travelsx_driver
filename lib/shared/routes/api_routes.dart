@@ -64,4 +64,6 @@ abstract class ApiRoutes {
   static String getRideFinalDetails = '${baseUrlV1}ride/total/rate';
   static String getRidesMatrix = '${baseUrlV1}rides/driver/all/q';
   static String verifyRideOtp = '${baseUrlV1}rides/otp/verify';
+  static String getDlvyBusinessOverview =
+      '${baseUrlV1}delivery/business/overview/q';
 }

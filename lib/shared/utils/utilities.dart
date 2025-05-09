@@ -3,26 +3,168 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
+import 'package:travelx_driver/shared/local_storage/user_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/app_colors/app_colors.dart';
 import '../widgets/size_config/size_config.dart';
 
 class Utils {
+  static Future<void> handlePermissions() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    await Geolocator.requestPermission();
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    Position currentPosition = await Geolocator.getCurrentPosition();
+
+    UserRepository.instance.setUserCurrentLat(currentPosition.latitude);
+    UserRepository.instance.setUserCurrentLong(currentPosition.longitude);
+
+    print(UserRepository.getLat);
+    print(UserRepository.getLong);
+    if (!serviceEnabled) {
+      // Location services are not enabled; request the user to enable them.
+      await Geolocator.openLocationSettings();
+
+      Position currentPosition = await Geolocator.getCurrentPosition();
+
+      UserRepository.instance.setUserCurrentLat(currentPosition.latitude);
+      UserRepository.instance.setUserCurrentLong(currentPosition.longitude);
+      return Future.error('Location services are disabled.');
+    }
+
+    // Check the current permission state.
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      Position currentPosition = await Geolocator.getCurrentPosition();
+
+      UserRepository.instance.setUserCurrentLat(currentPosition.latitude);
+      UserRepository.instance.setUserCurrentLong(currentPosition.longitude);
+    } else if (permission == LocationPermission.denied) {
+      // Request permissions.
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are permanently denied.
+      return Future.error('Location permissions are permanently denied.');
+    }
+
+    // Permissions granted; you can now access location.
+  }
+
+  static Future<void> handleBottomSheetPermissions({
+    required BuildContext context,
+    bool fromLogin = false,
+  }) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled; request the user to enable them.
+      await Geolocator.openLocationSettings();
+      return;
+    }
+
+    // Check the current permission state.
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      // Request permissions.
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied.
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Location permissions are denied')),
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are permanently denied.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Location permissions are permanently denied.')),
+      );
+      await Geolocator.openAppSettings();
+      return;
+    }
+
+    // Permissions granted, fetch location if not from login.
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      if (!fromLogin) {
+        try {
+          // Fetch the current location.
+          Position position = await Geolocator.getCurrentPosition(
+            locationSettings: LocationSettings(
+              accuracy: LocationAccuracy.high,
+              timeLimit: Duration(seconds: 5), // Adjust as needed
+            ),
+          );
+
+          // Update the UserRepository with the fetched location.
+          UserRepository.instance.setUserCurrentLat(position.latitude);
+          UserRepository.instance.setUserCurrentLong(position.longitude);
+          UserRepository.instance.init();
+
+          print(UserRepository.getLat);
+          print(UserRepository.getLong);
+
+          // Post the user's location to the server if needed
+          await MainHomeCubit().postUserCurrentLocation();
+        } catch (e) {
+          // Handle location fetching errors.
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error fetching location: ${e.toString()}')),
+          );
+          return;
+        }
+      }
+
+      // Dismiss the bottom sheet.
+      Navigator.pop(context);
+    } else {
+      // Handle if permissions are still denied or not granted.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Location permissions are required for the app to work.',
+          ),
+        ),
+      );
+    }
+  }
+
   static Future<LatLng> getCurrentLocation() async {
     await Geolocator.checkPermission();
     bool getData = await Geolocator.isLocationServiceEnabled();
     if (getData == false) {
       await Geolocator.openLocationSettings();
     }
-    Position currentPosition =
-        await Geolocator.getCurrentPosition(forceAndroidLocationManager: true);
+    Position currentPosition = await Geolocator.getCurrentPosition(
+      forceAndroidLocationManager: true,
+    );
     return LatLng(currentPosition.latitude, currentPosition.longitude);
   }
 
   static Future<void> openDirections({required LatLng destination}) async {
     final Uri uri = Uri.parse(
-        'google.navigation:q=${destination.latitude}, ${destination.longitude}&travelmode=driving&dir_action=navigate');
+      'google.navigation:q=${destination.latitude}, ${destination.longitude}&travelmode=driving&dir_action=navigate',
+    );
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else if (Platform.isIOS) {
@@ -53,24 +195,27 @@ class Utils {
     return Center(
       child: Padding(
         padding: EdgeInsets.only(
-            left: 20 * SizeConfig.widthMultiplier!,
-            right: 20 * SizeConfig.widthMultiplier!,
-            bottom: 2 * SizeConfig.heightMultiplier!),
+          left: 20 * SizeConfig.widthMultiplier!,
+          right: 20 * SizeConfig.widthMultiplier!,
+          bottom: 2 * SizeConfig.heightMultiplier!,
+        ),
         child: Container(
           decoration: BoxDecoration(
-              color:
-                  isSelected == true ? AppColors.kRedD32F2F : AppColors.kWhite),
+            color: isSelected == true ? AppColors.kRedD32F2F : AppColors.kWhite,
+          ),
           child: Padding(
             padding: EdgeInsets.only(
-                top: 12 * SizeConfig.heightMultiplier!,
-                bottom: 12 * SizeConfig.heightMultiplier!),
+              top: 12 * SizeConfig.heightMultiplier!,
+              bottom: 12 * SizeConfig.heightMultiplier!,
+            ),
             child: Center(
               child: Text(
                 title ?? "",
                 style: TextStyle(
-                  color: isSelected == true
-                      ? AppColors.kWhite
-                      : AppColors.kBlackTextColor,
+                  color:
+                      isSelected == true
+                          ? AppColors.kWhite
+                          : AppColors.kBlackTextColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 14 * SizeConfig.textMultiplier!,
                 ),
@@ -132,16 +277,10 @@ enum DeliveryStatus {
   pickedUp,
   arrivedAtDropOff,
   delivered,
-  ontrip
+  ontrip,
 }
 
-enum SelectRideType {
-  all,
-  oneWay,
-  round,
-  package,
-  tour,
-}
+enum SelectRideType { all, oneWay, round, package, tour }
 
 extension SelectRideTypeExtension on SelectRideType? {
   String get toValue {
@@ -189,14 +328,7 @@ extension SelectRideTypeExtension on SelectRideType? {
   }
 }
 
-enum SelectRideAvailable {
-  nearMe,
-  upTo50KM,
-  upTo100KM,
-
-  upTo500KM,
-  upTo1000KM,
-}
+enum SelectRideAvailable { nearMe, upTo50KM, upTo100KM, upTo500KM, upTo1000KM }
 
 extension SelectRideAvailableExtension on SelectRideAvailable? {
   String get toValue {
@@ -289,11 +421,7 @@ enum RideStatus {
   }
 }
 
-enum DriverStatus {
-  online,
-  offline,
-  onTrip,
-}
+enum DriverStatus { online, offline, onTrip }
 
 enum EarningActivity {
   today,
@@ -301,7 +429,7 @@ enum EarningActivity {
   thisWeek,
   thisMonth,
   lastweek,
-  lastmonth
+  lastmonth,
 }
 
 extension EarningActivityString on EarningActivity {
@@ -392,10 +520,7 @@ extension RideStatusString on RideStatus? {
   }
 }
 
-enum OnlineOfflineString {
-  online,
-  offline,
-}
+enum OnlineOfflineString { online, offline }
 
 extension OnlineOfflineExtension on OnlineOfflineString {
   String get getOnOffString {
@@ -410,11 +535,7 @@ extension OnlineOfflineExtension on OnlineOfflineString {
   }
 }
 
-enum RideType {
-  none,
-  oneWay,
-  roundTrip,
-}
+enum RideType { none, oneWay, roundTrip }
 
 extension RideTypeString on RideType {
   String get getRideTypeString {
@@ -429,24 +550,11 @@ extension RideTypeString on RideType {
   }
 }
 
-enum Flavor {
-  dev,
-  staging,
-  production,
-}
+enum Flavor { dev, staging, production }
 
-enum Config {
-  debug,
-  profile,
-  release,
-}
+enum Config { debug, profile, release }
 
-enum RequestType {
-  get,
-  post,
-  put,
-  postFile,
-}
+enum RequestType { get, post, put, postFile }
 
 extension RideTypeForUIString on RideType {
   String get getRideTypeForUIString {
@@ -524,8 +632,4 @@ extension VehicleTypeString on VehicleType {
   }
 }
 
-enum DriverRideType {
-  ride,
-  actingDriver,
-  deliveryDriver,
-}
+enum DriverRideType { ride, actingDriver, deliveryDriver }

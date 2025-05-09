@@ -10,138 +10,113 @@ EarningModel earningModelFromJson(String str) =>
 String earningModelToJson(EarningModel data) => json.encode(data.toJson());
 
 class EarningModel {
-  String status;
-  Data data;
+  String? status;
+  Data? data;
 
-  EarningModel({
-    required this.status,
-    required this.data,
-  });
+  EarningModel({this.status, this.data});
 
   factory EarningModel.fromJson(Map<String, dynamic> json) => EarningModel(
-        status: json["status"],
-        data: Data.fromJson(json["data"]),
-      );
+    status: json["status"],
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
+  );
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": data.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"status": status, "data": data?.toJson()};
 }
 
 class Data {
-  Metrics metrics;
-  List<List<Activity>> activities;
+  Metrics? metrics;
+  List<List<Activity>>? activities;
 
-  Data({
-    required this.metrics,
-    required this.activities,
-  });
+  Data({this.metrics, this.activities});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        metrics: Metrics.fromJson(json["metrics"]),
-        activities: List<List<Activity>>.from(json["activities"].map(
-            (x) => List<Activity>.from(x.map((x) => Activity.fromJson(x))))),
-      );
+    metrics: json["metrics"] == null ? null : Metrics.fromJson(json["metrics"]),
+    activities:
+        json["activities"] == null
+            ? []
+            : List<List<Activity>>.from(
+              json["activities"]!.map(
+                (x) => List<Activity>.from(x.map((x) => Activity.fromJson(x))),
+              ),
+            ),
+  );
 
   Map<String, dynamic> toJson() => {
-        "metrics": metrics.toJson(),
-        "activities": List<dynamic>.from(activities
-            .map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
-      };
+    "metrics": metrics?.toJson(),
+    "activities":
+        activities == null
+            ? []
+            : List<dynamic>.from(
+              activities!.map(
+                (x) => List<dynamic>.from(x.map((x) => x.toJson())),
+              ),
+            ),
+  };
 }
 
 class Activity {
-  String text;
-  int fee;
-  String currency;
-  String date;
-  String distance;
-  String time;
-  String pickupAddress;
-  String dropoffAddress;
-  String createdTime;
+  String? text;
+  String? amount;
+  String? currency;
+  String? deliveryAddr;
+  String? dlvyTime;
 
-  Activity(
-      {required this.text,
-      required this.fee,
-      required this.currency,
-      required this.date,
-      required this.distance,
-      required this.time,
-      required this.pickupAddress,
-      required this.dropoffAddress,
-      required this.createdTime});
+  Activity({
+    this.text,
+    this.amount,
+    this.currency,
+    this.deliveryAddr,
+    this.dlvyTime,
+  });
 
   factory Activity.fromJson(Map<String, dynamic> json) => Activity(
-        createdTime: json["created_time"],
-        text: json["text"],
-        fee: json["fee"],
-        currency: json["currency"],
-        date: json["date"],
-        distance: json["distance"],
-        time: json["time"],
-        pickupAddress: json["pickup_address"],
-        dropoffAddress: json["dropoff_address"],
-      );
+    text: json["text"],
+    amount: json["amount"],
+    currency: json["currency"],
+    deliveryAddr: json["delivery_addr"],
+    dlvyTime: json["dlvy_time"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "text": text,
-        "fee": fee,
-        "currency": currency,
-        "date": date,
-        "distance": distance,
-        "time": time,
-        "pickup_address": pickupAddress,
-        "dropoff_address": dropoffAddress,
-        "created_time": createdTime
-      };
+    "text": text,
+    "amount": amount,
+    "currency": currency,
+    "delivery_addr": deliveryAddr,
+    "dlvy_time": dlvyTime,
+  };
 }
 
 class Metrics {
-  Breakdown breakdown;
+  Breakdown? breakdown;
 
-  Metrics({
-    required this.breakdown,
-  });
+  Metrics({this.breakdown});
 
   factory Metrics.fromJson(Map<String, dynamic> json) => Metrics(
-        breakdown: Breakdown.fromJson(json["breakdown"]),
-      );
+    breakdown:
+        json["breakdown"] == null
+            ? null
+            : Breakdown.fromJson(json["breakdown"]),
+  );
 
-  Map<String, dynamic> toJson() => {
-        "breakdown": breakdown.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"breakdown": breakdown?.toJson()};
 }
 
 class Breakdown {
-  int totalAmount;
-  String currency;
-  int totalTrips;
-  String totalDistance;
-  String totalTime;
+  int? totalAmount;
+  String? currency;
+  int? totalOrders;
 
-  Breakdown({
-    required this.totalAmount,
-    required this.currency,
-    required this.totalTrips,
-    required this.totalDistance,
-    required this.totalTime,
-  });
+  Breakdown({this.totalAmount, this.currency, this.totalOrders});
 
   factory Breakdown.fromJson(Map<String, dynamic> json) => Breakdown(
-        totalAmount: json["total_amount"],
-        currency: json["currency"],
-        totalTrips: json["total_trips"],
-        totalDistance: json["total_distance"],
-        totalTime: json["total_time"],
-      );
+    totalAmount: json["total_amount"],
+    currency: json["currency"],
+    totalOrders: json["total_orders"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "total_amount": totalAmount,
-        "currency": currency,
-        "total_trips": totalTrips,
-        "total_distance": totalDistance,
-        "total_time": totalTime,
-      };
+    "total_amount": totalAmount,
+    "currency": currency,
+    "total_orders": totalOrders,
+  };
 }

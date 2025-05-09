@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
 import 'package:travelx_driver/shared/constants/app_colors/app_colors.dart';
 import 'package:travelx_driver/shared/constants/app_styles/app_styles.dart';
 import 'package:travelx_driver/shared/constants/imagePath/image_paths.dart';
+import 'package:travelx_driver/shared/constants/revamp/imagePath/new_imagePath.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
-import 'package:travelx_driver/shared/utils/utilities.dart';
 import 'package:travelx_driver/shared/widgets/custom_sized_box/custom_sized_box.dart';
 import 'package:travelx_driver/shared/widgets/image_loader/image_loader.dart';
 import 'package:travelx_driver/shared/widgets/ride_back_button/ride_back_button.dart';
@@ -16,7 +17,8 @@ import 'package:travelx_driver/user/vehicle/bloc/add_vehicle_cubit.dart';
 import '../shimmer/select_vehicle_shimmer.dart';
 
 class DriverVehicleScreen extends StatefulWidget {
-  const DriverVehicleScreen({super.key});
+  DriverVehicleScreen({super.key, this.fromHome = false});
+  bool? fromHome;
 
   @override
   State<DriverVehicleScreen> createState() => _DriverVehicleScreenState();
@@ -38,10 +40,46 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
     return PopScope(
       canPop: true,
       onPopInvoked: (t) {
-        AnywhereDoor.pushReplacementNamed(context,
-            routeName: RouteName.homeScreen);
+        AnywhereDoor.pushReplacementNamed(
+          context,
+          routeName: RouteName.homeScreen,
+        );
       },
       child: Scaffold(
+        floatingActionButton: BlocBuilder<AddVehicleCubit, AddVehicleState>(
+          builder: (context, state) {
+            if (state.getProfileData.success) {
+              final getData = state.getUserProfileData?.data;
+
+              if (getData?.vehicleType?.isNotEmpty == false) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+                  child: GestureDetector(
+                    onTap: () {
+                      AnywhereDoor.pushNamed(
+                        context,
+                        routeName: RouteName.addVehicleScreen,
+                      );
+
+                      // AddDriverBottomSheet.show(context);
+                    },
+                    child: SizedBox(
+                      width: 90 * SizeConfig.widthMultiplier!,
+                      height: 90 * SizeConfig.heightMultiplier!,
+                      child: ImageLoader.svgPictureAssetImage(
+                        imagePath: NewImagePath.floatingIcon,
+                        width: 90 * SizeConfig.widthMultiplier!,
+                        height: 90 * SizeConfig.heightMultiplier!,
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }
+
+            return SizedBox.shrink();
+          },
+        ),
         body: BlocBuilder<AddVehicleCubit, AddVehicleState>(
           builder: (context, state) {
             if (state.getProfileData.success) {
@@ -49,55 +87,65 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
 
               return Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: 12 * SizeConfig.widthMultiplier!),
+                  horizontal: 12 * SizeConfig.widthMultiplier!,
+                ),
                 child: Column(
                   children: [
-                    CustomSizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RideBackButton(
-                          padding: EdgeInsets.zero,
-                          onTap: () {
-                            AnywhereDoor.pushReplacementNamed(context,
-                                routeName: RouteName.homeScreen);
-                          },
-                        ),
-                        const Spacer(),
-                        Expanded(
+                    CustomSizedBox(height: 40),
+                    if (widget.fromHome == false)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RideBackButton(
+                            padding: EdgeInsets.zero,
+                            onTap: () {
+                              AnywhereDoor.pushReplacementNamed(
+                                context,
+                                routeName: RouteName.homeScreen,
+                              );
+                            },
+                          ),
+                          const Spacer(),
+                          Expanded(
                             flex: 2,
                             child: Text(
                               "My Vehicle",
                               style: AppTextStyle.text16kBlack272727W600,
-                            ))
-                      ],
-                    ),
-                    CustomSizedBox(
-                      height: 20,
-                    ),
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Text(
+                        "My Vehicle",
+                        style: AppTextStyle.text16kBlack272727W600,
+                      ),
+                    CustomSizedBox(height: 20),
                     if (getData?.vehicleType?.isNotEmpty == true)
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: 5 * SizeConfig.heightMultiplier!,
-                            horizontal: 8 * SizeConfig.widthMultiplier!),
+                          vertical: 5 * SizeConfig.heightMultiplier!,
+                          horizontal: 8 * SizeConfig.widthMultiplier!,
+                        ),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              vertical: 10 * SizeConfig.heightMultiplier!,
-                              horizontal: 12 * SizeConfig.widthMultiplier!),
+                            vertical: 10 * SizeConfig.heightMultiplier!,
+                            horizontal: 12 * SizeConfig.widthMultiplier!,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.kWhite,
                             borderRadius: BorderRadius.circular(
-                                6 * SizeConfig.widthMultiplier!),
+                              6 * SizeConfig.widthMultiplier!,
+                            ),
                             boxShadow: [
                               BoxShadow(
-                                color:
-                                    AppColors.kBlackTextColor.withOpacity(0.15),
+                                color: AppColors.kBlackTextColor.withOpacity(
+                                  0.15,
+                                ),
                                 blurRadius: 3, // soften the shadow
                                 spreadRadius: 1.0, //extend the shadow
-                              )
+                              ),
                             ],
                           ),
                           child: Column(
@@ -115,34 +163,42 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
                                       surfaceTintColor: AppColors.kWhite,
                                       shadowColor: AppColors.kWhite,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10 *
-                                                  SizeConfig.widthMultiplier!),
-                                              bottomLeft: Radius.circular(10 *
-                                                  SizeConfig.widthMultiplier!),
-                                              bottomRight: Radius.circular(10 *
-                                                  SizeConfig
-                                                      .widthMultiplier!))),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(
+                                            10 * SizeConfig.widthMultiplier!,
+                                          ),
+                                          bottomLeft: Radius.circular(
+                                            10 * SizeConfig.widthMultiplier!,
+                                          ),
+                                          bottomRight: Radius.circular(
+                                            10 * SizeConfig.widthMultiplier!,
+                                          ),
+                                        ),
+                                      ),
                                       itemBuilder: (BuildContext context) {
                                         return [
                                           PopupMenuItem<int>(
-                                              onTap: () {
-                                                myVehicleCubit
-                                                    .deleteMyVehiclePop(
-                                                        context: context);
-                                              },
-                                              child: Text(
-                                                "Delete",
-                                                style: AppTextStyle
-                                                    .text14black0000W700,
-                                              )),
+                                            onTap: () {
+                                              myVehicleCubit.deleteMyVehiclePop(
+                                                context: context,
+                                              );
+                                            },
+                                            child: Text(
+                                              "Delete",
+                                              style:
+                                                  AppTextStyle
+                                                      .text14black0000W700,
+                                            ),
+                                          ),
                                           PopupMenuItem<int>(
-                                              onTap: () {},
-                                              child: Text(
-                                                "Cancel",
-                                                style: AppTextStyle
-                                                    .text14black0000W700,
-                                              )),
+                                            onTap: () {},
+                                            child: Text(
+                                              "Cancel",
+                                              style:
+                                                  AppTextStyle
+                                                      .text14black0000W700,
+                                            ),
+                                          ),
                                         ];
                                       },
                                       child: ImageLoader.svgPictureAssetImage(
@@ -155,9 +211,7 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
                                   ),
                                 ],
                               ),
-                              CustomSizedBox(
-                                height: 6,
-                              ),
+                              CustomSizedBox(height: 6),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -204,9 +258,7 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
                                       wantsScale: true,
                                       scale: 1.2,
                                     ),
-                                  CustomSizedBox(
-                                    width: 20,
-                                  ),
+                                  CustomSizedBox(width: 20),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -215,67 +267,70 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: 120 *
+                                            width:
+                                                120 *
                                                 SizeConfig.widthMultiplier!,
                                             child: Text(
-                                              getData?.vehicleType
-                                                      ?.capitalize() ??
+                                              getData
+                                                      ?.vehicleType!
+                                                      .capitalize ??
                                                   "",
-                                              style: AppTextStyle
-                                                  .text14black0000W700,
+                                              style:
+                                                  AppTextStyle
+                                                      .text14black0000W700,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      CustomSizedBox(
-                                        height: 5,
-                                      ),
+                                      CustomSizedBox(height: 5),
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: 120 *
+                                            width:
+                                                120 *
                                                 SizeConfig.widthMultiplier!,
                                             child: Text(
                                               "Model",
-                                              style: AppTextStyle
-                                                  .text14black0000W400,
+                                              style:
+                                                  AppTextStyle
+                                                      .text14black0000W400,
                                             ),
                                           ),
                                           Text(
                                             getData?.vehicleModel ?? "",
-                                            style: AppTextStyle
-                                                .text14black0000W400,
+                                            style:
+                                                AppTextStyle
+                                                    .text14black0000W400,
                                           ),
                                         ],
                                       ),
-                                      CustomSizedBox(
-                                        height: 5,
-                                      ),
+                                      CustomSizedBox(height: 5),
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: 120 *
+                                            width:
+                                                120 *
                                                 SizeConfig.widthMultiplier!,
                                             child: Text(
                                               "Vehicle Number",
-                                              style: AppTextStyle
-                                                  .text14black0000W400,
+                                              style:
+                                                  AppTextStyle
+                                                      .text14black0000W400,
                                             ),
                                           ),
                                           Text(
                                             getData?.vehicleNumber ?? "",
-                                            style: AppTextStyle
-                                                .text14black0000W400,
+                                            style:
+                                                AppTextStyle
+                                                    .text14black0000W400,
                                           ),
                                         ],
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
-                              CustomSizedBox(
-                                height: 3,
-                              ),
+                              CustomSizedBox(height: 3),
                             ],
                           ),
                         ),
@@ -283,9 +338,45 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
                     else
                       Column(
                         children: [
-                          CustomSizedBox(
-                            height: 150,
-                          ),
+                          CustomSizedBox(height: 150),
+                          CustomSizedBox(height: 30),
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //     left: 16 * SizeConfig.widthMultiplier!,
+                          //     right: 16 * SizeConfig.widthMultiplier!,
+                          //     bottom: 8 * SizeConfig.heightMultiplier!,
+                          //   ),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.end,
+                          //     crossAxisAlignment: CrossAxisAlignment.end,
+                          //     children: [
+                          //       GestureDetector(
+                          //         onTap: () {
+                          //           AnywhereDoor.pushNamed(
+                          //             context,
+                          //             routeName: RouteName.addVehicleScreen,
+                          //           );
+                          //         },
+                          //         child: Row(
+                          //           children: [
+                          //             Text(
+                          //               "add".tr,
+                          //               style: AppTextStyle.text16black0000W700,
+                          //             ),
+                          //             CustomSizedBox(width: 8),
+                          //             ImageLoader.svgPictureAssetImage(
+                          //               width: 18 * SizeConfig.widthMultiplier!,
+                          //               height:
+                          //                   18 * SizeConfig.heightMultiplier!,
+                          //               imagePath: ImagePath.plusBlueFullIcon,
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // CustomSizedBox(height: 100),
                           Center(
                             child: Text(
                               "Add your vehicle",
@@ -293,7 +384,7 @@ class _DriverVehicleScreenState extends State<DriverVehicleScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                   ],
                 ),
               );

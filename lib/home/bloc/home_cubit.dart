@@ -8,6 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:travelx_driver/home/models/app_version_res.dart';
 import 'package:travelx_driver/home/models/distance_matrix_model.dart';
 import 'package:travelx_driver/home/models/driver_status.dart';
@@ -27,7 +28,6 @@ import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
 import 'package:travelx_driver/shared/utils/utilities.dart';
 import 'package:travelx_driver/user/user_details/user_details_data.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../shared/local_storage/log_in_status.dart';
 import '../../shared/local_storage/user_repository.dart';
@@ -65,13 +65,14 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(RiderToggleLoadingState());
       final response = await HomeRepository.toggleDriverStatus(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          onlineStatus: availabilityStatus,
-          deviceToken: UserRepository.getDeviceToken ?? "",
-          phoneNumber: UserRepository.getPhoneNumber ?? "",
-          user: "driver-ride",
-          rideStatus: true);
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        onlineStatus: availabilityStatus,
+        deviceToken: UserRepository.getDeviceToken ?? "",
+        phoneNumber: UserRepository.getPhoneNumber ?? "",
+        user: "driver-ride",
+        rideStatus: true,
+      );
       if (response.isNotEmpty) {
         if (response['status'] == 'success') {
           _isRiderAvailable = availabilityStatus;
@@ -131,16 +132,17 @@ class HomeCubit extends Cubit<HomeState> {
       }
       final currentPosition = await Utils.getCurrentLocation();
       final response = await HomeRepository.fetchRide(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          countryCode: UserRepository.getCountryCode ?? "",
-          currentPosition: currentPosition,
-          unit: "kms",
-          url: ApiRoutes.getRide,
-          vehicleType: ProfileRepository.getVehicleModel?.toLowerCase() ?? "",
-          accountStatus: ProfileRepository.getAccountStatus ?? "",
-          rideId: rideId,
-          actingDriverRide: actingDriverRide);
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        countryCode: UserRepository.getCountryCode ?? "",
+        currentPosition: currentPosition,
+        unit: "kms",
+        url: ApiRoutes.getRide,
+        vehicleType: ProfileRepository.getVehicleModel?.toLowerCase() ?? "",
+        accountStatus: ProfileRepository.getAccountStatus ?? "",
+        rideId: rideId,
+        actingDriverRide: actingDriverRide,
+      );
       if (response['status'] == "success") {
         // final rides = List<acting_driver.ActingRide>.from(
         //     response['data'].map((x) => acting_driver.ActingRide.fromJson(x)));
@@ -150,9 +152,11 @@ class HomeCubit extends Cubit<HomeState> {
           // AnywhereDoor.pushNamed(navigatorKey.currentContext!,
           //     routeName: RouteName.homeScreen,
           //     arguments: NewHomeScreen(activeRide: rides.firstOrNull));
-          AnywhereDoor.pushNamed(navigatorKey.currentContext!,
-              routeName: RouteName.rideScreen,
-              arguments: RidesScreen(rides: rides));
+          AnywhereDoor.pushNamed(
+            navigatorKey.currentContext!,
+            routeName: RouteName.rideScreen,
+            arguments: RidesScreen(rides: rides),
+          );
         } else {
           emit(RidesEmptyData());
         }
@@ -190,9 +194,11 @@ class HomeCubit extends Cubit<HomeState> {
         final rides = ride_model.rideFromJson(response['data']);
 
         if (rides.isNotEmpty) {
-          AnywhereDoor.pushNamed(navigatorKey.currentContext!,
-              routeName: RouteName.rideScreen,
-              arguments: RidesScreen(rides: rides));
+          AnywhereDoor.pushNamed(
+            navigatorKey.currentContext!,
+            routeName: RouteName.rideScreen,
+            arguments: RidesScreen(rides: rides),
+          );
         } else {
           emit(RidesEmptyData());
         }
@@ -204,28 +210,30 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> fetchManualRides(
-      {String? searchRadius,
-      String? rideType,
-      String? vehicleType,
-      required String feature}) async {
+  Future<void> fetchManualRides({
+    String? searchRadius,
+    String? rideType,
+    String? vehicleType,
+    required String feature,
+  }) async {
     try {
       emit(ManualRidesLoadingData());
       final currentPosition = await Utils.getCurrentLocation();
       final response = await HomeRepository.fetchManualRides(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          user: 'driver-ride',
-          countryCode: UserRepository.getCountryCode ?? "",
-          currentPosition: currentPosition,
-          searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
-          unit: "miles",
-          profile: UserRepository.getProfile ?? "",
-          accountStatus: ProfileRepository.getAccountStatus ?? "",
-          url: ApiRoutes.getManualRides,
-          vechileType: vehicleType ?? "",
-          rideType: rideType ?? "",
-          feature: feature);
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        user: 'driver-ride',
+        countryCode: UserRepository.getCountryCode ?? "",
+        currentPosition: currentPosition,
+        searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
+        unit: "miles",
+        profile: UserRepository.getProfile ?? "",
+        accountStatus: ProfileRepository.getAccountStatus ?? "",
+        url: ApiRoutes.getManualRides,
+        vechileType: vehicleType ?? "",
+        rideType: rideType ?? "",
+        feature: feature,
+      );
 
       if (response['status'] == "success") {
         final manualRide = ride_model.rideFromJson(response['data']);
@@ -241,30 +249,35 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> fetchAutoAssignedRides(
-      {String? searchRadius, String? rideType}) async {
+  Future<void> fetchAutoAssignedRides({
+    String? searchRadius,
+    String? rideType,
+  }) async {
     try {
       final currentPosition = await Utils.getCurrentLocation();
       final response = await HomeRepository.fetchManualRides(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          user: 'driver-ride',
-          countryCode: UserRepository.getCountryCode ?? "",
-          currentPosition: currentPosition,
-          searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
-          unit: "miles",
-          profile: UserRepository.getProfile ?? "",
-          accountStatus: ProfileRepository.getAccountStatus ?? "",
-          url: ApiRoutes.getManualRides,
-          vechileType: ProfileRepository.getVehicleModel?.toLowerCase() ?? "",
-          rideType: rideType ?? "",
-          feature: "book_ride");
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        user: 'driver-ride',
+        countryCode: UserRepository.getCountryCode ?? "",
+        currentPosition: currentPosition,
+        searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
+        unit: "miles",
+        profile: UserRepository.getProfile ?? "",
+        accountStatus: ProfileRepository.getAccountStatus ?? "",
+        url: ApiRoutes.getManualRides,
+        vechileType: ProfileRepository.getVehicleModel?.toLowerCase() ?? "",
+        rideType: rideType ?? "",
+        feature: "book_ride",
+      );
       if (response['status'] == "success") {
         final rides = ride_model.rideFromJson(response['data']);
         if (rides.isNotEmpty) {
-          AnywhereDoor.pushNamed(navigatorKey.currentContext!,
-              routeName: RouteName.rideScreen,
-              arguments: RidesScreen(rides: rides));
+          AnywhereDoor.pushNamed(
+            navigatorKey.currentContext!,
+            routeName: RouteName.rideScreen,
+            arguments: RidesScreen(rides: rides),
+          );
         } else {
           emit(RidesEmptyData());
         }
@@ -302,8 +315,9 @@ class HomeCubit extends Cubit<HomeState> {
     emit(TripMetricsLoading());
     try {
       final response = await HomeRepository.getTripsMetrics(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "");
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+      );
 
       if (response['status'] == "success") {
         final tripMetrics = TripMetrics.fromJson(response);
@@ -336,14 +350,17 @@ class HomeCubit extends Cubit<HomeState> {
     if (_currentLocationTimer?.isActive ?? false) {
       _currentLocationTimer?.cancel();
     }
-    _currentLocationTimer =
-        Timer.periodic(const Duration(minutes: 10), (_) async {
+    _currentLocationTimer = Timer.periodic(const Duration(minutes: 10), (
+      _,
+    ) async {
       await postUserCurrentLocation();
     });
   }
 
-  Future<void> postUserCurrentLocation(
-      {int? userStatus, String? source}) async {
+  Future<void> postUserCurrentLocation({
+    int? userStatus,
+    String? source,
+  }) async {
     await getId();
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -354,8 +371,9 @@ class HomeCubit extends Cubit<HomeState> {
       String osName = Platform.operatingSystem;
       Device device;
       DriverPosition currentPosition = DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude);
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+      );
 
       if (driverStatus == DriverStatus.onTrip) {
         status = 2;
@@ -366,46 +384,44 @@ class HomeCubit extends Cubit<HomeState> {
       }
 
       User user = User(
-          userId: int.parse(getUserId ?? ""),
-          name: firstName,
-          countryCode: countryCode,
-          phoneNumber: phoneNumber,
-          userStatus: userStatus ?? status,
-          position: currentPosition,
-          user: "driver-ride");
+        userId: int.parse(getUserId ?? ""),
+        name: firstName,
+        countryCode: countryCode,
+        phoneNumber: phoneNumber,
+        userStatus: userStatus ?? status,
+        position: currentPosition,
+      );
 
       if (deviceInfo is AndroidDeviceInfo) {
         device = Device(
-            name: deviceInfo.model,
-            os: 'Android',
-            osVersion: deviceInfo.version.release);
+          name: deviceInfo.model,
+          os: 'Android',
+          osVersion: deviceInfo.version.release,
+        );
       } else if (deviceInfo is IosDeviceInfo) {
         device = Device(
-            name: deviceInfo.name ?? "",
-            os: 'iOS',
-            osVersion: deviceInfo.systemVersion ?? "");
+          name: deviceInfo.name ?? "",
+          os: 'iOS',
+          osVersion: deviceInfo.systemVersion ?? "",
+        );
       } else {
         // Handle other device types or provide a default value
-        device = Device(
-          name: 'Unknown',
-          os: 'Unknown',
-          osVersion: "0",
-        );
+        device = Device(name: 'Unknown', os: 'Unknown', osVersion: "0");
       }
 
       App app = App(name: packageInfo.appName, version: packageInfo.version);
 
       PostUserDataParams params = PostUserDataParams(
-          lpId: int.parse(getLpId ?? ""),
-          user: user,
-          source: source ?? "",
-          deviceToken: deviceId,
-          device: device,
-          app: app,
-          vehicleType: vehicleType,
-          countryCode: countryCode,
-          timezone: DateTime.now().timeZoneName,
-          agencyList: agencyList);
+        lpId: int.parse(getLpId ?? ""),
+        user: user,
+        source: source ?? "",
+        deviceToken: deviceId,
+        device: device,
+        app: app,
+        vehicleType: vehicleType,
+
+        timezone: DateTime.now().timeZoneName,
+      );
       final response = await HomeRepository.postUserData(params);
     } catch (e) {
       print(e);
@@ -421,19 +437,26 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GetRidesFullRouteLoading());
 
       final response = await HomeRepository.getTripFullRoute(
-          url: ApiRoutes.getRidesFullRoute,
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          deliveryId: deliveryId,
-          position: driverPosition);
+        url: ApiRoutes.getRidesFullRoute,
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        deliveryId: deliveryId,
+        position: driverPosition,
+      );
       String? routePath;
       if (response['data'].isNotEmpty) {
         List data = response['data'];
-        routePath = data.firstWhere(
-            (element) => element['type'] == 'full_route')['route_path'];
+        routePath =
+            data.firstWhere(
+              (element) => element['type'] == 'full_route',
+            )['route_path'];
       }
-      emit(GetRidesFullRouteSuccess(
-          routePath: routePath ?? '', selectedRideIndex: selectedRideIndex));
+      emit(
+        GetRidesFullRouteSuccess(
+          routePath: routePath ?? '',
+          selectedRideIndex: selectedRideIndex,
+        ),
+      );
     } on DioError catch (e) {
       emit(GetRidesFullRouteFailed());
     } catch (e) {
@@ -460,36 +483,40 @@ class HomeCubit extends Cubit<HomeState> {
         driverStatus = DriverStatus.onTrip;
       }
 
-      ride_model.User rideUser =
-          ride_model.User(deviceToken: userDeviceToken ?? "");
+      ride_model.User rideUser = ride_model.User(
+        deviceToken: userDeviceToken ?? "",
+      );
 
       ride_model.Payment payment = ride_model.Payment(
-          amount: userAmount,
-          mode: userMode,
-          status: userPaymentStatus,
-          currency: userCurrency);
+        amount: userAmount,
+        mode: userMode,
+        status: userPaymentStatus,
+        currency: userCurrency,
+      );
 
       final currentLocation = await Utils.getCurrentLocation();
       final response = await HomeRepository.mutateRideStatus(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          user: "driver-ride",
-          firstName: ProfileRepository.getFirstName ?? '',
-          countryCode: UserRepository.getCountryCode ?? '',
-          phoneNumber: UserRepository.getPhoneNumber ?? '',
-          position: DriverPosition(
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude),
-          deviceToken: UserRepository.getDeviceToken ?? '',
-          vehicleModel: ProfileRepository.getVehicleModel ?? '',
-          vehicleName: ProfileRepository.getVehicleName ?? '',
-          vehicleNumber: ProfileRepository.getVehicleNumber ?? '',
-          rideID: rideID,
-          rideStatus: rideStatus.getRideStatusString,
-          mutationReason: mutationReason,
-          userData: rideUser,
-          payment: payment,
-          bookedFor: bookedFor);
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        user: "driver-ride",
+        firstName: ProfileRepository.getFirstName ?? '',
+        countryCode: UserRepository.getCountryCode ?? '',
+        phoneNumber: UserRepository.getPhoneNumber ?? '',
+        position: DriverPosition(
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+        ),
+        deviceToken: UserRepository.getDeviceToken ?? '',
+        vehicleModel: ProfileRepository.getVehicleModel ?? '',
+        vehicleName: ProfileRepository.getVehicleName ?? '',
+        vehicleNumber: ProfileRepository.getVehicleNumber ?? '',
+        rideID: rideID,
+        rideStatus: rideStatus.getRideStatusString,
+        mutationReason: mutationReason,
+        userData: rideUser,
+        payment: payment,
+        bookedFor: bookedFor,
+      );
 
       if (response['status'] == "error") {
         emit(AcceptedByOtherDriver());
@@ -538,33 +565,37 @@ class HomeCubit extends Cubit<HomeState> {
         driverStatus = DriverStatus.onTrip;
       }
 
-      ride_model.User rideUser =
-          ride_model.User(deviceToken: userDeviceToken ?? "");
+      ride_model.User rideUser = ride_model.User(
+        deviceToken: userDeviceToken ?? "",
+      );
 
       ride_model.Payment payment = ride_model.Payment(
-          amount: userAmount,
-          mode: userMode,
-          status: userPaymentStatus,
-          currency: userCurrency);
+        amount: userAmount,
+        mode: userMode,
+        status: userPaymentStatus,
+        currency: userCurrency,
+      );
 
       final currentLocation = await Utils.getCurrentLocation();
       final response = await HomeRepository.mutateRideStatus(
-          lpId: UserRepository.getLpID ?? "",
-          userId: UserRepository.getUserID ?? "",
-          user: "driver-ride",
-          firstName: ProfileRepository.getFirstName ?? '',
-          countryCode: UserRepository.getCountryCode ?? '',
-          phoneNumber: UserRepository.getPhoneNumber ?? '',
-          position: DriverPosition(
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude),
-          deviceToken: UserRepository.getDeviceToken ?? '',
-          rideID: rideID,
-          rideStatus: rideStatus.getRideStatusString,
-          mutationReason: mutationReason,
-          userData: rideUser,
-          payment: payment,
-          bookedFor: bookedFor);
+        lpId: UserRepository.getLpID ?? "",
+        userId: UserRepository.getUserID ?? "",
+        user: "driver-ride",
+        firstName: ProfileRepository.getFirstName ?? '',
+        countryCode: UserRepository.getCountryCode ?? '',
+        phoneNumber: UserRepository.getPhoneNumber ?? '',
+        position: DriverPosition(
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+        ),
+        deviceToken: UserRepository.getDeviceToken ?? '',
+        rideID: rideID,
+        rideStatus: rideStatus.getRideStatusString,
+        mutationReason: mutationReason,
+        userData: rideUser,
+        payment: payment,
+        bookedFor: bookedFor,
+      );
 
       if (response['status'] == "error") {
         emit(AcceptedHireByOtherDriver());
@@ -593,24 +624,27 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  void showCancelRideDialog(BuildContext context,
-      {required String tripId,
-      required String rideID,
-      required String rateID,
-      required RideStatus rideStatus,
-      required Function() onSubmit,
-      required Function() onCancel}) {
+  void showCancelRideDialog(
+    BuildContext context, {
+    required String tripId,
+    required String rideID,
+    required String rateID,
+    required RideStatus rideStatus,
+    required Function() onSubmit,
+    required Function() onCancel,
+  }) {
     //pauseResumeRideTimer(true);
 
     CustomBottomSheet().customBottomSheet(
       context: context,
       onSubmit: (cancelReason) async {
         final bool? result = await mutateRides(
-            tripId: tripId,
-            rideID: rideID,
-            rateID: rateID,
-            rideStatus: rideStatus,
-            mutationReason: cancelReason ?? "");
+          tripId: tripId,
+          rideID: rideID,
+          rateID: rateID,
+          rideStatus: rideStatus,
+          mutationReason: cancelReason ?? "",
+        );
 
         if (result == true) {
           onSubmit();
@@ -661,15 +695,17 @@ class HomeCubit extends Cubit<HomeState> {
   //   return null;
   // }
 
-  Future<void> getDistanceMatrix(
-      {required bool onRoute,
-      required DriverPosition sourceLatLng,
-      required DriverPosition destinationLatLng}) async {
+  Future<void> getDistanceMatrix({
+    required bool onRoute,
+    required DriverPosition sourceLatLng,
+    required DriverPosition destinationLatLng,
+  }) async {
     try {
       final response = await HomeRepository.getDistanceMetrix(
-          onRoute: onRoute,
-          sourceLatLng: sourceLatLng,
-          destinationLatLng: destinationLatLng);
+        onRoute: onRoute,
+        sourceLatLng: sourceLatLng,
+        destinationLatLng: destinationLatLng,
+      );
       final distanceMatrix = DistanceMatrix.fromJson(response['data']);
       emit(GetDistanceMatrixSuccess(distanceMatrix: distanceMatrix));
     } on ApiException catch (e) {
