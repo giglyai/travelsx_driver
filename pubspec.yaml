@@ -138,6 +138,8 @@ flutter:
     - images/prithavi/common_images/
     - images/jp_image/
     - images/jp_image/common_images/
+    - images/kurinji/
+    - images/kurinji/common_images/
   #    - android/app/src/bmtravels/res/raw/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

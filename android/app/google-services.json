@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1085048373266",
-    "project_id": "travelx-driver",
-    "storage_bucket": "travelx-driver.firebasestorage.app"
+    "project_number": "444627600115",
+    "project_id": "travelsx-driver",
+    "storage_bucket": "travelsx-driver.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1085048373266:android:d90dfb1c76a57dc751d8cb",
+        "mobilesdk_app_id": "1:444627600115:android:79f6025e8b224841226d86",
         "android_client_info": {
           "package_name": "com.travelx.driver"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA2ZRTcZLdj5Lyd5nDloYI_cRmoMwoXc0U"
+          "current_key": "AIzaSyBODXF7KvIuaTPfVLI3X1E_KuXwQ4yOOnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444627600115:android:8488e56fa016bc98226d86",
+        "android_client_info": {
+          "package_name": "com.travelx.driver.kurinji"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBODXF7KvIuaTPfVLI3X1E_KuXwQ4yOOnE"
         }
       ],
       "services": {
