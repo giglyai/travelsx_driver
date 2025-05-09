@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main_jppdriver.dart
+ASSET_PREFIX=jppdriver
+BUNDLE_NAME=JPP Driver
+BUNDLE_DISPLAY_NAME=JPP Driver

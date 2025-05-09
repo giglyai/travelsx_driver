@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "332682699816",
+    "project_id": "bm-travels-driver",
+    "storage_bucket": "bm-travels-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332682699816:android:6ed8606d69dd9fb052411d",
+        "android_client_info": {
+          "package_name": "com.byteplace.gigly.driver.ride.bmtravels"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE1yVGcCSt6-f-pACa5B0ISzw-VQC1MSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main_oorugodriver.dart
+ASSET_PREFIX=oorugodriver
+BUNDLE_NAME=Oorugo Driver
+BUNDLE_DISPLAY_NAME=Oorugo Driver

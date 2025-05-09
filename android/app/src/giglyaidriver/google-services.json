@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1036080645950",
+    "project_id": "ai-gigly-driver-ride",
+    "storage_bucket": "ai-gigly-driver-ride.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036080645950:android:04b4eeca9a3b03cd8d8e6f",
+        "android_client_info": {
+          "package_name": "com.byteplace.gigly.driver.ride"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuE1CMb91zyXT53W2m8HjCsQk4xhvzmkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

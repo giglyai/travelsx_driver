@@ -1,0 +1,19 @@
+[
+  {
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station.airport",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  }
+]

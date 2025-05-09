@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1051902992975",
+    "project_id": "prithvi-driver",
+    "storage_bucket": "prithvi-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051902992975:android:7505a130873f1c74dfc03a",
+        "android_client_info": {
+          "package_name": "com.byteplace.gigly.driver.ride.prithvi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTqKQMfsovSIT0_wHMAIOGPyyDB2pJlDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190089077264",
+    "project_id": "jpp-driver",
+    "storage_bucket": "jpp-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190089077264:android:b5d58ccf97dad4faca6095",
+        "android_client_info": {
+          "package_name": "com.byteplace.gigly.driver.ride.jpp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKu7RjhdsxDAx0cl306Qa22XdqR6kA0rE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

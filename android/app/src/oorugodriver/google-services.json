@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994713223903",
+    "project_id": "oorugo-driver",
+    "storage_bucket": "oorugo-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994713223903:android:594d2d4656f399ff2adf6a",
+        "android_client_info": {
+          "package_name": "com.byteplace.gigly.driver.ride.oorugo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPalhgnRkzRq_9UKbVtA9Nhzh_KK_Ie7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

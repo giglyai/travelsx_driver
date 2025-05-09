@@ -1,0 +1,43 @@
+flavors:
+  kurinjidriver:
+    app:
+      name: "Kurinji Driver"
+    android:
+      applicationId: "com.travelx.driver.kurinji"
+    ios:
+      bundleId: "com.travelx.driver.kurinji"
+  bmdriver:
+    app:
+      name: "BM Driver"
+    android:
+      applicationId: "com.travelx.driver.bmdriver"
+    ios:
+      bundleId: "com.travelx.driver.bmdriver"
+  oorugodriver:
+    app:
+      name: "Oorugo Driver"
+    android:
+      applicationId: "com.travelx.driver.oorugodriver"
+    ios:
+      bundleId: "com.travelx.driver.oorugodriver"
+  prithvidriver:
+    app:
+      name: "Prithvi Driver"
+    android:
+      applicationId: "com.travelx.driver.prithvidriver"
+    ios:
+      bundleId: "com.travelx.driver.prithvidriver"
+  jppdriver:
+    app:
+      name: "JPP Driver"
+    android:
+      applicationId: "com.travelx.driver.jppdriver"
+    ios:
+      bundleId: "com.travelx.driver.jppdriver"
+  giglyaidriver:
+    app:
+      name: "Giglyai Driver"
+    android:
+      applicationId: "com.travelx.driver.giglyaidriver"
+    ios:
+      bundleId: "com.travelx.driver.giglyaidriver"
