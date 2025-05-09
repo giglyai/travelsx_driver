@@ -5,7 +5,7 @@ abstract class ApiRoutes {
   static String mainUrl = parentApi;
   static String baseUrl = '${mainUrl}api/';
   static String baseUrlV1 = '${mainUrl}api/v1/';
-  // static String baseUrlV2 = '${mainUrl}api/v2/';
+  static String baseUrlV2 = '${mainUrl}api/v2/';
   static String updateUserLocation =
       '${baseUrlV1}location/ingest/current/location';
   static String accountUpdate = '${baseUrlV1}user/account/update';
@@ -65,5 +65,5 @@ abstract class ApiRoutes {
   static String getRidesMatrix = '${baseUrlV1}rides/driver/all/q';
   static String verifyRideOtp = '${baseUrlV1}rides/otp/verify';
   static String getDlvyBusinessOverview =
-      '${baseUrlV1}delivery/business/overview/q';
+      '${baseUrlV2}ride/business/overview/q';
 }
