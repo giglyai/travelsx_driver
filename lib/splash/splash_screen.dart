@@ -2,18 +2,13 @@
 
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/location_permission/location_permission.dart';
 import 'package:travelx_driver/shared/constants/imagePath/jpdriver/jp_image_paths.dart';
-import 'package:travelx_driver/shared/constants/imagePath/prithavi/prithavi_image_paths.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-import '../config/phone_pay/phone_pay_payment.dart';
-import '../main.dart';
-import '../serivce/firebase_notification.dart';
 import '../shared/constants/app_colors/app_colors.dart';
 import '../shared/constants/imagePath/image_paths.dart';
 import '../shared/local_storage/auth_repository.dart';
@@ -60,14 +55,14 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kBlackTextColor,
+      backgroundColor: AppColors.kWheatF5DEB3,
       body: Center(
         child: Builder(
           builder: (context) {
             if (F.appFlavor == Flavor.kurinjidriver) {
               return ImageLoader.assetImage(
                 imagePath: ImagePath.splashKurinjiIcon,
-                height: 110 * SizeConfig.heightMultiplier!,
+                height: 200 * SizeConfig.heightMultiplier!,
                 width: 196 * SizeConfig.widthMultiplier!,
               );
             } else {

@@ -1150,7 +1150,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
       snap: false,
       minChildSize: 0.3 * SizeConfig.heightMultiplier!,
       initialChildSize: 0.3 * SizeConfig.heightMultiplier!,
-      maxChildSize: 0.68 * SizeConfig.heightMultiplier!,
+      maxChildSize: 0.72 * SizeConfig.heightMultiplier!,
       builder: (context, scrollController) {
         return StatefulBuilder(
           builder: (context, setState1) {
@@ -2763,9 +2763,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          newDeliveryCount > 0
-                              ? "New Delivery"
-                              : "Ready To Pickup",
+                          newDeliveryCount > 0 ? "New Ride" : "Ready To Pickup",
                           style: AppTextStyle.text12black0000W600,
                         ),
                         CustomSizedBox(width: 5),

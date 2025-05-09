@@ -5,10 +5,10 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelx_driver/flavors.dart';
-import 'package:travelx_driver/home/screen/new_home_screen.dart';
 import 'package:travelx_driver/login/bloc/login_cubit.dart';
 import 'package:travelx_driver/login/bloc/login_state.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
+import 'package:travelx_driver/shared/routes/navigator.dart';
 
 import '../../../config/config.dart';
 import '../../../home/widget/container_with_border/container_with_border.dart';
@@ -105,12 +105,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: AppColors.kWheatF5DEB3,
+
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImagePath.splashScreenBack),
-            fit: BoxFit.cover,
-          ),
+          // image: DecorationImage(
+          //   image: AssetImage(ImagePath.splashScreenBack),
+          //   fit: BoxFit.cover,
+          // ),
         ),
         child: Padding(
           padding: EdgeInsets.only(bottom: 34 * SizeConfig.heightMultiplier!),
@@ -126,7 +128,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               if (F.appFlavor == Flavor.kurinjidriver)
                 ImageLoader.assetImage(
                   imagePath: ImagePath.splashKurinjiIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
+                  height: 200 * SizeConfig.heightMultiplier!,
                   width: 196 * SizeConfig.widthMultiplier!,
                 )
               else
@@ -280,11 +282,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   BlocConsumer<ServiceLoginCubit, LoginState>(
                     listener: (context, state) {
                       if (state is OtpSuccess) {
-                        Navigator.pushReplacement(
+                        AnywhereDoor.pushReplacementNamed(
                           context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => NewHomeScreen(),
-                          ),
+                          routeName: RouteName.homeScreen,
                         );
 
                         AuthRepository.instance.init();

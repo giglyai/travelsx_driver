@@ -56,13 +56,13 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kBlackTextColor,
+      backgroundColor: AppColors.kWheatF5DEB3,
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImagePath.splashScreenBack),
-            fit: BoxFit.cover,
-          ),
+          // image: DecorationImage(
+          //   image: AssetImage(ImagePath.splashScreenBack),
+          //   fit: BoxFit.cover,
+          // ),
         ),
         child: Padding(
           padding: EdgeInsets.only(bottom: 40 * SizeConfig.heightMultiplier!),
@@ -78,7 +78,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
               if (F.appFlavor == Flavor.kurinjidriver)
                 ImageLoader.assetImage(
                   imagePath: ImagePath.splashKurinjiIcon,
-                  height: 110 * SizeConfig.heightMultiplier!,
+                  height: 200 * SizeConfig.heightMultiplier!,
                   width: 196 * SizeConfig.widthMultiplier!,
                 )
               else
