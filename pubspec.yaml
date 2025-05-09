@@ -103,6 +103,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_flavorizr: ^2.2.3
+  
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -124,6 +125,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - images/app_icons/kurinjidriver
     - images/common_images/
     - images/dragabble_images/
     - images/snackbar/
