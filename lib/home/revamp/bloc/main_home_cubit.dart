@@ -1591,7 +1591,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                   ),
                                                   CustomSizedBox(width: 5),
                                                   Text(
-                                                    "Delivery",
+                                                    "Dropoff",
                                                     style: AppTextStyle
                                                         .text17black0000W800
                                                         ?.copyWith(
@@ -1726,7 +1726,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                             ?.mode
                                                                             ?.toUpperCase() ==
                                                                         "CASH"
-                                                                    ? "COD"
+                                                                    ? "CASH"
                                                                     : "${acceptedRide?.payment?.mode?.toUpperCase()}",
                                                                 style:
                                                                     AppTextStyle
@@ -2358,7 +2358,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                           width: 5,
                                                         ),
                                                         Text(
-                                                          "Delivery",
+                                                          "Dropoff",
                                                           style: AppTextStyle
                                                               .text17black0000W800
                                                               ?.copyWith(
@@ -2492,7 +2492,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                     child: Text(
                                                                       acceptedRide?.payment?.mode?.toUpperCase() ==
                                                                               "CASH"
-                                                                          ? "COD"
+                                                                          ? "CASH"
                                                                           : "${acceptedRide?.payment?.mode?.toUpperCase()}",
                                                                       style:
                                                                           AppTextStyle
