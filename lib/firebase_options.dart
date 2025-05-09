@@ -17,17 +17,29 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,49 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB7XqZ8GDktrJwDBZHhwAUEbmB8XbKNOkE',
-    appId: '1:190089077264:web:732a70b05c3afc84ca6095',
-    messagingSenderId: '190089077264',
-    projectId: 'jpp-driver',
-    authDomain: 'jpp-driver.firebaseapp.com',
-    storageBucket: 'jpp-driver.appspot.com',
-    measurementId: 'G-YMS61CNKFT',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCKu7RjhdsxDAx0cl306Qa22XdqR6kA0rE',
-    appId: '1:190089077264:android:b5d58ccf97dad4faca6095',
-    messagingSenderId: '190089077264',
-    projectId: 'jpp-driver',
-    storageBucket: 'jpp-driver.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD-OhlSKKjXrM_zlDG9lzPnByKLO1So6jc',
-    appId: '1:190089077264:ios:3ba48486bc5954c0ca6095',
-    messagingSenderId: '190089077264',
-    projectId: 'jpp-driver',
-    storageBucket: 'jpp-driver.appspot.com',
-    iosBundleId: 'com.byteplace.gigly.driver.ride',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD-OhlSKKjXrM_zlDG9lzPnByKLO1So6jc',
-    appId: '1:190089077264:ios:9b0a4a70c12f9a72ca6095',
-    messagingSenderId: '190089077264',
-    projectId: 'jpp-driver',
-    storageBucket: 'jpp-driver.appspot.com',
-    iosBundleId: 'com.example.silkrouteFlutter',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB7XqZ8GDktrJwDBZHhwAUEbmB8XbKNOkE',
-    appId: '1:190089077264:web:6fc8cc9892a4d3f7ca6095',
-    messagingSenderId: '190089077264',
-    projectId: 'jpp-driver',
-    authDomain: 'jpp-driver.firebaseapp.com',
-    storageBucket: 'jpp-driver.appspot.com',
-    measurementId: 'G-JPEFXQ3KVY',
+    apiKey: 'AIzaSyBODXF7KvIuaTPfVLI3X1E_KuXwQ4yOOnE',
+    appId: '1:444627600115:android:8488e56fa016bc98226d86',
+    messagingSenderId: '444627600115',
+    projectId: 'travelsx-driver',
+    storageBucket: 'travelsx-driver.firebasestorage.app',
   );
 }
