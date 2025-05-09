@@ -64,7 +64,14 @@ class SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Builder(
           builder: (context) {
-            if (F.appFlavor == Flavor.bmdriver) {
+             if (F.appFlavor == Flavor.kurinjidriver) {
+              return ImageLoader.assetImage(
+                imagePath: ImagePath.splashKurinjiIcon,
+                height: 110 * SizeConfig.heightMultiplier!,
+                width: 196 * SizeConfig.widthMultiplier!,
+              );
+            }
+            else if (F.appFlavor == Flavor.bmdriver) {
               return ImageLoader.assetImage(
                 imagePath: ImagePath.splashBmtIcon,
                 height: 110 * SizeConfig.heightMultiplier!,
