@@ -1490,7 +1490,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                 .heightMultiplier!,
                                                       ),
                                                       child: Text(
-                                                        "Delivery Fee",
+                                                        "Ride Amount Fee",
                                                         style:
                                                             AppTextStyle
                                                                 .text14Black0000W400,
@@ -1681,7 +1681,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                               width: 10,
                                                             ),
                                                             Text(
-                                                              'Total Bill : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                              'Total Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
                                                               style:
                                                                   AppTextStyle
                                                                       .text18black0000W700,
@@ -2250,7 +2250,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                       .heightMultiplier!,
                                                             ),
                                                             child: Text(
-                                                              "Delivery Fee",
+                                                              "Ride Amount Fee",
                                                               style:
                                                                   AppTextStyle
                                                                       .text14Black0000W400,
@@ -2452,7 +2452,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                     width: 10,
                                                                   ),
                                                                   Text(
-                                                                    'Total Bill : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                                    'Total Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
                                                                     style:
                                                                         AppTextStyle
                                                                             .text18black0000W700,
