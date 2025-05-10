@@ -492,12 +492,12 @@ class HomeWidgets {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Waiting for orders",
+                      "Waiting for ride",
                       style: AppTextStyle.text12black0000W400,
                     ),
                     CustomSizedBox(height: 2),
                     Text(
-                      "we’ll notify you when you get an order!",
+                      "we’ll notify you when you get ride!",
                       style: AppTextStyle.text10black0000W300,
                     ),
                   ],
