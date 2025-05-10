@@ -745,6 +745,8 @@ class MainHomeCubit extends Cubit<MainHomeState> {
         //   AnywhereDoor.pushReplacementNamed(navigatorKey.currentState!.context,
         //       routeName: RouteName.vehicleInfoScreen);
         // }
+
+        await getDlvyBusinessOverview(date: "This Week");
         emit(
           state.copyWith(
             getProfileData: ApiStatus.success,
