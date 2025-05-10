@@ -43,11 +43,29 @@ android {
         versionName = "1.0"
     }
 
+   signingConfigs {
+        release {
+            keyAlias 'travelsx-driver'
+            keyPassword 'tr@vel$x-dr!ver@123'
+            storeFile file('/Users/manikandanmuthu/projects/gigly/flutter/travelsx_driver/travelsx-driver.jks')
+            storePassword 'tr@vel$x-dr!ver@123'
+        }
+    }
+
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.debug
+        }
+            // disbale this signingConfigsn for samsung release
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
