@@ -12,7 +12,8 @@ class ImagePath {
   static String giglyDriverSplashLogoFinal =
       'images/common_images/splashDriverRideFinal2.svg';
   static String splashBmtIcon = 'assets/icons/bmt-icon.png';
-  static String splashKurinjiIcon = 'assets/icons/kurinji_icon.png';
+  static String splashKurinjiIcon =
+      'images/app_icons/kurinjidriver/app_icon.png';
   static String splashOorugoDriverIcon = 'assets/icons/oorugo-driver-icon.png';
   static String splashPrithviDriverIcon = 'assets/icons/oorugo-driver-icon.png';
   static String giglyDriverSplashLogoFinal1 =
