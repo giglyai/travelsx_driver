@@ -746,7 +746,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
         //       routeName: RouteName.vehicleInfoScreen);
         // }
 
-        await getDlvyBusinessOverview(date: "This Week");
+        // await getDlvyBusinessOverview(date: "This Week");
         emit(
           state.copyWith(
             getProfileData: ApiStatus.success,
