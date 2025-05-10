@@ -1467,38 +1467,38 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Spacer(),
-                                                  ContainerWithBorder(
-                                                    wantPadding: true,
-                                                    containerColor:
-                                                        AppColors
-                                                            .kLightYelFFF3F0,
-                                                    borderColor:
-                                                        AppColors
-                                                            .kLightYelFFF3F0,
-                                                    borderRadius:
-                                                        32 *
-                                                        SizeConfig
-                                                            .widthMultiplier!,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            16 *
-                                                            SizeConfig
-                                                                .widthMultiplier!,
-                                                        vertical:
-                                                            8 *
-                                                            SizeConfig
-                                                                .heightMultiplier!,
-                                                      ),
-                                                      child: Text(
-                                                        "Ride Amount Fee",
-                                                        style:
-                                                            AppTextStyle
-                                                                .text14Black0000W400,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  // Spacer(),
+                                                  // ContainerWithBorder(
+                                                  //   wantPadding: true,
+                                                  //   containerColor:
+                                                  //       AppColors
+                                                  //           .kLightYelFFF3F0,
+                                                  //   borderColor:
+                                                  //       AppColors
+                                                  //           .kLightYelFFF3F0,
+                                                  //   borderRadius:
+                                                  //       32 *
+                                                  //       SizeConfig
+                                                  //           .widthMultiplier!,
+                                                  //   child: Padding(
+                                                  //     padding: EdgeInsets.symmetric(
+                                                  //       horizontal:
+                                                  //           16 *
+                                                  //           SizeConfig
+                                                  //               .widthMultiplier!,
+                                                  //       vertical:
+                                                  //           8 *
+                                                  //           SizeConfig
+                                                  //               .heightMultiplier!,
+                                                  //     ),
+                                                  //     child: Text(
+                                                  //       "Amount Fee",
+                                                  //       style:
+                                                  //           AppTextStyle
+                                                  //               .text14Black0000W400,
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                               CustomSizedBox(height: 10),
@@ -1683,7 +1683,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                               width: 10,
                                                             ),
                                                             Text(
-                                                              'Total Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                              'Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
                                                               style:
                                                                   AppTextStyle
                                                                       .text18black0000W700,
@@ -2227,38 +2227,38 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Spacer(),
-                                                        ContainerWithBorder(
-                                                          wantPadding: true,
-                                                          containerColor:
-                                                              AppColors
-                                                                  .kLightYelFFF3F0,
-                                                          borderColor:
-                                                              AppColors
-                                                                  .kLightYelFFF3F0,
-                                                          borderRadius:
-                                                              32 *
-                                                              SizeConfig
-                                                                  .widthMultiplier!,
-                                                          child: Padding(
-                                                            padding: EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  16 *
-                                                                  SizeConfig
-                                                                      .widthMultiplier!,
-                                                              vertical:
-                                                                  8 *
-                                                                  SizeConfig
-                                                                      .heightMultiplier!,
-                                                            ),
-                                                            child: Text(
-                                                              "Ride Amount Fee",
-                                                              style:
-                                                                  AppTextStyle
-                                                                      .text14Black0000W400,
-                                                            ),
-                                                          ),
-                                                        ),
+                                                        // Spacer(),
+                                                        // ContainerWithBorder(
+                                                        //   wantPadding: true,
+                                                        //   containerColor:
+                                                        //       AppColors
+                                                        //           .kLightYelFFF3F0,
+                                                        //   borderColor:
+                                                        //       AppColors
+                                                        //           .kLightYelFFF3F0,
+                                                        //   borderRadius:
+                                                        //       32 *
+                                                        //       SizeConfig
+                                                        //           .widthMultiplier!,
+                                                        //   child: Padding(
+                                                        //     padding: EdgeInsets.symmetric(
+                                                        //       horizontal:
+                                                        //           16 *
+                                                        //           SizeConfig
+                                                        //               .widthMultiplier!,
+                                                        //       vertical:
+                                                        //           8 *
+                                                        //           SizeConfig
+                                                        //               .heightMultiplier!,
+                                                        //     ),
+                                                        //     child: Text(
+                                                        //       "Amount Fee",
+                                                        //       style:
+                                                        //           AppTextStyle
+                                                        //               .text14Black0000W400,
+                                                        //     ),
+                                                        //   ),
+                                                        // ),
                                                       ],
                                                     ),
                                                     CustomSizedBox(height: 10),
@@ -2454,7 +2454,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                     width: 10,
                                                                   ),
                                                                   Text(
-                                                                    'Total Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                                    'Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
                                                                     style:
                                                                         AppTextStyle
                                                                             .text18black0000W700,
