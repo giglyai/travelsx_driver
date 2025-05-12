@@ -31,19 +31,3 @@ class OtpModel {
         "data": data,
       };
 }
-
-class Data {
-  String? otp;
-
-  Data({
-    this.otp,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        otp: json["otp"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "otp": otp,
-      };
-}

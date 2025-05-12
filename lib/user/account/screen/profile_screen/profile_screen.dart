@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:travelx_driver/login/screen/mobile_login_screen.dart';
 
-import '../../../../login/screen/login_screen/mobile_login.dart';
 import '../../../../shared/constants/app_colors/app_colors.dart';
 import '../../../../shared/constants/app_styles/app_styles.dart';
 import '../../../../shared/constants/imagePath/image_paths.dart';

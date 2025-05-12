@@ -141,7 +141,8 @@ class BLueButtonWithIcon extends StatelessWidget {
                 ? ImageLoader.assetImage(
                     imagePath: ImagePath.loaderImage,
                     width: 80 * SizeConfig.widthMultiplier!,
-                    loaderColor: loadingImageColor ?? AppColors.kWhite)
+                    //loaderColor: loadingImageColor ?? AppColors.kWhite
+                    )
                 : buttonIsEnabled == false
                     ? Text(
                         title ?? "",

@@ -6,7 +6,7 @@ class AppConfig {
   static String getClientToken() {
     // Make it a static method for easy access
     if (F.appFlavor == Flavor.kurinjidriver) {
-      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cHBvcnRAZ2lnbHkuY29tIiwibmFtZSI6ImJtdHJhdmVscyIsImxwX2lkIjozMzQ5OTcsImlhdCI6MTcyNDkwNjc0Nn0.pDGBs5aY9vQH8GP-YXYqTqH1fG2wXXneX0pZjIL42FU";
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cHBvcnRAZ2lnbHkuY29tIiwibmFtZSI6InRyYXZlbHN4LWRyaXZlciIsImxwX2lkIjoyODgzMDIsImFnZ3JfaWQiOjI4ODMwMiwiaWF0IjoxNzQ3MDM0NDA0fQ.mj_peYCX8sUXO4Qs7xmpp-vClrz4gVS_85xNxgudFtQ";
     } else {
       return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdpZ2x5LmNvbSIsImxwX2lkIjoxMTYwMDAsImlhdCI6MTcwMDkxMzk5M30.V3KojO1yE7CN-jTm1Go3fU-TxmzEvgy8-MPMjvyNvK0';
     }
@@ -18,9 +18,9 @@ class AppName {
   static String getAppName() {
     // Make it a static method for easy access
     if (F.appFlavor == Flavor.kurinjidriver) {
-      return "bmdriver";
+      return "kurinji-driver";
     } else {
-      return 'travelxdriver';
+      return 'travelsx-driver';
     }
   }
 }

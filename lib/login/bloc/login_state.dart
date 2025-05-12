@@ -1,8 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-
-import '../entity/country_code_model.dart';
+import 'package:travelx_driver/login/entity/country_list/country_list.dart';
 
 @immutable
 abstract class LoginState {}
@@ -17,6 +16,10 @@ class LoginFailure extends LoginState {
   String? errorMessage;
 
   LoginFailure({this.errorMessage});
+}
+
+class UserIsNewSuccess extends LoginState {
+  UserIsNewSuccess();
 }
 
 class PhoneNumberLoading extends LoginState {}
@@ -49,8 +52,14 @@ class OtpFailure extends LoginState {
 
 class CountryCodeLoading extends LoginState {}
 
+// class GotCountryCode extends LoginState {
+//   GetCountryCodeRes? countryCodeModel;
+//
+//   GotCountryCode({this.countryCodeModel});
+// }
+
 class GotCountryCode extends LoginState {
-  CountryCodeModel? countryCodeModel;
+  CountryCodeList? countryCodeModel;
 
   GotCountryCode({this.countryCodeModel});
 }

@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
+import 'package:travelx_driver/login/screen/mobile_login_screen.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
-
-import '../../../login/screen/login_screen/mobile_login.dart';
 import '../../../user/user_details/user_details_data.dart';
 import '../../constants/app_colors/app_colors.dart';
 import '../../constants/app_styles/app_styles.dart';

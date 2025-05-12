@@ -8,6 +8,8 @@ abstract class ApiRoutes {
   static String baseUrlV2 = '${mainUrl}api/v2/';
   static String updateUserLocation =
       '${baseUrlV1}location/ingest/current/location';
+  static String getCountryCode = '${baseUrlV1}user/country/config';
+
   static String accountUpdate = '${baseUrlV1}user/account/update';
   static String toggleDriverStatus = '${baseUrlV1}user/driver/status';
   static String updateUserDetail = '${baseUrlV1}user/driver/profile/update';

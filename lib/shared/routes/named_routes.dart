@@ -5,8 +5,9 @@ import 'package:travelx_driver/documents/widgets/document_upload_screen.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/screen/hire_driver_direction_screen.dart';
 import 'package:travelx_driver/home/revamp/screen/bottom_navigation_bar.dart';
 import 'package:travelx_driver/home/screen/ride.dart';
-import 'package:travelx_driver/login/screen/login_screen/mobile_login.dart';
-import 'package:travelx_driver/login/screen/login_screen/verify_otp.dart';
+import 'package:travelx_driver/login/screen/mobile_login_screen.dart';
+import 'package:travelx_driver/login/screen/verify_otp_screen.dart';
+
 import 'package:travelx_driver/search-rides/screens/booking_registration/bookings_screen.dart';
 import 'package:travelx_driver/search-rides/screens/list-rides-screen.dart';
 import 'package:travelx_driver/splash/splash_screen.dart';
@@ -36,9 +37,12 @@ import '../widgets/app_bar/gigly_app_bar.dart';
 
 abstract class RouteName {
   static const splashScreen = "/";
+  static const mobileNumberLoginScreen = "/mobileNumberLoginScreen";
+
   static const homeScreen = "/homeScreen";
   static const rideScreen = "/rides";
   static const noConnection = "/noConnection";
+  static const verifyOtpScreen = "/verifyOtpScreen";
 
   static const listRideScreen = "/listRideScreen";
   static const mobileLoginScreen = "/mobileLoginScreen";
@@ -73,6 +77,7 @@ abstract class RouteName {
   static const addVehicleScreen = "/addVehicleScreen";
   static const driverVehicleMainScreen = "/driverAddVehicleMainScreen";
   static const selectVehicleScreen = "/selectVehicleScreen";
+  static const travelBottomNavigationBar = "/travelBottomNavigationBar";
 }
 
 mixin GenerateRoute {
@@ -90,7 +95,23 @@ mixin GenerateRoute {
           builder: (context) => DriverBottomNavBar(),
           settings: settings,
         );
+      case RouteName.mobileNumberLoginScreen:
+        return MaterialPageRoute(
+          builder: (context) => const MobileNumberLoginScreen(),
+          settings: settings,
+        );
+      case RouteName.verifyOtpScreen:
+        final arguments = settings.arguments as VerifyOtpScreen?;
 
+        return MaterialPageRoute(
+          builder:
+              (context) => VerifyOtpScreen(
+                countryCode: arguments?.countryCode ?? "",
+                mobileController: arguments?.mobileController ?? "",
+                email: arguments?.email ?? "",
+              ),
+          settings: settings,
+        );
       case RouteName.rideScreen:
         final arguments = settings.arguments as RidesScreen;
 
@@ -277,7 +298,13 @@ mixin GenerateRoute {
               (context) => VerifyOtpScreen(
                 countryCode: arguments?.countryCode ?? "",
                 mobileController: arguments?.mobileController ?? "",
+                email: arguments?.email ?? "",
               ),
+          settings: settings,
+        );
+      case RouteName.travelBottomNavigationBar:
+        return MaterialPageRoute(
+          builder: (context) => const DriverBottomNavBar(),
           settings: settings,
         );
 

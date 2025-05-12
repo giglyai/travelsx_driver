@@ -5,6 +5,7 @@ class ImagePath {
   static String timeNewIcon = 'images/common_images/timeNewIcon.svg';
   static String stickyNotesIcon = 'images/common_images/stickyNotesIcon.svg';
   static String billNotesIcon = 'images/common_images/billNotesIcon.svg';
+  static String splashBackground = 'images/common_images/splash_backgroud.png';
 
   static String mainLogo = 'images/common_images/main_logo_driver.png';
   static String splashScreenBack = 'images/common_images/splash_agent.png';
