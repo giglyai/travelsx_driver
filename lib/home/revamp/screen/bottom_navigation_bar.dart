@@ -119,7 +119,7 @@ class DriverBottomNavBarState extends State<DriverBottomNavBar>
                           index: 0,
                         ),
                         _buildNavItem(
-                          imagePath: NewImagePath.orderNav,
+                          imagePath: NewImagePath.bookingNav,
                           index: 1,
                         ),
                         _buildNavItem(

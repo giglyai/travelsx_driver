@@ -86,7 +86,7 @@ class NewImagePath {
   static String arrowRightDoubleLineIcon =
       'images/revamp/arrowRightDoubleLineIcon.svg';
   static String homeNav = 'images/revamp/home/home_nav.svg';
-  static String orderNav = 'images/revamp/order_nav.svg';
+  static String bookingNav = 'images/revamp/ride_booking.svg';
   static String addVehicleNav = 'images/revamp/add_vehicle_nav.svg';
   static String earningNav = 'images/revamp/wallet_nav.svg';
 }
