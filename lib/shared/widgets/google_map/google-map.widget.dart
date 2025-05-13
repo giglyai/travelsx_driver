@@ -362,7 +362,10 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   final LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
   );
+
   Future<void> updateDriverMarker(Position position) async {
+    if (position.latitude == 0 || position.longitude == 0) return;
+
     // Get the map controller.
     final GoogleMapController controller = await mapController.future;
 
@@ -383,17 +386,27 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
       ),
     );
 
-    // Get the polyline.
+    // Safely get the polyline
+    if (_polyline.isEmpty) {
+      debugPrint('No polyline data available.');
+      return;
+    }
+
     final Polyline polyline = _polyline.first;
 
-    // Get the polyline points.
+    if (polyline.points.isEmpty) {
+      debugPrint('Polyline points are empty.');
+      return;
+    }
+
+    // Get the polyline points
     final List<LatLng> points = polyline.points;
 
-    // Convert the polyline points to LatLng objects.
+    // Convert the polyline points to mp.LatLng
     List<mp.LatLng> latLangPoints =
         points.map((e) => mp.LatLng(e.latitude, e.longitude)).toList();
 
-    // Get the index of the driver's position on the polyline.
+    // Find current index on the path
     int currentIndex = mp.PolygonUtil.locationIndexOnPath(
       mp.LatLng(position.latitude, position.longitude),
       latLangPoints,
@@ -401,13 +414,17 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
       tolerance: 20,
     );
 
-    // Get the remaining polyline points.
+    // Handle invalid index (not found on path)
+    if (currentIndex < 0 || currentIndex >= points.length) {
+      debugPrint('Current index not found on polyline path.');
+      return;
+    }
+
+    // Get remaining polyline points
     final List<LatLng> remainingPoints = points.sublist(currentIndex);
 
-    // Clear the existing polyline.
+    // Clear and update polyline
     _polyline.clear();
-
-    // Add a new polyline with the remaining points.
     _polyline.add(
       Polyline(
         polylineId: polyline.polylineId,
@@ -418,7 +435,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
       ),
     );
 
-    // Move the camera to the driver's position, animated.
+    // Animate camera to driver's position
     await Future.delayed(const Duration(seconds: 1), () async {
       await controller.animateCamera(
         CameraUpdate.newLatLngZoom(
@@ -428,9 +445,79 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
       );
     });
 
-    // Notify the state that the driver marker and polyline have been updated.
+    // Notify Flutter to redraw UI
     setState(() {});
   }
+
+  // Future<void> updateDriverMarker(Position position) async {
+  //   // Get the map controller.
+  //   final GoogleMapController controller = await mapController.future;
+
+  //   // Get the driver marker image.
+  //   final driverMarker = await getMarkerImage(ImagePath.icDriverPosition);
+
+  //   // Remove the existing driver marker.
+  //   _markers.removeWhere((element) => element.markerId == driverMarkerId);
+
+  //   // Add a new driver marker at the given position.
+  //   _markers.add(
+  //     Marker(
+  //       rotation: position.heading,
+  //       markerId: driverMarkerId,
+  //       position: LatLng(position.latitude, position.longitude),
+  //       visible: true,
+  //       icon: driverMarker,
+  //     ),
+  //   );
+
+  //   // Get the polyline.
+  //   final Polyline polyline = _polyline.first;
+
+  //   // Get the polyline points.
+  //   final List<LatLng> points = polyline.points;
+
+  //   // Convert the polyline points to LatLng objects.
+  //   List<mp.LatLng> latLangPoints =
+  //       points.map((e) => mp.LatLng(e.latitude, e.longitude)).toList();
+
+  //   // Get the index of the driver's position on the polyline.
+  //   int currentIndex = mp.PolygonUtil.locationIndexOnPath(
+  //     mp.LatLng(position.latitude, position.longitude),
+  //     latLangPoints,
+  //     false,
+  //     tolerance: 20,
+  //   );
+
+  //   // Get the remaining polyline points.
+  //   final List<LatLng> remainingPoints = points.sublist(currentIndex);
+
+  //   // Clear the existing polyline.
+  //   _polyline.clear();
+
+  //   // Add a new polyline with the remaining points.
+  //   _polyline.add(
+  //     Polyline(
+  //       polylineId: polyline.polylineId,
+  //       visible: true,
+  //       width: 5,
+  //       points: remainingPoints,
+  //       color: Colors.green,
+  //     ),
+  //   );
+
+  //   // Move the camera to the driver's position, animated.
+  //   await Future.delayed(const Duration(seconds: 1), () async {
+  //     await controller.animateCamera(
+  //       CameraUpdate.newLatLngZoom(
+  //         LatLng(position.latitude, position.longitude),
+  //         18,
+  //       ),
+  //     );
+  //   });
+
+  //   // Notify the state that the driver marker and polyline have been updated.
+  //   setState(() {});
+  // }
 
   Future<void> initializeGoogleMapPolyline() async {
     final apiKey = await initializeMapApi();

@@ -558,11 +558,11 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     }
   }
 
-  Future<void> getDlvyBusinessOverview({String? date}) async {
+  Future<void> getDriverBusinessOverview({String? date}) async {
     try {
       emit(state.copyWith(ridesMatrixApiStatus: ApiStatus.loading));
 
-      final response = await MainHomeData.getDlvyBusinessOverview(
+      final response = await MainHomeData.getDriverBusinessOverview(
         lpId: UserRepository.getLpID ?? '',
         userId: UserRepository.getUserID ?? '',
         date: date ?? "This Week",
@@ -719,6 +719,9 @@ class MainHomeCubit extends Cubit<MainHomeState> {
         );
         ProfileRepository.instance.setVehicleModel(
           getUserProfileData.data?.vehicleModel ?? "",
+        );
+        ProfileRepository.instance.setVehicleType(
+          getUserProfileData.data?.vehicleType ?? "",
         );
         ProfileRepository.instance.setVehicleName(
           getUserProfileData.data?.vehicleName ?? "",

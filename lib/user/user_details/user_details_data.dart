@@ -24,6 +24,7 @@ class ProfileRepository {
     getAccountStatus = await _accessAccountStatus;
     getAccountRating = await _accessAccountRating;
     getVehicleModel = await _accessVehicleModel;
+        getVehicleType = await _accessVehicleType;
     getVehicleName = await _accessVehicleName;
     getVehicleNumber = await _accessVehicleNumber;
     getVehicleCategory = await _accessVehicleCategory;
@@ -40,6 +41,7 @@ class ProfileRepository {
   static String? getAccountStatus;
   static String? getAccountRating;
   static String? getVehicleModel;
+  static String? getVehicleType;
   static String? getActingDriver;
   static String? getVehicleName;
   static String? getVehicleNumber;
@@ -66,6 +68,10 @@ class ProfileRepository {
 
   Future<String?> get _accessVehicleNumber async {
     return await LogInStatus().getUserVehicleNumber();
+  }
+
+  Future<String?> get _accessVehicleType async {
+    return await LogInStatus().getUserVehicleType();
   }
 
   Future<String?> get _accessVehicleCategory async {
@@ -103,7 +109,8 @@ class ProfileRepository {
   Future<void> setUserFirstName(String firstName) async {
     getFirstName = firstName;
     return await LogInStatus.setUserProfileFirstName(
-        profileFirstName: firstName);
+      profileFirstName: firstName,
+    );
   }
 
   Future<void> setCountryCode(String countryCode) async {
@@ -121,7 +128,12 @@ class ProfileRepository {
     return await LogInStatus.setUserVehicleModel(vehicleModel: vehicleModel);
   }
 
-    Future<void> setActingDriver(String isActingDriver) async {
+  Future<void> setVehicleType(String vehicleType) async {
+    getVehicleType = vehicleType;
+    return await LogInStatus.setUserVehicleType(vehicleType: vehicleType);
+  }
+
+  Future<void> setActingDriver(String isActingDriver) async {
     getActingDriver = isActingDriver;
     return await LogInStatus.setActingDriver(isActingDriver: isActingDriver);
   }
@@ -139,7 +151,8 @@ class ProfileRepository {
   Future<void> setVehicleCategory(String vehicleCategory) async {
     getVehicleCategory = vehicleCategory;
     return await LogInStatus.setUserVehicleCategory(
-        vehicleCategory: vehicleCategory);
+      vehicleCategory: vehicleCategory,
+    );
   }
 
   Future<void> setUserLastName(String lastName) async {
@@ -155,13 +168,15 @@ class ProfileRepository {
   Future<void> setUserProfileIcon(String profileIcon) async {
     getProfileIcon = profileIcon;
     return await LogInStatus.setUserProfileImageData(
-        profileImageData: profileIcon);
+      profileImageData: profileIcon,
+    );
   }
 
   Future<void> setUserProfileAccountStatus(String accountStatus) async {
     getAccountStatus = accountStatus;
     return await LogInStatus.setUserProfileAccountStatus(
-        profileAccountStatus: accountStatus);
+      profileAccountStatus: accountStatus,
+    );
   }
 
   Future<void> setAgencyList(List<AgencyList>? agencyList) async {
@@ -172,6 +187,7 @@ class ProfileRepository {
   Future<void> setUserProfileAccountRating(String accountRating) async {
     getAccountRating = accountRating;
     return await LogInStatus.setUserProfileAccountRating(
-        profileAccountRating: accountRating);
+      profileAccountRating: accountRating,
+    );
   }
 }

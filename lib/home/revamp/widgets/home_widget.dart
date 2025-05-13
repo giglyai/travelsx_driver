@@ -27,22 +27,24 @@ class HomeWidgets {
         state.upComingRideData?.data?.newRide?.isNotEmpty == true &&
             state.isOnTripBottomSheetIsOpen == true) {
       return mainHomeCubit.showAcceptedRideBottomSheet();
-    } else if (state.getUserProfileData != null &&
-        state.getUserProfileData!.data != null &&
-        state.getUserProfileData!.data!.missingDocs?.isNotEmpty == true &&
-        state.isOnTripBottomSheetIsOpen == true) {
-      return SizedBox(
-        height: MediaQuery.of(context).size.height * 1,
-        child: mainHomeCubit.showDocumentUploadBottomSheet(),
-      );
-    } else if (state.getUserProfileData != null &&
-        state.getUserProfileData!.data != null &&
-        state.getUserProfileData!.data!.accountStatus == 'pending' &&
-        state.isOnTripBottomSheetIsOpen == true) {
-      return SizedBox(
-        height: MediaQuery.of(context).size.height * 1,
-        child: mainHomeCubit.showAccountNotVerifiedStatusBottomSheet(),
-      );
+
+      //else if (state.getUserProfileData != null &&
+      //     state.getUserProfileData!.data != null &&
+      //     state.getUserProfileData!.data!.missingDocs?.isNotEmpty == true &&
+      //     state.isOnTripBottomSheetIsOpen == true) {
+      //   return SizedBox(
+      //     height: MediaQuery.of(context).size.height * 1,
+      //     child: mainHomeCubit.showDocumentUploadBottomSheet(),
+      //   );
+      // }
+      // else if (state.getUserProfileData != null &&
+      //     state.getUserProfileData!.data != null &&
+      //     state.getUserProfileData!.data!.accountStatus == 'pending' &&
+      //     state.isOnTripBottomSheetIsOpen == true) {
+      //   return SizedBox(
+      //     height: MediaQuery.of(context).size.height * 1,
+      //     child: mainHomeCubit.showAccountNotVerifiedStatusBottomSheet(),
+      //   );
     }
     return const SizedBox.shrink(); // Hide if no bottom sheet is needed
   }
@@ -315,7 +317,7 @@ class HomeWidgets {
                     ),
                     CustomSizedBox(height: 2),
                     Text(
-                      "Complete your profile",
+                      "Complete add your vehicles",
                       style: AppTextStyle.text10black0000W300,
                     ),
                   ],

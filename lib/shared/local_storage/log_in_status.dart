@@ -452,6 +452,18 @@ class LogInStatus {
     return vehicleNumber;
   }
 
+  Future<String?> getUserVehicleType() async {
+    //return stored token
+    String? vehicleType;
+    await storage
+        .read(key: 'profile_vehicle_type')
+        .then((value) => vehicleType = value.toString());
+    if (vehicleType != null) {
+      vehicleType = vehicleType!;
+    }
+    return vehicleType;
+  }
+
   Future<String?> getUserVehicleCategory() async {
     //return stored token
     String? vehicleCategory;
@@ -481,6 +493,13 @@ class LogInStatus {
         key: 'profile_vehicle_model',
         value: vehicleModel.toString(),
       );
+    }
+  }
+
+  static Future<void> setUserVehicleType({String? vehicleType}) async {
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+    if (vehicleType != null) {
+      storage.write(key: 'profile_vehicle_type', value: vehicleType.toString());
     }
   }
 

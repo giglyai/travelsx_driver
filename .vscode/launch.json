@@ -9,12 +9,12 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "program": "lib/main_bmtravels.dart",
+      "program": "lib/main_kurinjidriver.dart",
       "args": [
         "--flavor",
-        "bmdriver",
+        "kurinjidriver",
         "target",
-        "lib/main_bmtravels.dart"
+        "lib/main_kurinjidriver.dart"
       ]
     }
   ]

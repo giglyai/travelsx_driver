@@ -97,8 +97,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     Future.microtask(() async {
       await Future.wait([
         mainHomeCubit.getUserData(),
-        mainHomeCubit.getDlvyBusinessOverview(),
-
+        mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),
         mainHomeCubit.getRideHomeData(),
         mainHomeCubit.getRidesMatrix(),
@@ -127,8 +126,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     Future.microtask(() async {
       await Future.wait([
         mainHomeCubit.getUserData(),
-        mainHomeCubit.getDlvyBusinessOverview(),
-
+        mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),
         mainHomeCubit.getRideHomeData(),
         mainHomeCubit.getRidesMatrix(),
@@ -236,7 +234,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                             });
 
                             /// Fetch metrics based on the selected filter.
-                            await mainHomeCubit.getDlvyBusinessOverview(
+                            await mainHomeCubit.getDriverBusinessOverview(
                               date: selectedDate,
                             );
                           },
@@ -254,7 +252,41 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                         ),
 
                         /// Extra spacing for bottom padding.
-                        CustomSizedBox(height: 50),
+                        CustomSizedBox(height: 10),
+
+                        /// Banner indicating a missing email address.
+                        if (state
+                                .getUserProfileData
+                                ?.data
+                                ?.missingDocs
+                                ?.isEmpty ==
+                            false)
+                          HomeWidgets.missingDocumentsBanner(
+                            profileData: state.getUserProfileData,
+                            onTap: () {
+                              AnywhereDoor.pushNamed(
+                                context,
+                                routeName: RouteName.accountScreen,
+                              );
+                            },
+                          ),
+
+                        /// Extra spacing for bottom padding.
+                        CustomSizedBox(height: 10),
+
+                        /// Banner indicating a missing email address.
+                        if ((state.getUserProfileData?.data?.vehicleNumber ??
+                                '')
+                            .isEmpty)
+                          HomeWidgets.missingVehicleBanner(
+                            profileData: state.getUserProfileData,
+                            onTap: () {
+                              AnywhereDoor.pushNamed(
+                                context,
+                                routeName: RouteName.addVehicleScreen,
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -272,7 +304,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                           /// Banner indicating no new orders.
                           HomeWidgets.noNewOrder(
                             onTap: () async {
-                              await mainHomeCubit.getDlvyBusinessOverview(
+                              await mainHomeCubit.getDriverBusinessOverview(
                                 date: selectedDate,
                               );
                             },
