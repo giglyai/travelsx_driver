@@ -833,7 +833,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           //         "user_id": UserRepository.getUserID,
                           //         "lp_id": UserRepository.getLpID,
                           //         "feature": "credit-money",
-                          //         "user": "driver-ride",
+                          //         "user": AppNames.appName,
                           //         "reason": "for wallet",
                           //         "create_iso_time":
                           //             DateTime.now().toIso8601String(),

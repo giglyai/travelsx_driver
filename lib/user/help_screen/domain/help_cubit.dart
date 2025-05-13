@@ -55,7 +55,7 @@ class HelpCubit extends Cubit<HelpState> {
       final response = await HelpData.getHelpData(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: 'driver-ride',
+        user: 'travelsx-driver',
       );
       final getUserHelpData = GetUserHelpData.fromJson(response);
 

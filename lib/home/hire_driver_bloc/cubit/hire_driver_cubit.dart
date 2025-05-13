@@ -196,7 +196,7 @@ class HireDriverCubit extends Cubit<HireState> {
       final response = await HireRepository.hireDriverMutateRide(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: "driver-ride",
+        user: AppNames.appName,
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
@@ -287,7 +287,7 @@ class HireDriverCubit extends Cubit<HireState> {
       final response = await HireRepository.acceptDriverMutateRide(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: "driver-ride",
+        user: AppNames.appName,
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
@@ -1003,7 +1003,7 @@ class HireDriverCubit extends Cubit<HireState> {
       final response = await HireRepository.hireDriverMutateRide(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: "driver-ride",
+        user: AppNames.appName,
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
@@ -1131,7 +1131,7 @@ class HireDriverCubit extends Cubit<HireState> {
       final response = await HireRepository.getUpcomingOnTripRideData(
         lpId: UserRepository.getLpID ?? '',
         userId: UserRepository.getUserID ?? '',
-        user: 'driver-ride',
+        user: 'travelsx-driver',
       );
       final upcomingOntripRideRes =
           upComing.UpcomingOntripRideRes.fromJson(response);
@@ -1180,7 +1180,7 @@ class HireDriverCubit extends Cubit<HireState> {
           accountStatus: ProfileRepository.getAccountStatus ?? "",
           lpId: UserRepository.getLpID ?? "",
           userId: UserRepository.getUserID ?? "",
-          user: 'driver-ride',
+          user: 'travelsx-driver',
           countryCode: UserRepository.getCountryCode ?? "",
           currentPosition: currentPosition,
           searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
@@ -1434,7 +1434,7 @@ class HireDriverCubit extends Cubit<HireState> {
                           //       "user_id": UserRepository.getUserID,
                           //       "lp_id": UserRepository.getLpID,
                           //       "feature": "credit-money",
-                          //       "user": "driver-ride",
+                          //       "user": AppNames.appName,
                           //       "reason": "new ride",
                           //       "create_iso_time":
                           //           DateTime.now().toIso8601String(),

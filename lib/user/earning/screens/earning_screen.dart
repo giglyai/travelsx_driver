@@ -400,14 +400,14 @@ class _EarningsState extends State<Earnings>
                                       height: 20 * SizeConfig.heightMultiplier!,
                                     ),
                                     UsableRow(
-                                      title: "Total Orders",
+                                      title: "Total Rides",
                                       subTitle:
                                           state
                                               .earningModel
                                               .data
                                               ?.metrics
                                               ?.breakdown
-                                              ?.totalOrders
+                                              ?.totalRides
                                               .toString(),
                                     ),
                                     Divider(

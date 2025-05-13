@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelx_driver/main.dart';
 import 'package:travelx_driver/search-rides/screens/booking_registration/repository/booking_registration_repo.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
+import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/local_storage/user_repository.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
 import 'package:travelx_driver/shared/widgets/text_form_field/custom_textform_field.dart';
@@ -156,7 +157,7 @@ class BookingRegistrationCubit extends Cubit<BookingRegistrationState> {
           lpId: int.tryParse(UserRepository.getLpID ?? "") ?? 0,
           userId: int.tryParse(UserRepository.getUserID ?? "") ?? 0,
           phoneNumber: UserRepository.getPhoneNumber,
-          user: "driver-ride",
+          user: AppNames.appName,
           vehicleNumber: registrationNumber,
           rideId: rideId);
       final response = await BookingRegistrationRepo.uploadCarDocuments(

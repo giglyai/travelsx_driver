@@ -17,7 +17,7 @@ class SubscriptionData {
     final queryData = {
       "lp_id": lpId,
       "user_id": userId,
-      "user": 'driver-ride',
+      "user": 'travelsx-driver',
       "sub_type": "rides-count"
     };
 
@@ -49,7 +49,7 @@ class SubscriptionData {
     final body = {
       "lp_id": lpId,
       "user_id": userId,
-      "user": 'driver-ride',
+      "user": 'travelsx-driver',
       "subscription": {
         "sub_name": subName,
         "sub_plan": subPlan,

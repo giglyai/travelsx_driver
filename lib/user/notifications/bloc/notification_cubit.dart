@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 
 import '../../../shared/api_client/api_exception.dart';
 import '../../../shared/local_storage/user_repository.dart';
@@ -19,7 +20,7 @@ class NotificationCubit extends Cubit<NotificationState> {
       final response = await NotificationRepository.getRecentNotification(
           lpId: UserRepository.getLpID,
           userId: UserRepository.getUserID,
-          user: "driver-ride",
+          user: AppNames.appName,
           offset: 0,
           limit: 10);
 
@@ -45,7 +46,7 @@ class NotificationCubit extends Cubit<NotificationState> {
       final response = await NotificationRepository.getAllNotification(
           lpId: UserRepository.getLpID,
           userId: UserRepository.getUserID,
-          user: "driver-ride",
+          user: AppNames.appName,
           offset: 0,
           limit: 10);
 

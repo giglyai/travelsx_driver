@@ -45,7 +45,7 @@ class AccountCubit extends Cubit<AccountState> {
       final response = await AccountRepository.postUserData(
         lpId: int.parse(UserRepository.getLpID!),
         userId: int.parse(UserRepository.getUserID!),
-        user: 'driver-ride',
+        user: 'travelsx-driver',
         firstName: firstName ?? "",
         lastName: lastName ?? "",
         email: email ?? "",
@@ -67,7 +67,7 @@ class AccountCubit extends Cubit<AccountState> {
       final response = await AccountRepository.getProfileData(
           lpId: UserRepository.getLpID,
           userId: UserRepository.getUserID,
-          user: 'driver-ride',
+          user: 'travelsx-driver',
           phoneNumber: UserRepository.getPhoneNumber ?? "",
           countryCode: UserRepository.getCountryCode ?? "");
       getUserProfileData = GetUserProfileData.fromJson(response);
@@ -87,7 +87,7 @@ class AccountCubit extends Cubit<AccountState> {
       final response = await AccountRepository.getVehicleListData(
           lpId: UserRepository.getLpID,
           userId: UserRepository.getUserID,
-          user: 'driver-ride',
+          user: 'travelsx-driver',
           phoneNumber: UserRepository.getPhoneNumber ?? "",
           countryCode: UserRepository.getCountryCode ?? "");
       vehicleInformationList = VehicleListModel.fromJson(response);
@@ -109,7 +109,7 @@ class AccountCubit extends Cubit<AccountState> {
           lpId: int.tryParse(UserRepository.getLpID ?? "") ?? 0,
           userId: int.tryParse(UserRepository.getUserID ?? "") ?? 0,
           phoneNumber: UserRepository.getPhoneNumber,
-          user: "driver-ride");
+          user: AppNames.appName);
 
       final response = await AccountRepository.uploadProfileImg(
           params: params, imagePath: imagePath);
@@ -250,7 +250,7 @@ class AccountCubit extends Cubit<AccountState> {
       final response = await AccountRepository.deleteAccountData(
           lpId: int.parse(UserRepository.getLpID ?? ""),
           userId: int.parse(UserRepository.getUserID ?? ""),
-          user: 'driver-ride');
+          user: 'travelsx-driver');
 
       final AccountDeleteRes accountDeleteData =
           AccountDeleteRes.fromJson(response);

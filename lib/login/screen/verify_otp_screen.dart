@@ -5,8 +5,10 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelx_driver/config/config.dart';
+import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
+import 'package:travelx_driver/shared/utils/image_loader/image_loader.dart';
 import 'package:travelx_driver/shared/widgets/ride_back_button/ride_back_button.dart';
 
 import '../../../../shared/constants/app_colors/app_colors.dart';
@@ -128,28 +130,18 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
                 const Spacer(),
 
-                // if (F.appFlavor == Flavor.apparelsxpartner)
-
-                //   /// Apparelsx partner logo.
-                //   ImageLoader.assetImage(
-                //     imagePath: ImagePath.apparelsxPartnerLogo,
-                //     height: 110 * SizeConfig.heightMultiplier!,
-                //     width: 210 * SizeConfig.widthMultiplier!,
-                //   )
-                // else if (F.appFlavor == Flavor.bakerpartner)
-
-                //   /// Baker partner logo.
-                //   ImageLoader.assetImage(
-                //     imagePath: ImagePath.bakerPartnerLogo,
-                //     height: 110 * SizeConfig.heightMultiplier!,
-                //     width: 210 * SizeConfig.widthMultiplier!,
-                //   )
-                // else
-                //   ImageLoader.assetImage(
-                //     imagePath: ImagePath.bakerPartnerLogo,
-                //     height: 110 * SizeConfig.heightMultiplier!,
-                //     width: 210 * SizeConfig.widthMultiplier!,
-                //   ),
+                if (F.appFlavor == Flavor.kurinjidriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashKurinjiIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
+                else
+                  ImageLoader.svgPictureAssetImage(
+                    imagePath: ImagePath.giglyDriverSplashLogoFinal,
+                    height: 110 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  ),
                 const Spacer(),
 
                 Column(

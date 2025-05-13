@@ -23,6 +23,7 @@ import 'package:travelx_driver/home/screen/ride.dart';
 import 'package:travelx_driver/home/widget/cancel_trip_dialog/cancel_trip_dialog.dart';
 import 'package:travelx_driver/main.dart';
 import 'package:travelx_driver/shared/api_client/api_exception.dart';
+import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/routes/api_routes.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
@@ -70,7 +71,7 @@ class HomeCubit extends Cubit<HomeState> {
         onlineStatus: availabilityStatus,
         deviceToken: UserRepository.getDeviceToken ?? "",
         phoneNumber: UserRepository.getPhoneNumber ?? "",
-        user: "driver-ride",
+        user: AppNames.appName,
         rideStatus: true,
       );
       if (response.isNotEmpty) {
@@ -222,7 +223,7 @@ class HomeCubit extends Cubit<HomeState> {
       final response = await HomeRepository.fetchManualRides(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: 'driver-ride',
+        user: 'travelsx-driver',
         countryCode: UserRepository.getCountryCode ?? "",
         currentPosition: currentPosition,
         searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
@@ -258,7 +259,7 @@ class HomeCubit extends Cubit<HomeState> {
       final response = await HomeRepository.fetchManualRides(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: 'driver-ride',
+        user: 'travelsx-driver',
         countryCode: UserRepository.getCountryCode ?? "",
         currentPosition: currentPosition,
         searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
@@ -498,7 +499,7 @@ class HomeCubit extends Cubit<HomeState> {
       final response = await HomeRepository.mutateRideStatus(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: "driver-ride",
+        user: AppNames.appName,
         firstName: ProfileRepository.getFirstName ?? '',
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
@@ -580,7 +581,7 @@ class HomeCubit extends Cubit<HomeState> {
       final response = await HomeRepository.mutateRideStatus(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
-        user: "driver-ride",
+        user: AppNames.appName,
         firstName: ProfileRepository.getFirstName ?? '',
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
@@ -668,7 +669,7 @@ class HomeCubit extends Cubit<HomeState> {
   //     final response = await HomeRepository.getUpcomingOnTripRideData(
   //       lpId: UserRepository.getLpID ?? '',
   //       userId: UserRepository.getUserID ?? '',
-  //       user: 'driver-ride',
+  //       user: 'travelsx-driver',
   //     );
   //
   //     // Ensure the 'data' key exists in the response

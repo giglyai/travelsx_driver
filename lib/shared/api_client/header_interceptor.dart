@@ -65,7 +65,7 @@ class AuthInterceptor extends QueuedInterceptor {
     Map<String, dynamic> tempHeader = {
       'accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Request-Source': 'driver-ride-flutter'
+      'X-Request-Source': 'travelsx-driver-flutter'
 
     };
     //Add other header params if passed

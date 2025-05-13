@@ -87,15 +87,15 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kWheatF5DEB3,
+      backgroundColor: AppColors.kWhite,
       body: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
-              // image: DecorationImage(
-              //   image: AssetImage(ImagePath.splashScreenBack),
-              //   fit: BoxFit.cover,
-              // ),
+              image: DecorationImage(
+                image: AssetImage(ImagePath.splashBackground),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
 

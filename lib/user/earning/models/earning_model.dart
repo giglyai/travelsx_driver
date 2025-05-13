@@ -104,19 +104,19 @@ class Metrics {
 class Breakdown {
   int? totalAmount;
   String? currency;
-  int? totalOrders;
+  int? totalRides;
 
-  Breakdown({this.totalAmount, this.currency, this.totalOrders});
+  Breakdown({this.totalAmount, this.currency, this.totalRides});
 
   factory Breakdown.fromJson(Map<String, dynamic> json) => Breakdown(
     totalAmount: json["total_amount"],
     currency: json["currency"],
-    totalOrders: json["total_orders"],
+    totalRides: json["total_rides"],
   );
 
   Map<String, dynamic> toJson() => {
     "total_amount": totalAmount,
     "currency": currency,
-    "total_orders": totalOrders,
+    "total_rides": totalRides,
   };
 }

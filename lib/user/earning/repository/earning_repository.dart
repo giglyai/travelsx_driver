@@ -18,7 +18,7 @@ class EarningRepository {
     final queryData = {
       "lp_id": lpId,
       "user_id": userId,
-      "user": 'driver-ride',
+      "user": 'travelsx-driver',
       "date_filter": dateFilter,
       // "date_range": dateRange,
       "offset": offset,

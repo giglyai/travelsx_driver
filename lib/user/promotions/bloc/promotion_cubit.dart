@@ -22,7 +22,7 @@ class PromotionCubit extends Cubit<PromotionState> {
       final response = await PromotionRepository.activePromotion(
         lpId: UserRepository.getLpID,
         userId: UserRepository.getUserID,
-        user: 'driver-ride',
+        user: 'travelsx-driver',
         currentPosition: currentPosition,
         offset: 0,
         limit: 20,
@@ -49,7 +49,7 @@ class PromotionCubit extends Cubit<PromotionState> {
       final response = await PromotionRepository.completedPromotion(
         lpId: UserRepository.getLpID,
         userId: UserRepository.getUserID,
-        user: 'driver-ride',
+        user: 'travelsx-driver',
         currentPosition: currentPosition,
         offset: 0,
         limit: 20,

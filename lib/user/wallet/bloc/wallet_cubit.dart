@@ -16,7 +16,7 @@ class WalletCubit extends Cubit<WalletState> {
       final response = await WalletRepository.getWalletData(
         lpId: UserRepository.getLpID,
         userId: UserRepository.getUserID,
-        user: 'driver-ride',
+        user: 'travelsx-driver',
         dateFilter: dateFilter ?? "This Week",
         // dateRange: "28-05-2023,31-05-2023",
       );

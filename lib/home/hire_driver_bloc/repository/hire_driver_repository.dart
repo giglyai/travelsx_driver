@@ -16,7 +16,7 @@ class HireRepository {
   //   final queryData = {
   //     "lp_id": lpId,
   //     "user_id": userId,
-  //     "user": "driver-ride",
+  //     "user": AppNames.appName,
   //     "trip_status": "accepted",
   //     "latitude": currentPosition.latitude,
   //     "longitude": currentPosition.longitude,

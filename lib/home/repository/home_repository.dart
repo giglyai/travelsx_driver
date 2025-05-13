@@ -2,6 +2,7 @@ import 'package:travelx_driver/global_variables.dart';
 import 'package:travelx_driver/home/models/position_data_model.dart';
 import 'package:travelx_driver/home/models/post_userdata_params.dart';
 import 'package:travelx_driver/home/models/ride_response_model.dart' as user;
+import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/routes/api_routes.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -10,13 +11,16 @@ import '../../shared/api_client/api_client.dart';
 class HomeRepository {
   static String? refreshToken;
   static Future<Map<String, dynamic>> postUserData(
-      PostUserDataParams params) async {
-    final response = await ApiClient()
-        .postLocations(ApiRoutes.updateUserLocation, body: params.toJson());
+    PostUserDataParams params,
+  ) async {
+    final response = await ApiClient().postLocations(
+      ApiRoutes.updateUserLocation,
+      body: params.toJson(),
+    );
     return response as Map<String, dynamic>;
   }
 
-   static Future<Map<String, dynamic>> getRideHomeData({
+  static Future<Map<String, dynamic>> getRideHomeData({
     required LatLng currentPosition,
     required lpId,
     required userId,
@@ -31,13 +35,14 @@ class HomeRepository {
       "user_id": userId,
       "latitude": currentPosition.latitude,
       "longitude": currentPosition.longitude,
-      "user": "driver-ride"
+      "user": AppNames.appName,
     };
 
     final response = await ApiClient().getWithoutBottomSheet(
-        ApiRoutes.getDriverRideHomeData,
-        headers: requestHeaders,
-        queryParams: queryData);
+      ApiRoutes.getDriverRideHomeData,
+      headers: requestHeaders,
+      queryParams: queryData,
+    );
 
     return response as Map<String, dynamic>;
   }
@@ -68,17 +73,18 @@ class HomeRepository {
     return response as Map<String, dynamic>;
   }
 
-  static Future<Map<String, dynamic>> fetchRides(
-      {required String lpId,
-      required String userId,
-      required String countryCode,
-      required LatLng currentPosition,
-      required int searchRadius,
-      required String unit,
-      required String profile,
-      required String accountStatus,
-      required String url,
-      required String vechileType}) async {
+  static Future<Map<String, dynamic>> fetchRides({
+    required String lpId,
+    required String userId,
+    required String countryCode,
+    required LatLng currentPosition,
+    required int searchRadius,
+    required String unit,
+    required String profile,
+    required String accountStatus,
+    required String url,
+    required String vechileType,
+  }) async {
     final queryData = {
       "lp_id": lpId,
       "user_id": userId,
@@ -90,7 +96,7 @@ class HomeRepository {
       "vehicle_type": vechileType,
       "account_status": accountStatus,
       "ride_type": "all",
-      "ride_date": "today"
+      "ride_date": "today",
     };
     final response = await ApiClient().get(url, queryParams: queryData);
     return response as Map<String, dynamic>;
@@ -136,8 +142,10 @@ class HomeRepository {
     required String userId,
   }) async {
     final queryData = {"lp_id": lpId, "user_id": userId};
-    final response = await ApiClient()
-        .get(ApiRoutes.getTripsMetrics, queryParams: queryData);
+    final response = await ApiClient().get(
+      ApiRoutes.getTripsMetrics,
+      queryParams: queryData,
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -156,8 +164,10 @@ class HomeRepository {
       "offset": offSet,
       "limit": limit,
     };
-    final response = await ApiClient()
-        .get(ApiRoutes.activeRidePromotion, queryParams: queryData);
+    final response = await ApiClient().get(
+      ApiRoutes.activeRidePromotion,
+      queryParams: queryData,
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -170,18 +180,20 @@ class HomeRepository {
     required String phoneNumber,
     required bool rideStatus,
   }) async {
-    final response =
-        await ApiClient().postLocations(ApiRoutes.toggleDriverStatus, body: {
-      "lp_id": lpId,
-      "user_id": userId,
-      "user": user,
-      "device_token": deviceToken,
-      "phone_number": phoneNumber,
-      "profile": {
-        "online_status": onlineStatus ? "ON" : "OFF",
-        "ride_status": rideStatus ? "ON" : "OFF",
+    final response = await ApiClient().postLocations(
+      ApiRoutes.toggleDriverStatus,
+      body: {
+        "lp_id": lpId,
+        "user_id": userId,
+        "user": user,
+        "device_token": deviceToken,
+        "phone_number": phoneNumber,
+        "profile": {
+          "online_status": onlineStatus ? "ON" : "OFF",
+          "ride_status": rideStatus ? "ON" : "OFF",
+        },
       },
-    });
+    );
     if (response is Map) {
       return response as Map<String, dynamic>;
     }
@@ -194,14 +206,17 @@ class HomeRepository {
     required bool deliveryStatus,
     required bool onlineStatus,
   }) async {
-    final response = await ApiClient().post(ApiRoutes.updateUserDetail, body: {
-      "profile": {
-        "online_status": onlineStatus ? "ON" : "OFF",
-        "ride_status": rideStatus ? "ON" : "OFF",
-        "delivery_status": deliveryStatus ? "ON" : "OFF",
+    final response = await ApiClient().post(
+      ApiRoutes.updateUserDetail,
+      body: {
+        "profile": {
+          "online_status": onlineStatus ? "ON" : "OFF",
+          "ride_status": rideStatus ? "ON" : "OFF",
+          "delivery_status": deliveryStatus ? "ON" : "OFF",
+        },
+        "phone_number": phoneNumber,
       },
-      "phone_number": phoneNumber
-    });
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -231,7 +246,7 @@ class HomeRepository {
   //     "trip_id": tripId,
   //     "lp_id": lpId,
   //     "user_id": userId,
-  //     "user": 'driver-ride',
+  //     "user": 'travelsx-driver',
   //     "position": position.toJson(),
   //     "delivery_id": deliveryId,
   //     "rate_id": priceId,
@@ -262,26 +277,28 @@ class HomeRepository {
     user.User? userData,
     user.Payment? payment,
   }) async {
-    final response = await ApiClient().post(ApiRoutes.mutateRides,
-        body: {
-          "lp_id": lpId,
-          "user_id": userId,
-          "user": user,
-          "first_name": firstName,
-          "phone_number": phoneNumber,
-          "position": position.toJson(),
-          "device_token": deviceToken,
-          "vehicle_model": vehicleModel,
-          "vehicle_name": vehicleName,
-          "vehicle_number": vehicleNumber,
-          "ride_id": rideID,
-          "ride_status": rideStatus,
-          "mutation_reason": mutationReason,
-          "ride_user": userData?.toJson(),
-          "payment": payment?.toJson(),
-          "mute_ride_for": bookedFor
-        },
-        headers: header);
+    final response = await ApiClient().post(
+      ApiRoutes.mutateRides,
+      body: {
+        "lp_id": lpId,
+        "user_id": userId,
+        "user": user,
+        "first_name": firstName,
+        "phone_number": phoneNumber,
+        "position": position.toJson(),
+        "device_token": deviceToken,
+        "vehicle_model": vehicleModel,
+        "vehicle_name": vehicleName,
+        "vehicle_number": vehicleNumber,
+        "ride_id": rideID,
+        "ride_status": rideStatus,
+        "mutation_reason": mutationReason,
+        "ride_user": userData?.toJson(),
+        "payment": payment?.toJson(),
+        "mute_ride_for": bookedFor,
+      },
+      headers: header,
+    );
 
     return response as Map<String, dynamic>;
   }
@@ -321,19 +338,23 @@ class HomeRepository {
   //   return response as Map<String, dynamic>;
   // }
 
-  static Future<Map<String, dynamic>> getTripFullRoute(
-      {required String lpId,
-      required String userId,
-      required String deliveryId,
-      required DriverPosition position,
-      required String url}) async {
-    final response = await ApiClient().get(url, queryParams: {
-      "lp_id": lpId,
-      "user_id": userId,
-      "ride_ids": deliveryId,
-      "latitude": position.latitude,
-      "longitude": position.longitude
-    });
+  static Future<Map<String, dynamic>> getTripFullRoute({
+    required String lpId,
+    required String userId,
+    required String deliveryId,
+    required DriverPosition position,
+    required String url,
+  }) async {
+    final response = await ApiClient().get(
+      url,
+      queryParams: {
+        "lp_id": lpId,
+        "user_id": userId,
+        "ride_ids": deliveryId,
+        "latitude": position.latitude,
+        "longitude": position.longitude,
+      },
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -353,18 +374,21 @@ class HomeRepository {
   //   return response as Map<String, dynamic>;
   // }
 
-  static Future<Map<String, dynamic>> getDistanceMetrix(
-      {required bool onRoute,
-      required DriverPosition sourceLatLng,
-      required DriverPosition destinationLatLng}) async {
-    final response =
-        await ApiClient().get(ApiRoutes.getDirectionDistance, queryParams: {
-      'source_lat': sourceLatLng.latitude,
-      'source_lng': sourceLatLng.longitude,
-      'dest_lat': destinationLatLng.latitude,
-      'dest_lng': destinationLatLng.longitude,
-      'on_route': onRoute
-    });
+  static Future<Map<String, dynamic>> getDistanceMetrix({
+    required bool onRoute,
+    required DriverPosition sourceLatLng,
+    required DriverPosition destinationLatLng,
+  }) async {
+    final response = await ApiClient().get(
+      ApiRoutes.getDirectionDistance,
+      queryParams: {
+        'source_lat': sourceLatLng.latitude,
+        'source_lng': sourceLatLng.longitude,
+        'dest_lat': destinationLatLng.latitude,
+        'dest_lng': destinationLatLng.longitude,
+        'on_route': onRoute,
+      },
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -373,12 +397,10 @@ class HomeRepository {
     required String userId,
     required String user,
   }) async {
-    final response =
-        await ApiClient().get(ApiRoutes.getUpcomingOnTripRide, queryParams: {
-      'lp_id': lpId,
-      'user_id': userId,
-      'user': user,
-    });
+    final response = await ApiClient().get(
+      ApiRoutes.getUpcomingOnTripRide,
+      queryParams: {'lp_id': lpId, 'user_id': userId, 'user': user},
+    );
     return response as Map<String, dynamic>;
   }
 
@@ -393,16 +415,19 @@ class HomeRepository {
     required String perUnitRate,
     required String currency,
   }) async {
-    final response = await ApiClient().post(ApiRoutes.updateDriverRate, body: {
-      "lp_id": lpId,
-      "user_id": userId,
-      "ride_type": rideType,
-      "vehicle_type": vehicleType,
-      "base_distance": baseDistance,
-      "base_rate": baseRate,
-      "per_unit_rate": perUnitRate,
-      "currency": currency,
-    });
+    final response = await ApiClient().post(
+      ApiRoutes.updateDriverRate,
+      body: {
+        "lp_id": lpId,
+        "user_id": userId,
+        "ride_type": rideType,
+        "vehicle_type": vehicleType,
+        "base_distance": baseDistance,
+        "base_rate": baseRate,
+        "per_unit_rate": perUnitRate,
+        "currency": currency,
+      },
+    );
     if (response is Map) {
       return response as Map<String, dynamic>;
     }
@@ -412,12 +437,10 @@ class HomeRepository {
   static Future<Map<String, dynamic>> getAppVersion({
     required String appName,
   }) async {
-    final response = await ApiClient()
-        .getWithoutBottomSheet(ApiRoutes.appVersion, queryParams: {
-      "app_name": appName,
-    });
+    final response = await ApiClient().getWithoutBottomSheet(
+      ApiRoutes.appVersion,
+      queryParams: {"app_name": appName},
+    );
     return response as Map<String, dynamic>;
   }
 }
-
-
