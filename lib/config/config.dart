@@ -6,7 +6,7 @@ class AppConfig {
   static String getClientToken() {
     // Make it a static method for easy access
     if (F.appFlavor == Flavor.kurinjidriver) {
-      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cHBvcnRAZ2lnbHkuY29tIiwibmFtZSI6InRyYXZlbHN4LWRyaXZlciIsImxwX2lkIjo3OTA0NjYsImFnZ3JfaWQiOjc5MDQ2NiwiaWF0IjoxNzQ3MTAxNjQ1fQ.r_iHceVX-MhbNJ_PMZPK6cU4-cWokJuq7rkEjV47b5M";
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt1cmluamljYWxsdGF4aUBnbWFpbC5jb20iLCJuYW1lIjoia3VyaW5qaS1kcml2ZXIiLCJscF9pZCI6MjIwMzEzLCJhZ2dyX2lkIjoyMjAzMTMsImlhdCI6MTc0NzIyOTU0Nn0.QLxecGPl13d2CJuTLZvF4U-fAjbP1F1vZfj6UmWIalQ";
     } else {
       return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdpZ2x5LmNvbSIsImxwX2lkIjoxMTYwMDAsImlhdCI6MTcwMDkxMzk5M30.V3KojO1yE7CN-jTm1Go3fU-TxmzEvgy8-MPMjvyNvK0';
     }
