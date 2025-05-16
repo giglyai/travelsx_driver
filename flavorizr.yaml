@@ -6,3 +6,10 @@ flavors:
       applicationId: "com.travelx.driver.kurinji"
     ios:
       bundleId: "com.travelx.driver.kurinji"
+  travelsxdriver:
+    app:
+      name: "TravelsX Driver"
+    android:
+      applicationId: "com.travelx.driver"
+    ios:
+      bundleId: "com.travelx.driver"

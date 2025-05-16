@@ -8,6 +8,9 @@ project 'Runner', {
   'Debug-kurinjidriver' => :debug,
   'Profile-kurinjidriver' => :release,
   'Release-kurinjidriver' => :release,
+  'Debug-travelsxdriver' => :debug,
+  'Profile-travelsxdriver' => :release,
+  'Release-travelsxdriver' => :release,
 }
 
 def flutter_root

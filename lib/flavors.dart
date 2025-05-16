@@ -1,5 +1,6 @@
 enum Flavor {
   kurinjidriver,
+  travelsxdriver,
 }
 
 class F {
@@ -11,6 +12,8 @@ class F {
     switch (appFlavor) {
       case Flavor.kurinjidriver:
         return 'Kurinji Driver';
+      case Flavor.travelsxdriver:
+        return 'TravelsX Driver';
       default:
         return 'title';
     }

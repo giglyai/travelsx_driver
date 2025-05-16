@@ -130,6 +130,12 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                     height: 200 * SizeConfig.heightMultiplier!,
                     width: 196 * SizeConfig.widthMultiplier!,
                   )
+                else if (F.appFlavor == Flavor.travelsxdriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashTravelsxIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
                 else
                   ImageLoader.svgPictureAssetImage(
                     imagePath: ImagePath.giglyDriverSplashLogoFinal,

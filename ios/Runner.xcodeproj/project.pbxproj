@@ -18,10 +18,13 @@
 		337E7B3553EF1047CDB9561A /* jppdriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B57E4BD80DA96FD6B354600D /* jppdriverRelease.xcconfig */; };
 		394D0A7453AB6B71F63E8916 /* giglyaidriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339D4BCA83F635733FFA4FC3 /* giglyaidriverLaunchScreen.storyboard */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
+		3C6EEF5D0B36875D1B5B9CAC /* travelsxdriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C6743D4536375E6F87096AEF /* travelsxdriverDebug.xcconfig */; };
 		5FF1CCC7186283BFC71E1D62 /* kurinjidriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D09FB0DE5B416671968517BE /* kurinjidriverDebug.xcconfig */; };
+		60D6A2651B4555A854FE72CE /* travelsxdriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 036215E82EE61EA177D4E06B /* travelsxdriverProfile.xcconfig */; };
 		615C3B03A67AB545FE595347 /* jppdriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4597A76C3F940CCCD7BFB0B2 /* jppdriverLaunchScreen.storyboard */; };
 		67DE22F2DF06E7B5EF7C8C3A /* prithvidriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 34B223B4D0881D74224C66BB /* prithvidriverProfile.xcconfig */; };
 		6E8F6DCF24CA7D721FA8121D /* bmdriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9E51330B8A40C3E6E1115E72 /* bmdriverProfile.xcconfig */; };
+		6E9BE5E4A57302F84A1DD23B /* travelsxdriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65350683ECAECC06213B7DCC /* travelsxdriverLaunchScreen.storyboard */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		8268D81AB96F67700FC5AE9C /* kurinjidriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CF13652A6C63369437BF87 /* kurinjidriverLaunchScreen.storyboard */; };
 		8CD903F6392E9F1F75AB1FC1 /* oorugodriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5F39F905356001A492516F1 /* oorugodriverLaunchScreen.storyboard */; };
@@ -38,6 +41,7 @@
 		DBCAC3A3B375B9E7E711E7F8 /* jppdriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CEEC9F24CF2173430E6AD808 /* jppdriverProfile.xcconfig */; };
 		DE5A58A35A73F35F98066FC2 /* oorugodriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3F53CBA4E78F8044301EF4FD /* oorugodriverProfile.xcconfig */; };
 		E6E41C738CF76AD456BF4A62 /* giglyaidriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0D4B7ECC147B17584897A66D /* giglyaidriverDebug.xcconfig */; };
+		EAF91BC5EA204947132BBFF6 /* travelsxdriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 83EDA4A4B63A2F6292CDE9E7 /* travelsxdriverRelease.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +68,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		036215E82EE61EA177D4E06B /* travelsxdriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = travelsxdriverProfile.xcconfig; path = Flutter/travelsxdriverProfile.xcconfig; sourceTree = "<group>"; };
 		0D4B7ECC147B17584897A66D /* giglyaidriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = giglyaidriverDebug.xcconfig; path = Flutter/giglyaidriverDebug.xcconfig; sourceTree = "<group>"; };
 		100ED29DC7B931E149748D6E /* bmdriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = bmdriverLaunchScreen.storyboard; path = Runner/bmdriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
@@ -78,11 +83,13 @@
 		3F53CBA4E78F8044301EF4FD /* oorugodriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = oorugodriverProfile.xcconfig; path = Flutter/oorugodriverProfile.xcconfig; sourceTree = "<group>"; };
 		4597A76C3F940CCCD7BFB0B2 /* jppdriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = jppdriverLaunchScreen.storyboard; path = Runner/jppdriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A1B29B908CBCA0CD7E67326 /* jppdriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = jppdriverDebug.xcconfig; path = Flutter/jppdriverDebug.xcconfig; sourceTree = "<group>"; };
+		65350683ECAECC06213B7DCC /* travelsxdriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = travelsxdriverLaunchScreen.storyboard; path = Runner/travelsxdriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77CF13652A6C63369437BF87 /* kurinjidriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = kurinjidriverLaunchScreen.storyboard; path = Runner/kurinjidriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7EAA0BC7122AD92EB4767A7C /* bmdriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = bmdriverRelease.xcconfig; path = Flutter/bmdriverRelease.xcconfig; sourceTree = "<group>"; };
+		83EDA4A4B63A2F6292CDE9E7 /* travelsxdriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = travelsxdriverRelease.xcconfig; path = Flutter/travelsxdriverRelease.xcconfig; sourceTree = "<group>"; };
 		899C128893123CD9E6351BCA /* prithvidriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = prithvidriverDebug.xcconfig; path = Flutter/prithvidriverDebug.xcconfig; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
@@ -95,6 +102,7 @@
 		B57E4BD80DA96FD6B354600D /* jppdriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = jppdriverRelease.xcconfig; path = Flutter/jppdriverRelease.xcconfig; sourceTree = "<group>"; };
 		B6DA0FF87A7DE05ECB88858D /* kurinjidriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = kurinjidriverProfile.xcconfig; path = Flutter/kurinjidriverProfile.xcconfig; sourceTree = "<group>"; };
 		BBBBA7689FD97BF9203B7751 /* oorugodriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = oorugodriverDebug.xcconfig; path = Flutter/oorugodriverDebug.xcconfig; sourceTree = "<group>"; };
+		C6743D4536375E6F87096AEF /* travelsxdriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = travelsxdriverDebug.xcconfig; path = Flutter/travelsxdriverDebug.xcconfig; sourceTree = "<group>"; };
 		CEE3CCB72DC75B9C0647ADF7 /* giglyaidriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = giglyaidriverRelease.xcconfig; path = Flutter/giglyaidriverRelease.xcconfig; sourceTree = "<group>"; };
 		CEEC9F24CF2173430E6AD808 /* jppdriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = jppdriverProfile.xcconfig; path = Flutter/jppdriverProfile.xcconfig; sourceTree = "<group>"; };
 		CFF1CAE959A9F556CC5331C4 /* oorugodriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = oorugodriverRelease.xcconfig; path = Flutter/oorugodriverRelease.xcconfig; sourceTree = "<group>"; };
@@ -149,6 +157,9 @@
 				0D4B7ECC147B17584897A66D /* giglyaidriverDebug.xcconfig */,
 				FADD4E10FBCA3E8205E6CEF3 /* giglyaidriverProfile.xcconfig */,
 				CEE3CCB72DC75B9C0647ADF7 /* giglyaidriverRelease.xcconfig */,
+				C6743D4536375E6F87096AEF /* travelsxdriverDebug.xcconfig */,
+				036215E82EE61EA177D4E06B /* travelsxdriverProfile.xcconfig */,
+				83EDA4A4B63A2F6292CDE9E7 /* travelsxdriverRelease.xcconfig */,
 			);
 			name = Flutter;
 			sourceTree = "<group>";
@@ -166,6 +177,7 @@
 				EE9A178CBFB38C2836D32B9E /* prithvidriverLaunchScreen.storyboard */,
 				4597A76C3F940CCCD7BFB0B2 /* jppdriverLaunchScreen.storyboard */,
 				339D4BCA83F635733FFA4FC3 /* giglyaidriverLaunchScreen.storyboard */,
+				65350683ECAECC06213B7DCC /* travelsxdriverLaunchScreen.storyboard */,
 			);
 			sourceTree = "<group>";
 		};
@@ -312,6 +324,10 @@
 				1ADE11E2854C2E7FAF57B958 /* prithvidriverLaunchScreen.storyboard in Resources */,
 				615C3B03A67AB545FE595347 /* jppdriverLaunchScreen.storyboard in Resources */,
 				394D0A7453AB6B71F63E8916 /* giglyaidriverLaunchScreen.storyboard in Resources */,
+				3C6EEF5D0B36875D1B5B9CAC /* travelsxdriverDebug.xcconfig in Resources */,
+				60D6A2651B4555A854FE72CE /* travelsxdriverProfile.xcconfig in Resources */,
+				EAF91BC5EA204947132BBFF6 /* travelsxdriverRelease.xcconfig in Resources */,
+				6E9BE5E4A57302F84A1DD23B /* travelsxdriverLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1313,6 +1329,76 @@
 			};
 			name = "Profile-oorugodriver";
 		};
+		7443EEF8AF4628A27DA2346E /* Profile-travelsxdriver */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 036215E82EE61EA177D4E06B /* travelsxdriverProfile.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelx.driver;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Profile-travelsxdriver";
+		};
 		8142B841B829B102544FABD4 /* Release-jppdriver */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B57E4BD80DA96FD6B354600D /* jppdriverRelease.xcconfig */;
@@ -1833,6 +1919,81 @@
 			};
 			name = "Debug-kurinjidriver";
 		};
+		BB164A0C1B79E91F7D0B1BC8 /* Debug-travelsxdriver */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6743D4536375E6F87096AEF /* travelsxdriverDebug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelx.driver;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-travelsxdriver";
+		};
 		BD03CD63BFF8115F1B22F23F /* Debug-jppdriver */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4A1B29B908CBCA0CD7E67326 /* jppdriverDebug.xcconfig */;
@@ -1907,6 +2068,78 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Debug-jppdriver";
+		};
+		BED732278CCEF20262644B18 /* Release-travelsxdriver */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83EDA4A4B63A2F6292CDE9E7 /* travelsxdriverRelease.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelx.driver;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-travelsxdriver";
 		};
 		C18709C6D0FAA039EEEB71E8 /* Profile-bmdriver */ = {
 			isa = XCBuildConfiguration;
@@ -2015,6 +2248,9 @@
 				5BF76550DF41AD732152EB81 /* Debug-giglyaidriver */,
 				5847215C1A1016EB09F41C00 /* Profile-giglyaidriver */,
 				207BA3C8027E9C1CD2CA0428 /* Release-giglyaidriver */,
+				BB164A0C1B79E91F7D0B1BC8 /* Debug-travelsxdriver */,
+				7443EEF8AF4628A27DA2346E /* Profile-travelsxdriver */,
+				BED732278CCEF20262644B18 /* Release-travelsxdriver */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

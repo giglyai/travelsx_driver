@@ -11,6 +11,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:travelx_driver/config/firebase/firebase_options_kurinjidriver.dart';
+import 'package:travelx_driver/config/firebase/firebase_options_travelsxdriver.dart';
 import 'package:travelx_driver/core/remote_config/remote_config.dart';
 import 'package:travelx_driver/documents/bloc/document_cubit.dart';
 import 'package:travelx_driver/firebase_options.dart';
@@ -53,14 +55,15 @@ Future<void> main({Flavor? flavor}) async {
   if (flavor == Flavor.kurinjidriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
+        options: KurinjiDriverFirebaseOptions.currentPlatform,
       );
     }
-  } else {
+  }
+  if (flavor == Flavor.travelsxdriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         name: "travelx-driver",
-        options: DefaultFirebaseOptions.currentPlatform,
+        options: TravelsXDriverFirebaseOptions.currentPlatform,
       );
     }
   }
