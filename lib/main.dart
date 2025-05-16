@@ -62,7 +62,6 @@ Future<void> main({Flavor? flavor}) async {
   if (flavor == Flavor.travelsxdriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
-        name: "travelx-driver",
         options: TravelsXDriverFirebaseOptions.currentPlatform,
       );
     }
