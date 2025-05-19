@@ -48,7 +48,7 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  Timer.periodic(const Duration(minutes: 1), (timer) async {
+  Timer.periodic(const Duration(seconds: 30), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         print("forground service running");
@@ -58,8 +58,10 @@ void onStart(ServiceInstance service) async {
 
         if (F.appFlavor == Flavor.kurinjidriver) {
           title = "Kurinji Driver";
+        } else if (F.appFlavor == Flavor.travelsxdriver) {
+          title = "TravelsX Driver";
         } else {
-          title = "Gigly Driver";
+          title = "TravelsX Driver";
         }
 
         service.setForegroundNotificationInfo(title: title, content: "Running");
@@ -68,24 +70,14 @@ void onStart(ServiceInstance service) async {
         String title;
         if (F.appFlavor == Flavor.kurinjidriver) {
           title = "Kurinji Driver";
+        } else if (F.appFlavor == Flavor.travelsxdriver) {
+          title = "TravelsX Driver";
         } else {
-          title = "Gigly Driver";
+          title = "TravelsX Driver";
         }
 
         service.setForegroundNotificationInfo(title: title, content: "Running");
         await HomeCubit().postUserCurrentLocation(source: "bg_service");
-        // service.setForegroundNotificationInfo(
-        //     title: F.appFlavor == Flavor.bmdriver
-        //         ? "BM Driver Service"
-        //         : F.appFlavor == Flavor.oorugodriver
-        //             ? "Oorugo Driver Service"
-        //             : F.appFlavor == Flavor.prithvidriver
-        //                 ? "Prithvi Driver"
-        //                 : F.appFlavor == Flavor.jppdriver
-        //                     ? "JPP Driver"
-        //                     : "Gigly Driver",
-        //     content: "Running");
-        // await HomeCubit().postUserCurrentLocation(source: "bg_service");
       }
     } else if (service is IOSServiceInstance) {
       print("iOS background service is running");

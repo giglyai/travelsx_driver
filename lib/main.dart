@@ -114,6 +114,8 @@ Future<void> main({Flavor? flavor}) async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+  initializeBackgroundService();
+
   runApp(const MyApp());
 }
 
