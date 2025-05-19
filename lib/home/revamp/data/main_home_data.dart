@@ -8,6 +8,25 @@ import 'package:travelx_driver/shared/routes/api_routes.dart';
 import '../../hire_driver_bloc/entity/accepted_hire_ride.dart';
 
 class MainHomeData {
+  static Future<Map<String, dynamic>> updateDeviceToken({
+    required int lpId,
+    required int userId,
+    required String user,
+    String? deviceToken,
+  }) async {
+    final response = await ApiClient().post(
+      ApiRoutes.accountUpdate,
+      body: {
+        "lp_id": lpId,
+        "user_id": userId,
+        "user": user,
+        "device_token": deviceToken ?? '',
+      },
+    );
+
+    return response as Map<String, dynamic>;
+  }
+
   static Future<Map<String, dynamic>> getDriverBusinessOverview({
     required String lpId,
     required String userId,

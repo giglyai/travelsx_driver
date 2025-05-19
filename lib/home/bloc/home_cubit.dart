@@ -517,7 +517,6 @@ class HomeCubit extends Cubit<HomeState> {
         userData: rideUser,
         payment: payment,
         bookedFor: bookedFor,
-        
       );
 
       if (response['status'] == "error") {

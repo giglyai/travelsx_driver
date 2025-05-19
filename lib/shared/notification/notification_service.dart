@@ -17,8 +17,9 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   int badgeCount = 0; // Badge count for notifications
-  ValueNotifier<int> badgeNotifier =
-      ValueNotifier(0); // For dynamic badge updates
+  ValueNotifier<int> badgeNotifier = ValueNotifier(
+    0,
+  ); // For dynamic badge updates
 
   /// Initialize notification service
   Future<void> init() async {
@@ -37,9 +38,9 @@ class NotificationService {
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
-    );
+          android: initializationSettingsAndroid,
+          iOS: initializationSettingsIOS,
+        );
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -68,7 +69,7 @@ class NotificationService {
         //   navigatorKey.currentState!.context,
         //   routeName: ScreenRoutes.sellerBottomNavBar,
         // );
-      } else if (message.notification?.title == "You have got a new order") {
+      } else if (message.notification?.title == "You have got a new ride") {
         // AnywhereDoor.pushReplacementNamed(
         //   navigatorKey.currentState!.context,
         //   routeName: ScreenRoutes.sellerBottomNavBar,
@@ -92,7 +93,7 @@ class NotificationService {
         //   navigatorKey.currentState!.context,
         //   routeName: ScreenRoutes.sellerBottomNavBar,
         // );
-      } else if (message.notification?.title == "You have got a new order") {
+      } else if (message.notification?.title == "You have got a new ride") {
         // AnywhereDoor.pushReplacementNamed(
         //   navigatorKey.currentState!.context,
         //   routeName: ScreenRoutes.sellerBottomNavBar,
@@ -110,15 +111,24 @@ class NotificationService {
   Future<void> showNotifications(RemoteMessage? message) async {
     if (message == null || message.notification == null) return;
 
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      'HOB Seller',
-      'HOB Seller',
-      channelDescription: 'HOB Seller Notifications',
+    const AndroidNotificationDetails
+    androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'travelsx_driver_channel',
+      'TravelsX Driver Alerts',
+      channelDescription: 'Notification channel for TravelsX Partner alerts',
+      sound: RawResourceAndroidNotificationSound('travelsx_driver_ride_alert'),
       importance: Importance.max,
       priority: Priority.high,
-      playSound: true,
     );
+
+    //     AndroidNotificationDetails(
+    //   'HOB Seller',
+    //   'HOB Seller',
+    //   channelDescription: 'HOB Seller Notifications',
+    //   importance: Importance.max,
+    //   priority: Priority.high,
+    //   playSound: true,
+    // );
 
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
         DarwinNotificationDetails();
@@ -141,16 +151,17 @@ class NotificationService {
   void _showInAppPopup(BuildContext context, String title, String body) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(body),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Dismiss'),
+      builder:
+          (context) => AlertDialog(
+            title: Text(title),
+            content: Text(body),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Dismiss'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 

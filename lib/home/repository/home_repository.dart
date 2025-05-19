@@ -10,6 +10,7 @@ import '../../shared/api_client/api_client.dart';
 
 class HomeRepository {
   static String? refreshToken;
+
   static Future<Map<String, dynamic>> postUserData(
     PostUserDataParams params,
   ) async {

@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:travelx_driver/home/bloc/home_cubit.dart';
 
 import '../../shared/local_storage/log_in_status.dart';
 import '../../shared/local_storage/user_repository.dart';
@@ -10,7 +11,7 @@ class FireBaseApi {
   Future<void> initNotification() async {
     await _firebaseMessaging.requestPermission();
     fCMToken = await _firebaseMessaging.getToken();
-    UserRepository.instance.setAccessPlayerId(fCMToken ?? "");
+    UserRepository.instance.setAccessDeviceToken(fCMToken ?? "");
     UserRepository.instance.init();
     saveDeviceToken();
     initPushNotification();

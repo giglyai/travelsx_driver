@@ -4,6 +4,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shimmer/main.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
 import 'package:travelx_driver/shared/constants/app_colors/app_colors.dart';
@@ -96,6 +97,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     // Fetch data concurrently to reduce waiting time
     Future.microtask(() async {
       await Future.wait([
+        mainHomeCubit.updateDeviceToken(),
         mainHomeCubit.getUserData(),
         mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),

@@ -9,7 +9,7 @@ import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
 
-Future<void> initializeService() async {
+Future<void> initializeBackgroundService() async {
   final service = FlutterBackgroundService();
   await service.configure(
     iosConfiguration: IosConfiguration(
@@ -48,7 +48,7 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  Timer.periodic(const Duration(minutes: 5), (timer) async {
+  Timer.periodic(const Duration(minutes: 1), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         print("forground service running");

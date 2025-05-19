@@ -517,6 +517,18 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     emit(state.copyWith(isOnTripBottomSheetIsOpen: value));
   }
 
+  Future<void> updateDeviceToken() async {
+    try {
+      final deviceToken = UserRepository.getDeviceToken!;
+      final response = await MainHomeData.updateDeviceToken(
+        lpId: int.parse(UserRepository.getLpID!),
+        userId: int.parse(UserRepository.getUserID!),
+        user: 'travelsx-driver',
+        deviceToken: deviceToken ?? "",
+      );
+    } on ApiException catch (e) {}
+  }
+
   Future<bool> getAppVersion() async {
     try {
       final response = await MainHomeData.getAppVersion();
