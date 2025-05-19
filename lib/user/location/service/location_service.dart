@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelx_driver/user/location/model/place_lat_lng.dart';
 
 import '../../../shared/api_client/api_client.dart';
@@ -12,19 +10,20 @@ class PlaceApiProvider {
   // static const String iosKey = "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo";
 
   // ignore: prefer_typing_uninitialized_variables
-  static var apiKey; //Platform.isAndroid ? androidKey : iosKey;
+  static var apiKey =
+      "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo"; //Platform.isAndroid ? androidKey : iosKey;
 
-  static Future<void> initializeMapApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    apiKey = prefs.getString('google_maps_api_key');
-  }
+  // static Future<void> initializeMapApi() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   apiKey = prefs.getString('google_maps_api_key');
+  // }
 
   static Future<Suggestion?> fetchSuggestions(
     String input,
     String lang,
     String sessionToken,
   ) async {
-    await initializeMapApi();
+    // await initializeMapApi();
     final request =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&key=$apiKey&sessiontoken=$sessionToken&components=country:in';
     final response = await ApiClient().get(request);

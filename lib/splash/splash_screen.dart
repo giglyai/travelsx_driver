@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/location_permission/location_permission.dart';
+import 'package:travelx_driver/serivce/notification_service.dart';
 import 'package:travelx_driver/shared/constants/imagePath/jpdriver/jp_image_paths.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 
@@ -16,6 +17,7 @@ import '../shared/local_storage/log_in_status.dart';
 import '../shared/local_storage/user_repository.dart';
 import '../shared/utils/image_loader/image_loader.dart';
 import '../shared/widgets/size_config/size_config.dart';
+import '../user/serivce/firebase_notification.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -33,7 +35,8 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     LocationPermissionHandler().requestLocationPermission();
 
-    //FireBaseApi().initNotification();
+    FireBaseApi().initNotification();
+    NotificationService().init();
     //PhonePayInit().phonePayInit();
     // getUserCurrentLocation();
     startservice();

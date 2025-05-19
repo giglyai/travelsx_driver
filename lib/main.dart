@@ -15,13 +15,13 @@ import 'package:travelx_driver/config/firebase/firebase_options_kurinjidriver.da
 import 'package:travelx_driver/config/firebase/firebase_options_travelsxdriver.dart';
 import 'package:travelx_driver/core/remote_config/remote_config.dart';
 import 'package:travelx_driver/documents/bloc/document_cubit.dart';
-import 'package:travelx_driver/firebase_options.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/global_bloc.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/cubit/hire_driver_cubit.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/search-rides/screens/booking_registration/cubit/booking_registration_cubit.dart';
+import 'package:travelx_driver/serivce/background_service/background_service.dart';
 import 'package:travelx_driver/shared/localization_part/local_string.dart';
 import 'package:travelx_driver/shared/notification/notification_service.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
@@ -66,6 +66,7 @@ Future<void> main({Flavor? flavor}) async {
       );
     }
   }
+
   NotificationService().init();
 
   await RemoteConfigHelper.init();
@@ -81,9 +82,10 @@ Future<void> main({Flavor? flavor}) async {
     ),
   );
 
+  _initializeMapsApiFromRemote();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  //await initializeService();
+  await initializeService();
   Bloc.observer = GlobalBlocObserver();
 
   // DynamicLinkHandler.instance.initDynamicLinks();

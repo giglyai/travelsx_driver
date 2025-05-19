@@ -1,6 +1,7 @@
 //screen height and width of user device will be stored here
 
 import 'package:flutter/material.dart';
+import 'package:travelx_driver/login/entity/country_list/country_list.dart';
 
 ///selected page for nottom navigation bar
 
@@ -31,6 +32,7 @@ bool confirmButtonIsEnable = false;
 bool joiningDone = false;
 
 bool? logoutVersion;
+CountryCodeList? countryCodeList;
 
 ///these variables are stored for portfolio based implementation coming from API
 ///user convert fee if the user plan is basic

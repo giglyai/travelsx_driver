@@ -266,7 +266,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                             onTap: () {
                               AnywhereDoor.pushNamed(
                                 context,
-                                routeName: RouteName.accountScreen,
+                                routeName: RouteName.driverAccountScreen,
                               );
                             },
                           ),
@@ -292,9 +292,9 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                   ),
 
                   /// Fixed bottom UI when there are no new orders.
-                  if (state.upComingRideData?.data?.upcomingRide?.isNotEmpty ==
+                  if (state.upComingRideData?.data?.upcomingRide?.isEmpty ==
                           true ||
-                      state.upComingRideData?.data?.newRide?.isNotEmpty == true)
+                      state.upComingRideData?.data?.newRide?.isEmpty == true)
                     Positioned(
                       left: 0,
                       right: 0,
@@ -318,7 +318,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                                   .getUserProfileData
                                   ?.data
                                   ?.missingDocs
-                                  ?.isNotEmpty ==
+                                  ?.isEmpty ==
                               true)
                             HomeWidgets.missingDocumentsBanner(
                               profileData: state.getUserProfileData,
@@ -329,6 +329,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                                 );
                               },
                             ),
+
                           CustomSizedBox(height: 5),
 
                           if (state
