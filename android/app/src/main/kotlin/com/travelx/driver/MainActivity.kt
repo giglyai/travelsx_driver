@@ -7,6 +7,13 @@ import android.os.Bundle
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.media.AudioAttributes
+import android.net.Uri
+import android.os.Build
+
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "api_channel"
 
@@ -28,6 +35,35 @@ class MainActivity : FlutterActivity() {
                     result.notImplemented()
                 }
             }
+    }
+
+
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "travelsx_driver_channel"
+            val channelName = "TravelsX Driver Alerts"
+            val soundUri = Uri.parse("android.resource://$packageName/raw/travelsx_driver_ride_alert")
+
+            val attributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                setSound(soundUri, attributes)
+                enableVibration(true)
+                description = "Notification channel for TravelsX Driver alerts"
+            }
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     private fun storeApiKey(apiKey: String) {

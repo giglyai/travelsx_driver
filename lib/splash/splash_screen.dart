@@ -8,6 +8,7 @@ import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/location_permission/location_permission.dart';
 import 'package:travelx_driver/shared/constants/imagePath/jpdriver/jp_image_paths.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
+import 'package:travelx_driver/user/serivce/firebase_notification.dart';
 
 import '../shared/constants/app_colors/app_colors.dart';
 import '../shared/constants/imagePath/image_paths.dart';
@@ -33,13 +34,13 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     LocationPermissionHandler().requestLocationPermission();
 
-    //FireBaseApi().initNotification();
+    FireBaseApi().initNotification();
     //PhonePayInit().phonePayInit();
     // getUserCurrentLocation();
     startservice();
     AuthRepository.instance.init();
     UserRepository.instance.init();
-    Future.delayed(const Duration(seconds: 7, milliseconds: 500), () async {
+    Future.delayed(const Duration(seconds: 4, milliseconds: 500), () async {
       //Navigator.of(context).pushReplacementNamed(RouteName.onBoardingScreen);
       checkLogInStatus();
     });

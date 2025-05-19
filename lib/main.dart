@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/cubit/hire_driver_cubit.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/search-rides/screens/booking_registration/cubit/booking_registration_cubit.dart';
+import 'package:travelx_driver/serivce/background_service/background_service.dart';
 import 'package:travelx_driver/shared/localization_part/local_string.dart';
 import 'package:travelx_driver/shared/notification/notification_service.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
@@ -83,7 +85,6 @@ Future<void> main({Flavor? flavor}) async {
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  //await initializeService();
   Bloc.observer = GlobalBlocObserver();
 
   // DynamicLinkHandler.instance.initDynamicLinks();
@@ -104,6 +105,9 @@ Future<void> main({Flavor? flavor}) async {
   // if (mapsImplementation is GoogleMapsFlutterAndroid) {
   //   mapsImplementation.useAndroidViewSurface = true;
   // }
+
+  // Register the background message handler BEFORE runApp
+  await initializeBackgroundService();
 
   runApp(const MyApp());
 }
@@ -202,7 +206,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                     builder: DevicePreview.appBuilder,
                     navigatorKey: navigatorKey,
                     debugShowCheckedModeBanner: false,
-                    title: 'GIGLY Driver',
+                    title: 'TravelsX Driver',
                     translations: LocaleString(),
                     locale: const Locale('en', 'US'),
                     fallbackLocale: const Locale('hi', 'IN'),
