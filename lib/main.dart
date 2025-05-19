@@ -111,10 +111,15 @@ Future<void> main({Flavor? flavor}) async {
   // Register the background message handler BEFORE runApp
 
   FireBaseApi().initNotification();
-  
-  await initializeBackgroundService();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(); // Required if background isolates run independently
+  print("Handling a background message: ${message.messageId}");
 }
 
 /// Initializes Firebase and sets up error handling
