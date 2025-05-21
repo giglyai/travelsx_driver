@@ -132,6 +132,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
         mainHomeCubit.getUpcomingOnTripRideData(),
         mainHomeCubit.getRideHomeData(),
         mainHomeCubit.getRidesMatrix(),
+        mainHomeCubit.postUserCurrentLocation(),
       ]);
     });
 
