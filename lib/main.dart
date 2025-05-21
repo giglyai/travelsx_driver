@@ -119,6 +119,7 @@ Future<void> main({Flavor? flavor}) async {
   runApp(const MyApp());
 }
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(); // Required if background isolates run independently
   print("Handling a background message: ${message.messageId}");

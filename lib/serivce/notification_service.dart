@@ -51,9 +51,9 @@ class NotificationService {
           playSound: true,
           enableVibration: true,
           silent: false,
-          sound: RawResourceAndroidNotificationSound(
-            'live_chat_notification_sound',
-          ),
+          // sound: RawResourceAndroidNotificationSound(
+          //   'live_chat_notification_sound',
+          // ),
         );
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,

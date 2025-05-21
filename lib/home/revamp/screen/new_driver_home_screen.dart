@@ -44,7 +44,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
   late MainHomeCubit mainHomeCubit;
 
   /// Currently selected date filter for earnings or metrics.
-  String selectedDate = "This Week";
+  String selectedDate = "Today";
 
   /// Flag to track if a button/action has been clicked.
   bool isClick = false;

@@ -386,9 +386,9 @@ class HomeCubit extends Cubit<HomeState> {
 
       User user = User(
         userId: int.parse(getUserId ?? ""),
-        name: firstName,
-        countryCode: countryCode,
-        phoneNumber: phoneNumber,
+        name: UserRepository.getFirstName,
+        countryCode: UserRepository.getCountryCode,
+        phoneNumber: UserRepository.getPhoneNumber,
         userStatus: userStatus ?? status,
         position: currentPosition,
       );
@@ -420,8 +420,7 @@ class HomeCubit extends Cubit<HomeState> {
         device: device,
         app: app,
         vehicleType: vehicleType,
-
-        timezone: DateTime.now().timeZoneName,
+        createIsoTime: DateTime.now().toIso8601String(),
       );
       final response = await HomeRepository.postUserData(params);
     } catch (e) {
