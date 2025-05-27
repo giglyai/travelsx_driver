@@ -4,7 +4,6 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:shimmer/main.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
 import 'package:travelx_driver/shared/constants/app_colors/app_colors.dart';
@@ -27,10 +26,7 @@ class NewDriverHomeScreen extends StatefulWidget {
 }
 
 class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+    with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   IndicatorController controller = IndicatorController(refreshEnabled: true);
 
@@ -147,7 +143,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     return CustomMaterialIndicator(
       onRefresh: _refresh,
       backgroundColor: AppColors.kLightYelFFF3F0,
