@@ -33,6 +33,7 @@ class DriverBottomNavBarState extends State<DriverBottomNavBar>
     super.initState();
     mainHomeCubit = context.read();
     mainHomeCubit.getUserData();
+    selectedPageIndex.value = 0;
     pageController = PageController(
       initialPage: selectedPageIndex.value,
       keepPage: true,
@@ -73,7 +74,6 @@ class DriverBottomNavBarState extends State<DriverBottomNavBar>
             controller: pageController,
             onPageChanged: (value) {
               selectedPageIndex.value = value;
-              setState(() {});
             },
             physics: const NeverScrollableScrollPhysics(),
             children: [
@@ -82,15 +82,6 @@ class DriverBottomNavBarState extends State<DriverBottomNavBar>
               DriverVehicleScreen(fromHome: true),
 
               Earnings(wantBackButton: false),
-
-              // NewInventoryScreen(
-              //     params: NewInventoryScreenParams(
-              //         inventoryCategoriesRes:
-              //             state.sellerHomeModel?.data?.categories)),
-              //
-              // CartScreen(
-              //   params: CartScreenParams(wantBackButton: false),
-              // ),
             ],
           );
         },
