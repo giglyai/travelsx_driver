@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_map_polyline_new/google_map_polyline_new.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelx_driver/home/models/position_data_model.dart'
     as position;
 import 'package:travelx_driver/home/models/ride_response_model.dart'
     as ride_model;
 import 'package:travelx_driver/shared/utils/utilities.dart';
-import 'package:google_map_polyline_new/google_map_polyline_new.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 
 import '../../constants/app_colors/app_colors.dart';
 import '../../constants/imagePath/image_paths.dart';
@@ -46,8 +46,9 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   );
   bool isMapVisible = false;
 
-  // GoogleMapPolyline googleMapPolyline =
-  //     GoogleMapPolyline(apiKey: "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo");
+  GoogleMapPolyline googleMapPolyline = GoogleMapPolyline(
+    apiKey: "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo",
+  );
   // GoogleMapPolyline googleMapPolyline = GoogleMapPolyline(
   //   apiKey: initializeMapApi(),
   // );

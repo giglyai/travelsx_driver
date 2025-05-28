@@ -1,70 +1,81 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:travelx_driver/main.dart';
+import 'package:travelx_driver/shared/routes/named_routes.dart';
+import 'package:travelx_driver/shared/routes/navigator.dart';
+import 'package:travelx_driver/user/user_details/user_details_data.dart';
 
 class NotificationService {
   static final NotificationService _notificationService =
       NotificationService._internal();
-  factory NotificationService() {
-    return _notificationService;
-  }
+  factory NotificationService() => _notificationService;
   NotificationService._internal();
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  late final AndroidNotificationDetails androidPlatformChannelSpecifics;
-  // Make it 'late final'
-  late final NotificationDetails
-  platformChannelSpecifics; // Make it 'late final'
-
   Future<void> init() async {
-    //Initialization Settings for Android
-    final AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings androidInitSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    //Initialization Settings for iOS
-    // final IOSInitializationSettings initializationSettingsIOS =
-    //     IOSInitializationSettings(
-    //   requestSoundPermission: false,
-    //   requestBadgePermission: false,
-    //   requestAlertPermission: false,
-    // );
+    final InitializationSettings initSettings = InitializationSettings(
+      android: androidInitSettings,
+    );
 
-    //InitializationSettings for initializing settings for both platforms (Android & iOS)
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
-          android: initializationSettingsAndroid,
-          //iOS: initializationSettingsIOS
-        );
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        _handleNotificationTap(response.payload);
+      },
+    );
   }
 
   Future<void> showNotifications(RemoteMessage? message) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'GiglyAI Driver',
-          // Replace with your own channel ID
-          'GiglyAI Driver', // Replace with your own channel   name
-          channelDescription: 'GiglyAI Driver',
+          'GiglyAI Driver',
+          channelDescription: 'GiglyAI Driver Notifications',
           importance: Importance.max,
           priority: Priority.high,
           playSound: true,
           enableVibration: true,
-          silent: false,
-          // sound: RawResourceAndroidNotificationSound(
-          //   'live_chat_notification_sound',
-          // ),
         );
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidDetails,
     );
+
+    final title = message?.notification?.title ?? "";
+    final payload = title; // use title as payload for routing
+
     await flutterLocalNotificationsPlugin.show(
-      0, // Notification ID
-      message?.notification?.title,
+      0,
+      title,
       message?.notification?.body,
-      platformChannelSpecifics,
-      // Use the initialized variable
-      payload: message?.notification?.body,
+      notificationDetails,
+      payload: payload,
     );
+  }
+
+  void _handleNotificationTap(String? payload) {
+    print("Tapped notification payload: $payload");
+
+    if (payload == null) return;
+
+    if (payload.contains("New Trip available for you") ||
+        payload.contains("New Trip assigned to you")) {
+      AnywhereDoor.pushReplacementNamed(
+        navigatorKey.currentState!.context,
+        routeName: RouteName.homeScreen,
+      );
+    } else if (payload == "Account Verified") {
+      ProfileRepository.instance.setUserProfileAccountStatus("Verified");
+      ProfileRepository.instance.init();
+      AnywhereDoor.pushReplacementNamed(
+        navigatorKey.currentState!.context,
+        routeName: RouteName.homeScreen,
+      );
+    }
   }
 }

@@ -4,10 +4,10 @@ import 'package:travelx_driver/documents/screens/document_sceen.dart';
 import 'package:travelx_driver/documents/widgets/document_upload_screen.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/screen/hire_driver_direction_screen.dart';
 import 'package:travelx_driver/home/revamp/screen/bottom_navigation_bar.dart';
+import 'package:travelx_driver/home/revamp/screen/new_driver_home_screen.dart';
 import 'package:travelx_driver/home/screen/ride.dart';
 import 'package:travelx_driver/login/screen/mobile_login_screen.dart';
 import 'package:travelx_driver/login/screen/verify_otp_screen.dart';
-
 import 'package:travelx_driver/search-rides/screens/booking_registration/bookings_screen.dart';
 import 'package:travelx_driver/search-rides/screens/list-rides-screen.dart';
 import 'package:travelx_driver/splash/splash_screen.dart';
@@ -78,6 +78,7 @@ abstract class RouteName {
   static const driverVehicleMainScreen = "/driverAddVehicleMainScreen";
   static const selectVehicleScreen = "/selectVehicleScreen";
   static const travelBottomNavigationBar = "/travelBottomNavigationBar";
+  static const newDriverHomeScreen = "/newDriverHomeScreen";
 }
 
 mixin GenerateRoute {
@@ -93,6 +94,12 @@ mixin GenerateRoute {
       case RouteName.homeScreen:
         return MaterialPageRoute(
           builder: (context) => DriverBottomNavBar(),
+          settings: settings,
+        );
+
+      case RouteName.newDriverHomeScreen:
+        return MaterialPageRoute(
+          builder: (context) => NewDriverHomeScreen(),
           settings: settings,
         );
       case RouteName.mobileNumberLoginScreen:

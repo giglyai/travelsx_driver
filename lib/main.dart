@@ -23,15 +23,14 @@ import 'package:travelx_driver/home/hire_driver_bloc/cubit/hire_driver_cubit.dar
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/search-rides/screens/booking_registration/cubit/booking_registration_cubit.dart';
 import 'package:travelx_driver/serivce/background_service/background_service.dart';
+import 'package:travelx_driver/serivce/firebase_notification.dart';
 import 'package:travelx_driver/shared/localization_part/local_string.dart';
-import 'package:travelx_driver/shared/notification/notification_service.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/splash/splash_screen.dart';
 import 'package:travelx_driver/user/account/bloc/account_cubit.dart';
 import 'package:travelx_driver/user/account/screen/driver_account_details/bloc/driver_accounts_bloc.dart';
 import 'package:travelx_driver/user/help_screen/domain/help_cubit.dart';
 import 'package:travelx_driver/user/my_agency/bloc/my_agency_cubit.dart';
-import 'package:travelx_driver/user/serivce/firebase_notification.dart';
 import 'package:travelx_driver/user/subscription/cubit/subscription_cubit.dart';
 import 'package:travelx_driver/user/trip/equatable/trip_equatable.dart';
 import 'package:travelx_driver/user/vehicle/bloc/add_vehicle_cubit.dart';
@@ -68,8 +67,6 @@ Future<void> main({Flavor? flavor}) async {
       );
     }
   }
-
-  NotificationService().init();
 
   await RemoteConfigHelper.init();
 
@@ -110,7 +107,8 @@ Future<void> main({Flavor? flavor}) async {
 
   // Register the background message handler BEFORE runApp
 
-  FireBaseApi().initNotification();
+  await FireBaseApi().initNotification();
+  // await NotificationService().init(); // <- Must be before runApp
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 

@@ -519,10 +519,10 @@ class MainHomeCubit extends Cubit<MainHomeState> {
 
   Future<void> updateDeviceToken() async {
     try {
-      final deviceToken = UserRepository.getDeviceToken!;
+      final deviceToken = UserRepository.getDeviceToken ?? "";
       final response = await MainHomeData.updateDeviceToken(
-        lpId: int.parse(UserRepository.getLpID!),
-        userId: int.parse(UserRepository.getUserID!),
+        lpId: int.parse(UserRepository.getLpID ?? ""),
+        userId: int.parse(UserRepository.getUserID ?? ""),
         user: 'travelsx-driver',
         deviceToken: deviceToken ?? "",
       );

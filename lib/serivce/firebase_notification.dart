@@ -1,7 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/main.dart';
 import 'package:travelx_driver/serivce/notification_service.dart';
 import 'package:travelx_driver/shared/local_storage/log_in_status.dart';
@@ -12,114 +9,53 @@ import 'package:travelx_driver/user/user_details/user_details_data.dart';
 
 class FireBaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
-
-  final HomeCubit _homeCubit = BlocProvider.of<HomeCubit>(
-    navigatorKey.currentState!.context,
-  );
   final notificationService = NotificationService();
 
   String? fCMToken;
+
   Future<void> initNotification() async {
     await _firebaseMessaging.requestPermission();
-    LogInStatus logInStatus = LogInStatus();
+
     fCMToken = await _firebaseMessaging.getToken();
     UserRepository.instance.setAccessDeviceToken(fCMToken ?? "");
-    logInStatus.setDeviceTokenFireBase(deviceToken: fCMToken ?? "");
+    LogInStatus().setDeviceTokenFireBase(deviceToken: fCMToken ?? "");
     UserRepository.instance.init();
     saveDeviceToken();
+
+    await notificationService.init(); // IMPORTANT!
     initPushNotification();
     listenForForegroundMessages();
+
     print("token: $fCMToken");
   }
 
   Future<void> handleMessage(RemoteMessage? message) async {
     if (message == null) return;
-    if (message.notification?.title == 'New Trip available for you' ||
-        message.notification?.title == 'New Trip assigned to you') {
-      notificationService.showNotifications(message);
+    notificationService.showNotifications(message); // Always show
 
-      String notifBody = message.notification?.body ?? "";
-      List<String> parts = notifBody.split(" ");
-      int rideIdIndex = parts.indexWhere((part) => part.startsWith("RideId:"));
-      String? rideId = rideIdIndex != -1 ? parts[rideIdIndex + 1] : null;
-      bool isActingDriverRide = false;
+    final title = message.notification?.title ?? "";
+    final body = message.notification?.body ?? "";
 
-      if (rideId != null) {
-        // await MainHomeCubit().getUpcomingOnTripRideData();
-        AnywhereDoor.pushReplacementNamed(
-          navigatorKey.currentState!.context,
-          routeName: RouteName.homeScreen,
-        );
-      }
-    } else if (message.notification?.title ==
-        'New Acting Driver ride available for you') {
-      String notifBody = message.notification?.body ?? "";
-      List<String> parts = notifBody.split(" ");
-      int rideIdIndex = parts.indexWhere((part) => part.startsWith("RideId:"));
-      String? rideId = rideIdIndex != -1 ? parts[rideIdIndex + 1] : null;
-      bool isActingDriverRide = true;
-      if (rideId != null) {
-        // await MainHomeCubit().getUpcomingOnTripRideData();
-        AnywhereDoor.pushReplacementNamed(
-          navigatorKey.currentState!.context,
-          routeName: RouteName.homeScreen,
-        );
-      }
-    } else if (message.notification?.title == "Account Verified") {
+    if (title.contains("New Trip availabe for you") ||
+        title.contains("New Trip assigned to you")) {
+      _navigateToHomeScreen();
+    } else if (title == "Account Verified") {
       ProfileRepository.instance.setUserProfileAccountStatus("Verified");
       ProfileRepository.instance.init();
-      AnywhereDoor.pushReplacementNamed(
-        navigatorKey.currentState!.context,
-        routeName: RouteName.homeScreen,
-      );
+      _navigateToHomeScreen();
     }
   }
 
   Future<void> handleOnMessageOpen(RemoteMessage? message) async {
-    if (message == null) return;
-    if (message.notification?.title == 'New Trip available for you' ||
-        message.notification?.title == 'New Trip assigned to you') {
-      String notifBody = message.notification?.body ?? "";
-      List<String> parts = notifBody.split(" ");
-      int rideIdIndex = parts.indexWhere((part) => part.startsWith("RideId:"));
-      String? rideId = rideIdIndex != -1 ? parts[rideIdIndex + 1] : null;
-      bool isActingDriverRide = false;
-
-      if (rideId != null) {
-        // await MainHomeCubit().getUpcomingOnTripRideData();
-        AnywhereDoor.pushReplacementNamed(
-          navigatorKey.currentState!.context,
-          routeName: RouteName.homeScreen,
-        );
-      }
-    } else if (message.notification?.title ==
-        'New Acting Driver ride availabe for you') {
-      String notifBody = message.notification?.body ?? "";
-      List<String> parts = notifBody.split(" ");
-      int rideIdIndex = parts.indexWhere((part) => part.startsWith("RideId:"));
-      String? rideId = rideIdIndex != -1 ? parts[rideIdIndex + 1] : null;
-      bool isActingDriverRide = true;
-
-      if (rideId != null) {
-        // await MainHomeCubit().getUpcomingOnTripRideData();
-        AnywhereDoor.pushReplacementNamed(
-          navigatorKey.currentState!.context,
-          routeName: RouteName.homeScreen,
-        );
-      }
-    } else if (message.notification?.title == "Account Verified") {
-      ProfileRepository.instance.setUserProfileAccountStatus("Verified");
-      ProfileRepository.instance.init();
-
-      AnywhereDoor.pushReplacementNamed(
-        navigatorKey.currentState!.context,
-        routeName: RouteName.homeScreen,
-      );
-    }
+    await handleMessage(message); // Reuse same logic
   }
 
-  Future initPushNotification() async {
-    FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
+  Future<void> initPushNotification() async {
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      await handleMessage(initialMessage);
+    }
+
     FirebaseMessaging.onMessageOpenedApp.listen(handleOnMessageOpen);
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
@@ -128,12 +64,18 @@ class FireBaseApi {
     FirebaseMessaging.onMessage.listen(handleMessage);
   }
 
-  saveDeviceToken() {
-    LogInStatus userHasLoggedIn = LogInStatus();
-    userHasLoggedIn.savedDeviceToken(fCMToken ?? "");
+  void saveDeviceToken() {
+    LogInStatus().savedDeviceToken(fCMToken ?? "");
+  }
+
+  void _navigateToHomeScreen() {
+    AnywhereDoor.pushReplacementNamed(
+      navigatorKey.currentState!.context,
+      routeName: RouteName.homeScreen,
+    );
   }
 }
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Handling a background message ${message.messageId}');
+  print('Handling background message: ${message.messageId}');
 }
