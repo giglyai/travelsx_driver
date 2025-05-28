@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:travelx_driver/main.dart';
@@ -6,6 +7,8 @@ import 'package:travelx_driver/shared/routes/navigator.dart';
 import 'package:travelx_driver/user/user_details/user_details_data.dart';
 
 class NotificationService {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   static final NotificationService _notificationService =
       NotificationService._internal();
   factory NotificationService() => _notificationService;
@@ -38,7 +41,7 @@ class NotificationService {
           channelDescription: 'GiglyAI Driver Notifications',
           importance: Importance.max,
           priority: Priority.high,
-          playSound: true,
+          playSound: false,
           enableVibration: true,
         );
 
@@ -56,6 +59,10 @@ class NotificationService {
       notificationDetails,
       payload: payload,
     );
+  }
+
+  Future<void> playAlertSound(String alertUrl) async {
+    await _audioPlayer.play(UrlSource(alertUrl));
   }
 
   void _handleNotificationTap(String? payload) {

@@ -32,11 +32,11 @@ class FireBaseApi {
   Future<void> handleMessage(RemoteMessage? message) async {
     if (message == null) return;
     notificationService.showNotifications(message); // Always show
-
+    notificationService.playAlertSound(message.data['alert_url'] ?? "");
     final title = message.notification?.title ?? "";
     final body = message.notification?.body ?? "";
 
-    if (title.contains("New Trip availabe for you") ||
+    if (title.contains("New Trip available for you") ||
         title.contains("New Trip assigned to you")) {
       _navigateToHomeScreen();
     } else if (title == "Account Verified") {
