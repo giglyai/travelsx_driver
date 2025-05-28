@@ -36,7 +36,9 @@ class FireBaseApi {
     if (message == null) return;
     if (message.notification?.title == 'New Trip available for you' ||
         message.notification?.title == 'New Trip assigned to you') {
+      final alertSoundUrl = message.data["alert_url"] ??= "0";
       notificationService.showNotifications(message);
+      notificationService.playBrandSound(alertSoundUrl);
 
       String notifBody = message.notification?.body ?? "";
       List<String> parts = notifBody.split(" ");
@@ -80,6 +82,11 @@ class FireBaseApi {
     if (message.notification?.title == 'New Trip available for you' ||
         message.notification?.title == 'New Trip assigned to you') {
       String notifBody = message.notification?.body ?? "";
+
+      final alertSoundUrl = message.data["alert_url"] ??= "0";
+      notificationService.showNotifications(message);
+      notificationService.playBrandSound(alertSoundUrl);
+
       List<String> parts = notifBody.split(" ");
       int rideIdIndex = parts.indexWhere((part) => part.startsWith("RideId:"));
       String? rideId = rideIdIndex != -1 ? parts[rideIdIndex + 1] : null;
@@ -110,6 +117,10 @@ class FireBaseApi {
     } else if (message.notification?.title == "Account Verified") {
       ProfileRepository.instance.setUserProfileAccountStatus("Verified");
       ProfileRepository.instance.init();
+
+      final alertSoundUrl = message.data["alert_url"] ??= "0";
+      notificationService.showNotifications(message);
+      notificationService.playBrandSound(alertSoundUrl);
 
       AnywhereDoor.pushReplacementNamed(
         navigatorKey.currentState!.context,

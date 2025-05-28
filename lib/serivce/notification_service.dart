@@ -1,7 +1,10 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   static final NotificationService _notificationService =
       NotificationService._internal();
   factory NotificationService() {
@@ -48,7 +51,7 @@ class NotificationService {
           channelDescription: 'GiglyAI Driver',
           importance: Importance.max,
           priority: Priority.high,
-          playSound: true,
+          playSound: false,
           enableVibration: true,
           silent: false,
           // sound: RawResourceAndroidNotificationSound(
@@ -66,5 +69,9 @@ class NotificationService {
       // Use the initialized variable
       payload: message?.notification?.body,
     );
+  }
+
+  Future<void> playBrandSound(String soundUrl) async {
+    await _audioPlayer.play(UrlSource(soundUrl));
   }
 }
