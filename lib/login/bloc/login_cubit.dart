@@ -19,7 +19,6 @@ import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/user/user_details/user_details_data.dart';
 
 import '../../../../shared/api_client/api_exception.dart';
-
 import '../data/login_data.dart';
 import '../entity/country_code_model.dart';
 import '../entity/otp_model.dart';
@@ -219,6 +218,7 @@ class ServiceLoginCubit extends Cubit<LoginState> {
           // Set access data for user
           UserRepository.instance.setAccessProfile(userProfile);
           UserRepository.instance.setAccessPhoneNumber(phoneNumber);
+          ProfileRepository.instance.setUserPhoneNumber(phoneNumber);
           UserRepository.instance.setAccessUserID(userId);
           UserRepository.instance.setAccessCountryCode(countryCode);
           UserRepository.instance.setAccessLpID(lpId);
@@ -273,6 +273,9 @@ class ServiceLoginCubit extends Cubit<LoginState> {
           UserRepository.instance.setAccessUserID(userId);
           UserRepository.instance.setAccessCountryCode(countryCode);
           UserRepository.instance.setAccessLpID(lpId);
+
+          ProfileRepository.instance.setUserPhoneNumber(phoneNumber);
+
           // UserRepository.instance.setIsUserIsSubscribed(
           //   isSubscribed.toString(),
           // );

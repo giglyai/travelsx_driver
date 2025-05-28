@@ -711,6 +711,10 @@ class MainHomeCubit extends Cubit<MainHomeState> {
         ProfileRepository.instance.setUserPhoneNumber(
           getUserProfileData.data?.phoneNumber ?? "",
         );
+        UserRepository.instance.setAccessPhoneNumber(
+          getUserProfileData.data?.phoneNumber ?? "",
+        );
+
         ProfileRepository.instance.setUserLastName(
           getUserProfileData.data?.lastName ?? "",
         );
