@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:travelx_driver/main.dart';
+import 'package:travelx_driver/serivce/audio_handler.dart';
 import 'package:travelx_driver/serivce/notification_service.dart';
 import 'package:travelx_driver/shared/local_storage/log_in_status.dart';
 import 'package:travelx_driver/shared/local_storage/user_repository.dart';
@@ -32,7 +33,8 @@ class FireBaseApi {
   Future<void> handleMessage(RemoteMessage? message) async {
     if (message == null) return;
     notificationService.showNotifications(message); // Always show
-    notificationService.playAlertSound(message.data['alert_url'] ?? "");
+    // notificationService.playAlertSound(message.data['alert_url'] ?? "");
+    MyAudioHandler().playFromUrl(message.data['alert_url'] ?? "");
     final title = message.notification?.title ?? "";
     final body = message.notification?.body ?? "";
 

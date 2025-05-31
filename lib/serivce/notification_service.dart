@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:travelx_driver/main.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
@@ -43,7 +43,7 @@ class NotificationService {
           priority: Priority.high,
           playSound: false,
           enableVibration: true,
-          sound: RawResourceAndroidNotificationSound('alert_sound'),
+          //sound: RawResourceAndroidNotificationSound('alert_sound'),
         );
 
     const NotificationDetails notificationDetails = NotificationDetails(
@@ -62,9 +62,13 @@ class NotificationService {
     );
   }
 
-  Future<void> playAlertSound(String alertUrl) async {
-    await _audioPlayer.play(UrlSource(alertUrl));
-  }
+  // Future<void> playAlertSound(String alertUrl) async {
+  //   final duration = await _audioPlayer.setUrl(
+  //     // Load a URL
+  //     alertUrl,
+  //   ); // Schemes: (https: | file: | asset: )
+  //   _audioPlayer.play();
+  // }
 
   void _handleNotificationTap(String? payload) {
     print("Tapped notification payload: $payload");
