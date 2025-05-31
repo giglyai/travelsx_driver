@@ -43,7 +43,7 @@ class NotificationService {
           priority: Priority.high,
           playSound: false,
           enableVibration: true,
-          sound: RawResourceAndroidNotificationSound('alert_sound'),
+          //sound: RawResourceAndroidNotificationSound('alert_sound'),
         );
 
     const NotificationDetails notificationDetails = NotificationDetails(

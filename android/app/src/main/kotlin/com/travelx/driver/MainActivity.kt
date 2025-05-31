@@ -1,5 +1,6 @@
 package com.travelx.driver
 
+
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -38,33 +39,52 @@ class MainActivity : FlutterActivity() {
     }
 
 
-    override fun onCreate(savedInstanceState: android.os.Bundle?) {
-        super.onCreate(savedInstanceState)
+   override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "travelsx_driver_channel"
-            val channelName = "TravelsX Driver Alerts"
-            val soundUri = Uri.parse("android.resource://$packageName/raw/travelsx_driver_ride_alert")
-
-            val attributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
-
-            val channel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                setSound(soundUri, attributes)
-                enableVibration(true)
-                description = "Notification channel for TravelsX Driver alerts"
-            }
-
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val currentPackage = applicationContext.packageName
+        val (channelId, channelName, soundFile) = when (currentPackage) {
+            "com.travelx.driver.kurinji" -> Triple(
+                "kurinji_driver_channel",
+                "Kurinji Driver Alerts",
+                "kurinji_driver_ride_alert"
+            )
+            "com.travelx.driver" -> Triple(
+                "travelsx_driver_channel",
+                "TravelsX Driver Alerts",
+                "travelsx_driver_ride_alert"
+            )
+            else -> Triple(
+                "default_channel",
+                "Default Alerts",
+                "default_sound"
+            )
         }
+
+        val soundUri = Uri.parse("android.resource://$currentPackage/raw/$soundFile")
+
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+
+        val channel = NotificationChannel(
+            channelId,
+            channelName,
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            setSound(soundUri, attributes)
+            enableVibration(true)
+            description = "Notification channel for $channelName"
+        }
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
+}
+
+
 
     private fun storeApiKey(apiKey: String) {
         val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
