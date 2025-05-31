@@ -94,8 +94,8 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
         // mainHomeCubit.getUserData(),
         mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),
-        mainHomeCubit.getRideHomeData(),
-        mainHomeCubit.getRidesMatrix(),
+        // mainHomeCubit.getRideHomeData(),
+        // mainHomeCubit.getRidesMatrix(),
       ]);
     });
   }
@@ -124,8 +124,8 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
         // mainHomeCubit.getUserData(),
         mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),
-        mainHomeCubit.getRideHomeData(),
-        mainHomeCubit.getRidesMatrix(),
+        // mainHomeCubit.getRideHomeData(),
+        // mainHomeCubit.getRidesMatrix(),
         mainHomeCubit.postUserCurrentLocation(),
       ]);
     });
