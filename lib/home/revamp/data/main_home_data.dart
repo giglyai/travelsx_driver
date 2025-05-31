@@ -106,10 +106,16 @@ class MainHomeData {
   static Future<Map<String, dynamic>> getUpcomingOnTripRideData({
     required String lpId,
     required String userId,
+    required String date,
   }) async {
     final response = await ApiClient().get(
       ApiRoutes.getUpcomingOnTripRide,
-      queryParams: {'lp_id': lpId, 'user_id': userId, 'user': AppNames.appName},
+      queryParams: {
+        'lp_id': lpId,
+        'user_id': userId,
+        'user': AppNames.appName,
+        "date_filter": date,
+      },
     );
     return response as Map<String, dynamic>;
   }

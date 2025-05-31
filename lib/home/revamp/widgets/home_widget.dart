@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:travelx_driver/home/hire_driver_bloc/entity/upcoming_ontrip_ride_res.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/shared/constants/app_colors/app_colors.dart';
 import 'package:travelx_driver/shared/constants/app_styles/app_styles.dart';
@@ -15,7 +16,6 @@ import 'package:travelx_driver/user/account/enitity/profile_model.dart';
 import 'package:travelx_driver/user/trip/screens/trip_screen.dart';
 
 import '../../../shared/widgets/custom_sized_box/custom_sized_box.dart';
-import '../entity/dlvy_biz_overview_entity.dart';
 
 class HomeWidgets {
   /// Floating Action Button Logic
@@ -104,7 +104,7 @@ class HomeWidgets {
   /// Business Overview Section
   static Widget businessOverview({
     required BuildContext context,
-    DriverHomeData? getHomeData,
+    UpcomingOntripRideResData? getHomeData,
     String? firstName,
     required Function(String?) onChanged,
     required String selectedDate,
@@ -146,7 +146,7 @@ class HomeWidgets {
   /// Order Details Section
   static Widget orderDetails({
     required BuildContext context,
-    DriverHomeData? getHomeData,
+    UpcomingOntripRideResData? getHomeData,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -175,7 +175,7 @@ class HomeWidgets {
               ),
               orderDetailsCard(
                 title: "Assigned",
-                count: getHomeData?.acceptedCount,
+                count: getHomeData?.assignedRide,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -197,7 +197,7 @@ class HomeWidgets {
             children: [
               orderDetailsCard(
                 title: "Completed",
-                count: getHomeData?.completedCount,
+                count: getHomeData?.completedRide,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -213,7 +213,7 @@ class HomeWidgets {
               ),
               orderDetailsCard(
                 title: "Cancelled",
-                count: getHomeData?.cancelledCount,
+                count: getHomeData?.cancelledRide,
                 onTap: () {
                   Navigator.push(
                     context,

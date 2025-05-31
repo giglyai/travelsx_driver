@@ -620,12 +620,13 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     }
   }
 
-  Future<void> getUpcomingOnTripRideData() async {
+  Future<void> getUpcomingOnTripRideData({String? dateFilter}) async {
     try {
       emit(state.copyWith(upComingRideApiStatus: ApiStatus.loading));
       final response = await MainHomeData.getUpcomingOnTripRideData(
         lpId: UserRepository.getLpID ?? '',
         userId: UserRepository.getUserID ?? '',
+        date: dateFilter ?? "Today",
       );
       final upcomingOntripRideRes = upcoming.UpcomingOntripRideRes.fromJson(
         response,

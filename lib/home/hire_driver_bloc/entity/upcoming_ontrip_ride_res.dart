@@ -14,57 +14,89 @@ String upcomingOntripRideResToJson(UpcomingOntripRideRes data) =>
 
 class UpcomingOntripRideRes {
   String? status;
-  Data? data;
+  UpcomingOntripRideResData? data;
 
-  UpcomingOntripRideRes({
-    this.status,
-    this.data,
-  });
+  UpcomingOntripRideRes({this.status, this.data});
 
   factory UpcomingOntripRideRes.fromJson(Map<String, dynamic> json) =>
       UpcomingOntripRideRes(
         status: json["status"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data:
+            json["data"] == null
+                ? null
+                : UpcomingOntripRideResData.fromJson(json["data"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": data?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"status": status, "data": data?.toJson()};
 }
 
-class Data {
+class UpcomingOntripRideResData {
   List<UpcomingRide>? upcomingRide;
   List<OntripRide>? ontripRide;
   List<NewRide>? newRide;
-  Data({this.upcomingRide, this.ontripRide, this.newRide});
+  int? completedRide;
+  int? cancelledRide;
+  int? assignedRide;
+  int? all;
+  Revenue? revenue;
+  UpcomingOntripRideResData({
+    this.upcomingRide,
+    this.ontripRide,
+    this.newRide,
+    this.completedRide,
+    this.cancelledRide,
+    this.assignedRide,
+    this.all,
+    this.revenue,
+  });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        upcomingRide: json["upcoming_ride"] == null
-            ? []
-            : List<UpcomingRide>.from(
-                json["upcoming_ride"]!.map((x) => UpcomingRide.fromJson(x))),
-        ontripRide: json["ontrip_ride"] == null
-            ? []
-            : List<OntripRide>.from(
-                json["ontrip_ride"]!.map((x) => OntripRide.fromJson(x))),
-        newRide: json["new_ride"] == null
-            ? []
-            : List<NewRide>.from(
-                json["new_ride"]!.map((x) => NewRide.fromJson(x))),
+  factory UpcomingOntripRideResData.fromJson(Map<String, dynamic> json) =>
+      UpcomingOntripRideResData(
+        upcomingRide:
+            json["upcoming_ride"] == null
+                ? []
+                : List<UpcomingRide>.from(
+                  json["upcoming_ride"]!.map((x) => UpcomingRide.fromJson(x)),
+                ),
+        ontripRide:
+            json["ontrip_ride"] == null
+                ? []
+                : List<OntripRide>.from(
+                  json["ontrip_ride"]!.map((x) => OntripRide.fromJson(x)),
+                ),
+        newRide:
+            json["new_ride"] == null
+                ? []
+                : List<NewRide>.from(
+                  json["new_ride"]!.map((x) => NewRide.fromJson(x)),
+                ),
+
+        completedRide: json["completed_ride"],
+        cancelledRide: json["cancelled_ride"],
+        assignedRide: json["assigned_ride"],
+        all: json["all"],
+        revenue: Revenue.fromJson(json["revenue"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "upcoming_ride": upcomingRide == null
+    "upcoming_ride":
+        upcomingRide == null
             ? []
             : List<dynamic>.from(upcomingRide!.map((x) => x.toJson())),
-        "ontrip_ride": ontripRide == null
+    "ontrip_ride":
+        ontripRide == null
             ? []
             : List<dynamic>.from(ontripRide!.map((x) => x.toJson())),
-        "new_ride": newRide == null
+    "new_ride":
+        newRide == null
             ? []
             : List<dynamic>.from(newRide!.map((x) => x.toJson())),
-      };
+    "completed_ride": completedRide,
+    "cancelled_ride": cancelledRide,
+    "assigned_ride": assignedRide,
+    "all": all,
+    "revenue": revenue?.toJson(),
+  };
 }
 
 class OntripRide {
@@ -129,82 +161,89 @@ class OntripRide {
   });
 
   factory OntripRide.fromJson(Map<String, dynamic> json) => OntripRide(
-        tripId: json["trip_id"],
-        userMessage: json["user_message"],
-        rideId: json["ride_id"],
-        driver: Driver.fromJson(json["driver"]),
-        promo: json["promo"] == null ? null : Promo.fromJson(json["promo"]),
-        bookedBy: json["booked_by"],
-        bookedByContact: json["booked_by_contact"],
-        bookedFor: json["booked_for"],
-        bookedForContact: json["booked_for_contact"],
-        createdBy: json["created_by"] == null
+    tripId: json["trip_id"],
+    userMessage: json["user_message"],
+    rideId: json["ride_id"],
+    driver: Driver.fromJson(json["driver"]),
+    promo: json["promo"] == null ? null : Promo.fromJson(json["promo"]),
+    bookedBy: json["booked_by"],
+    bookedByContact: json["booked_by_contact"],
+    bookedFor: json["booked_for"],
+    bookedForContact: json["booked_for_contact"],
+    createdBy:
+        json["created_by"] == null
             ? null
             : CreatedBy.fromJson(json["created_by"]),
-        rideStatus: json["ride_status"],
-        pickupDetails: json["pickup_details"] == null
+    rideStatus: json["ride_status"],
+    pickupDetails:
+        json["pickup_details"] == null
             ? null
             : PickupDetails.fromJson(json["pickup_details"]),
-        tripDetails: json["trip_details"] == null
+    tripDetails:
+        json["trip_details"] == null
             ? null
             : TripDetails.fromJson(json["trip_details"]),
-        driverDetails: json["driver_details"] == null
+    driverDetails:
+        json["driver_details"] == null
             ? null
             : OntripRideDriverDetails.fromJson(json["driver_details"]),
-        tripSequence: json["trip_sequence"] == null
+    tripSequence:
+        json["trip_sequence"] == null
             ? []
             : List<TripSequence>.from(
-                json["trip_sequence"]!.map((x) => TripSequence.fromJson(x))),
-        rideRoute: json["ride_route"],
-        price: json["price"] == null ? null : Price.fromJson(json["price"]),
-        route: json["route"] == null
+              json["trip_sequence"]!.map((x) => TripSequence.fromJson(x)),
+            ),
+    rideRoute: json["ride_route"],
+    price: json["price"] == null ? null : Price.fromJson(json["price"]),
+    route:
+        json["route"] == null
             ? []
             : List<dynamic>.from(json["route"]!.map((x) => x)),
-        rideVehicle: json["ride_vehicle"],
-        rideType: json["ride_type"],
-        tripsNearDropoff: json["trips_near_dropoff"],
-        rideAval: json["ride_aval"],
-        rideAvalTime: json["ride_aval_time"],
-        vehicleType: json["vehicle_type"],
-        rideFeature: json["ride_feature"],
-        travelMode: json["travel_mode"],
-        user: json["user"] == null ? null : User.fromJson(json["user"]),
-        payment:
-            json["payment"] == null ? null : Payment.fromJson(json["payment"]),
-      );
+    rideVehicle: json["ride_vehicle"],
+    rideType: json["ride_type"],
+    tripsNearDropoff: json["trips_near_dropoff"],
+    rideAval: json["ride_aval"],
+    rideAvalTime: json["ride_aval_time"],
+    vehicleType: json["vehicle_type"],
+    rideFeature: json["ride_feature"],
+    travelMode: json["travel_mode"],
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    payment: json["payment"] == null ? null : Payment.fromJson(json["payment"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "trip_id": tripId,
-        "ride_id": rideId,
-        "user_message": userMessage,
-        "driver": driver?.toJson(),
-        "promo": promo?.toJson(),
-        "booked_by": bookedBy,
-        "booked_by_contact": bookedByContact,
-        "booked_for": bookedFor,
-        "booked_for_contact": bookedForContact,
-        "created_by": createdBy?.toJson(),
-        "ride_status": rideStatus,
-        "pickup_details": pickupDetails?.toJson(),
-        "trip_details": tripDetails?.toJson(),
-        "driver_details": driverDetails?.toJson(),
-        "trip_sequence": tripSequence == null
+    "trip_id": tripId,
+    "ride_id": rideId,
+    "user_message": userMessage,
+    "driver": driver?.toJson(),
+    "promo": promo?.toJson(),
+    "booked_by": bookedBy,
+    "booked_by_contact": bookedByContact,
+    "booked_for": bookedFor,
+    "booked_for_contact": bookedForContact,
+    "created_by": createdBy?.toJson(),
+    "ride_status": rideStatus,
+    "pickup_details": pickupDetails?.toJson(),
+    "trip_details": tripDetails?.toJson(),
+    "driver_details": driverDetails?.toJson(),
+    "trip_sequence":
+        tripSequence == null
             ? []
             : List<dynamic>.from(tripSequence!.map((x) => x.toJson())),
-        "ride_route": rideRoute,
-        "price": price?.toJson(),
-        "route": route == null ? [] : List<dynamic>.from(route!.map((x) => x)),
-        "ride_vehicle": rideVehicle,
-        "ride_type": rideType,
-        "trips_near_dropoff": tripsNearDropoff,
-        "ride_aval": rideAval,
-        "ride_aval_time": rideAvalTime,
-        "vehicle_type": vehicleType,
-        "ride_feature": rideFeature,
-        "travel_mode": travelMode,
-        "user": user?.toJson(),
-        "payment": payment?.toJson(),
-      };
+    "ride_route": rideRoute,
+    "price": price?.toJson(),
+    "route": route == null ? [] : List<dynamic>.from(route!.map((x) => x)),
+    "ride_vehicle": rideVehicle,
+    "ride_type": rideType,
+    "trips_near_dropoff": tripsNearDropoff,
+    "ride_aval": rideAval,
+    "ride_aval_time": rideAvalTime,
+    "vehicle_type": vehicleType,
+    "ride_feature": rideFeature,
+    "travel_mode": travelMode,
+    "user": user?.toJson(),
+    "payment": payment?.toJson(),
+  };
 }
 
 class NewRide {
@@ -278,88 +317,94 @@ class NewRide {
   });
 
   factory NewRide.fromJson(Map<String, dynamic> json) => NewRide(
-        tripId: json["trip_id"],
-        rideId: json["ride_id"],
-        driver: json["driver"] == null ? null : Driver.fromJson(json["driver"]),
-        promo: json["promo"] == null ? null : Promo.fromJson(json["promo"]),
-        bookedBy: json["booked_by"],
-        bookedByContact: json["booked_by_contact"],
-        bookedFor: json["booked_for"],
-        bookedForContact: json["booked_for_contact"],
-        createdBy: json["created_by"] == null
+    tripId: json["trip_id"],
+    rideId: json["ride_id"],
+    driver: json["driver"] == null ? null : Driver.fromJson(json["driver"]),
+    promo: json["promo"] == null ? null : Promo.fromJson(json["promo"]),
+    bookedBy: json["booked_by"],
+    bookedByContact: json["booked_by_contact"],
+    bookedFor: json["booked_for"],
+    bookedForContact: json["booked_for_contact"],
+    createdBy:
+        json["created_by"] == null
             ? null
             : CreatedBy.fromJson(json["created_by"]),
-        rideStatus: json["ride_status"],
-        pickupDetails: json["pickup_details"] == null
+    rideStatus: json["ride_status"],
+    pickupDetails:
+        json["pickup_details"] == null
             ? null
             : PickupDetails.fromJson(json["pickup_details"]),
-        tripDetails: json["trip_details"] == null
+    tripDetails:
+        json["trip_details"] == null
             ? null
             : TripDetails.fromJson(json["trip_details"]),
-        tripSequence: json["trip_sequence"] == null
+    tripSequence:
+        json["trip_sequence"] == null
             ? []
             : List<TripSequence>.from(
-                json["trip_sequence"]!.map((x) => TripSequence.fromJson(x))),
-        rideRoute: json["ride_route"],
-        price: json["price"] == null ? null : Price.fromJson(json["price"]),
-        route: json["route"] == null
+              json["trip_sequence"]!.map((x) => TripSequence.fromJson(x)),
+            ),
+    rideRoute: json["ride_route"],
+    price: json["price"] == null ? null : Price.fromJson(json["price"]),
+    route:
+        json["route"] == null
             ? []
             : List<dynamic>.from(json["route"]!.map((x) => x)),
-        rideVehicle: json["ride_vehicle"],
-        rideType: json["ride_type"],
-        tripsNearDropoff: json["trips_near_dropoff"],
-        staysAt: json["stays_at"],
-        noOfAdults: json["no_of_adults"],
-        noOfKids: json["no_of_kids"],
-        tourDuration: json["tour_duration"],
-        rideAval: json["ride_aval"],
-        rideAvalTime: json["ride_aval_time"],
-        vehicleType: json["vehicle_type"],
-        rideFeature: json["ride_feature"],
-        travelMode: json["travel_mode"],
-        user: json["user"] == null ? null : User.fromJson(json["user"]),
-        payment:
-            json["payment"] == null ? null : Payment.fromJson(json["payment"]),
-        userMessage: json["user_message"],
-        cancelRide: json["cancel_ride"],
-      );
+    rideVehicle: json["ride_vehicle"],
+    rideType: json["ride_type"],
+    tripsNearDropoff: json["trips_near_dropoff"],
+    staysAt: json["stays_at"],
+    noOfAdults: json["no_of_adults"],
+    noOfKids: json["no_of_kids"],
+    tourDuration: json["tour_duration"],
+    rideAval: json["ride_aval"],
+    rideAvalTime: json["ride_aval_time"],
+    vehicleType: json["vehicle_type"],
+    rideFeature: json["ride_feature"],
+    travelMode: json["travel_mode"],
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    payment: json["payment"] == null ? null : Payment.fromJson(json["payment"]),
+    userMessage: json["user_message"],
+    cancelRide: json["cancel_ride"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "trip_id": tripId,
-        "ride_id": rideId,
-        "driver": driver?.toJson(),
-        "promo": promo?.toJson(),
-        "booked_by": bookedBy,
-        "booked_by_contact": bookedByContact,
-        "booked_for": bookedFor,
-        "booked_for_contact": bookedForContact,
-        "created_by": createdBy?.toJson(),
-        "ride_status": rideStatus,
-        "pickup_details": pickupDetails?.toJson(),
-        "trip_details": tripDetails?.toJson(),
-        "trip_sequence": tripSequence == null
+    "trip_id": tripId,
+    "ride_id": rideId,
+    "driver": driver?.toJson(),
+    "promo": promo?.toJson(),
+    "booked_by": bookedBy,
+    "booked_by_contact": bookedByContact,
+    "booked_for": bookedFor,
+    "booked_for_contact": bookedForContact,
+    "created_by": createdBy?.toJson(),
+    "ride_status": rideStatus,
+    "pickup_details": pickupDetails?.toJson(),
+    "trip_details": tripDetails?.toJson(),
+    "trip_sequence":
+        tripSequence == null
             ? []
             : List<dynamic>.from(tripSequence!.map((x) => x.toJson())),
-        "ride_route": rideRoute,
-        "price": price?.toJson(),
-        "route": route == null ? [] : List<dynamic>.from(route!.map((x) => x)),
-        "ride_vehicle": rideVehicle,
-        "ride_type": rideType,
-        "trips_near_dropoff": tripsNearDropoff,
-        "stays_at": staysAt,
-        "no_of_adults": noOfAdults,
-        "no_of_kids": noOfKids,
-        "tour_duration": tourDuration,
-        "ride_aval": rideAval,
-        "ride_aval_time": rideAvalTime,
-        "vehicle_type": vehicleType,
-        "ride_feature": rideFeature,
-        "travel_mode": travelMode,
-        "user": user?.toJson(),
-        "payment": payment?.toJson(),
-        "user_message": userMessage,
-        "cancel_ride": cancelRide,
-      };
+    "ride_route": rideRoute,
+    "price": price?.toJson(),
+    "route": route == null ? [] : List<dynamic>.from(route!.map((x) => x)),
+    "ride_vehicle": rideVehicle,
+    "ride_type": rideType,
+    "trips_near_dropoff": tripsNearDropoff,
+    "stays_at": staysAt,
+    "no_of_adults": noOfAdults,
+    "no_of_kids": noOfKids,
+    "tour_duration": tourDuration,
+    "ride_aval": rideAval,
+    "ride_aval_time": rideAvalTime,
+    "vehicle_type": vehicleType,
+    "ride_feature": rideFeature,
+    "travel_mode": travelMode,
+    "user": user?.toJson(),
+    "payment": payment?.toJson(),
+    "user_message": userMessage,
+    "cancel_ride": cancelRide,
+  };
 }
 
 class CreatedBy {
@@ -367,39 +412,30 @@ class CreatedBy {
   String? subText;
   String? promoUrl;
 
-  CreatedBy({
-    this.name,
-    this.subText,
-    this.promoUrl,
-  });
+  CreatedBy({this.name, this.subText, this.promoUrl});
 
   factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
-        name: json["name"],
-        subText: json["sub_text"],
-        promoUrl: json["promo_url"],
-      );
+    name: json["name"],
+    subText: json["sub_text"],
+    promoUrl: json["promo_url"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "sub_text": subText,
-        "promo_url": promoUrl,
-      };
+    "name": name,
+    "sub_text": subText,
+    "promo_url": promoUrl,
+  };
 }
 
 class Driver {
   DriverPosition position;
 
-  Driver({
-    required this.position,
-  });
+  Driver({required this.position});
 
-  factory Driver.fromJson(Map<String, dynamic> json) => Driver(
-        position: DriverPosition.fromJson(json["position"]),
-      );
+  factory Driver.fromJson(Map<String, dynamic> json) =>
+      Driver(position: DriverPosition.fromJson(json["position"]));
 
-  Map<String, dynamic> toJson() => {
-        "position": position.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"position": position.toJson()};
 }
 
 class OntripRideDriverDetails {
@@ -439,16 +475,16 @@ class OntripRideDriverDetails {
       );
 
   Map<String, dynamic> toJson() => {
-        "travel_mode": travelMode,
-        "user_id": userId,
-        "device_token": deviceToken,
-        "lp_id": lpId,
-        "first_name": firstName,
-        "vehicle_number": vehicleNumber,
-        "vehicle_name": vehicleName,
-        "vehicle_model": vehicleModel,
-        "phone_number": phoneNumber,
-      };
+    "travel_mode": travelMode,
+    "user_id": userId,
+    "device_token": deviceToken,
+    "lp_id": lpId,
+    "first_name": firstName,
+    "vehicle_number": vehicleNumber,
+    "vehicle_name": vehicleName,
+    "vehicle_model": vehicleModel,
+    "phone_number": phoneNumber,
+  };
 }
 
 class Payment {
@@ -457,26 +493,21 @@ class Payment {
   String? status;
   String? amount;
 
-  Payment({
-    this.mode,
-    this.currency,
-    this.status,
-    this.amount,
-  });
+  Payment({this.mode, this.currency, this.status, this.amount});
 
   factory Payment.fromJson(Map<String, dynamic> json) => Payment(
-        mode: json["mode"],
-        currency: json["currency"],
-        status: json["status"],
-        amount: json["amount"],
-      );
+    mode: json["mode"],
+    currency: json["currency"],
+    status: json["status"],
+    amount: json["amount"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "mode": mode,
-        "currency": currency,
-        "status": status,
-        "amount": amount,
-      };
+    "mode": mode,
+    "currency": currency,
+    "status": status,
+    "amount": amount,
+  };
 }
 
 class PickupDetails {
@@ -493,18 +524,18 @@ class PickupDetails {
   });
 
   factory PickupDetails.fromJson(Map<String, dynamic> json) => PickupDetails(
-        distance: json["distance"],
-        distanceUnit: json["distanceUnit"],
-        duration: json["duration"],
-        durationUnit: json["durationUnit"],
-      );
+    distance: json["distance"],
+    distanceUnit: json["distanceUnit"],
+    duration: json["duration"],
+    durationUnit: json["durationUnit"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "distance": distance,
-        "distanceUnit": distanceUnit,
-        "duration": duration,
-        "durationUnit": durationUnit,
-      };
+    "distance": distance,
+    "distanceUnit": distanceUnit,
+    "duration": duration,
+    "durationUnit": durationUnit,
+  };
 }
 
 class Price {
@@ -523,20 +554,20 @@ class Price {
   });
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
-        id: json["id"],
-        currency: json["currency"],
-        pricePerUnit: json["price_per_unit"],
-        priceText: json["price_text"],
-        totalPrice: json["total_price"],
-      );
+    id: json["id"],
+    currency: json["currency"],
+    pricePerUnit: json["price_per_unit"],
+    priceText: json["price_text"],
+    totalPrice: json["total_price"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "currency": currency,
-        "price_per_unit": pricePerUnit,
-        "price_text": priceText,
-        "total_price": totalPrice,
-      };
+    "id": id,
+    "currency": currency,
+    "price_per_unit": pricePerUnit,
+    "price_text": priceText,
+    "total_price": totalPrice,
+  };
 }
 
 class Promo {
@@ -544,23 +575,19 @@ class Promo {
   String? promoText;
   String? promoUrl;
 
-  Promo({
-    this.promoHead,
-    this.promoText,
-    this.promoUrl,
-  });
+  Promo({this.promoHead, this.promoText, this.promoUrl});
 
   factory Promo.fromJson(Map<String, dynamic> json) => Promo(
-        promoHead: json["promo_head"],
-        promoText: json["promo_text"],
-        promoUrl: json["promo_url"],
-      );
+    promoHead: json["promo_head"],
+    promoText: json["promo_text"],
+    promoUrl: json["promo_url"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "promo_head": promoHead,
-        "promo_text": promoText,
-        "promo_url": promoUrl,
-      };
+    "promo_head": promoHead,
+    "promo_text": promoText,
+    "promo_url": promoUrl,
+  };
 }
 
 class TripDetails {
@@ -579,20 +606,20 @@ class TripDetails {
   });
 
   factory TripDetails.fromJson(Map<String, dynamic> json) => TripDetails(
-        distance: json["distance"],
-        distanceUnit: json["distanceUnit"],
-        duration: json["duration"],
-        durationUnit: json["durationUnit"],
-        noOfTolls: json["noOfTolls"],
-      );
+    distance: json["distance"],
+    distanceUnit: json["distanceUnit"],
+    duration: json["duration"],
+    durationUnit: json["durationUnit"],
+    noOfTolls: json["noOfTolls"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "distance": distance,
-        "distanceUnit": distanceUnit,
-        "duration": duration,
-        "durationUnit": durationUnit,
-        "noOfTolls": noOfTolls,
-      };
+    "distance": distance,
+    "distanceUnit": distanceUnit,
+    "duration": duration,
+    "durationUnit": durationUnit,
+    "noOfTolls": noOfTolls,
+  };
 }
 
 class TripSequence {
@@ -623,48 +650,43 @@ class TripSequence {
   });
 
   factory TripSequence.fromJson(Map<String, dynamic> json) => TripSequence(
-        type: json["type"],
-        address: json["address"],
-        place: json["place"],
-        position: DriverPosition.fromJson(json["position"]),
-        notes: json["notes"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        countryCode: json["country_code"],
-        phoneNumber: json["phone_number"],
-        pickupTime: json["pickup_time"],
-        dropoffTime: json["dropoff_time"],
-      );
+    type: json["type"],
+    address: json["address"],
+    place: json["place"],
+    position: DriverPosition.fromJson(json["position"]),
+    notes: json["notes"],
+    firstName: json["first_name"],
+    lastName: json["last_name"],
+    countryCode: json["country_code"],
+    phoneNumber: json["phone_number"],
+    pickupTime: json["pickup_time"],
+    dropoffTime: json["dropoff_time"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "type": type,
-        "address": address,
-        "place": place,
-        "position": position?.toJson(),
-        "notes": notes,
-        "first_name": firstName,
-        "last_name": lastName,
-        "country_code": countryCode,
-        "phone_number": phoneNumber,
-        "pickup_time": pickupTime,
-        "dropoff_time": dropoffTime,
-      };
+    "type": type,
+    "address": address,
+    "place": place,
+    "position": position?.toJson(),
+    "notes": notes,
+    "first_name": firstName,
+    "last_name": lastName,
+    "country_code": countryCode,
+    "phone_number": phoneNumber,
+    "pickup_time": pickupTime,
+    "dropoff_time": dropoffTime,
+  };
 }
 
 class User {
   String? deviceToken;
 
-  User({
-    this.deviceToken,
-  });
+  User({this.deviceToken});
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        deviceToken: json["device_token"],
-      );
+  factory User.fromJson(Map<String, dynamic> json) =>
+      User(deviceToken: json["device_token"]);
 
-  Map<String, dynamic> toJson() => {
-        "device_token": deviceToken,
-      };
+  Map<String, dynamic> toJson() => {"device_token": deviceToken};
 }
 
 class UpcomingRide {
@@ -731,84 +753,91 @@ class UpcomingRide {
   });
 
   factory UpcomingRide.fromJson(Map<String, dynamic> json) => UpcomingRide(
-        tripId: json["trip_id"],
-        userMessage: json["user_message"],
-        rideId: json["ride_id"],
-        driver: Driver.fromJson(json["driver"]),
-        promo: json["promo"] == null ? null : Promo.fromJson(json["promo"]),
-        bookedBy: json["booked_by"],
-        bookedByContact: json["booked_by_contact"],
-        bookedFor: json["booked_for"],
-        bookedForContact: json["booked_for_contact"],
-        createdBy: json["created_by"] == null
+    tripId: json["trip_id"],
+    userMessage: json["user_message"],
+    rideId: json["ride_id"],
+    driver: Driver.fromJson(json["driver"]),
+    promo: json["promo"] == null ? null : Promo.fromJson(json["promo"]),
+    bookedBy: json["booked_by"],
+    bookedByContact: json["booked_by_contact"],
+    bookedFor: json["booked_for"],
+    bookedForContact: json["booked_for_contact"],
+    createdBy:
+        json["created_by"] == null
             ? null
             : CreatedBy.fromJson(json["created_by"]),
-        rideStatus: json["ride_status"],
-        pickupDetails: json["pickup_details"] == null
+    rideStatus: json["ride_status"],
+    pickupDetails:
+        json["pickup_details"] == null
             ? null
             : PickupDetails.fromJson(json["pickup_details"]),
-        tripDetails: json["trip_details"] == null
+    tripDetails:
+        json["trip_details"] == null
             ? null
             : TripDetails.fromJson(json["trip_details"]),
-        driverDetails: json["driver_details"] == null
+    driverDetails:
+        json["driver_details"] == null
             ? null
             : UpcomingRideDriverDetails.fromJson(json["driver_details"]),
-        tripSequence: json["trip_sequence"] == null
+    tripSequence:
+        json["trip_sequence"] == null
             ? []
             : List<TripSequence>.from(
-                json["trip_sequence"]!.map((x) => TripSequence.fromJson(x))),
-        rideRoute: json["ride_route"],
-        price: json["price"] == null ? null : Price.fromJson(json["price"]),
-        route: json["route"] == null
+              json["trip_sequence"]!.map((x) => TripSequence.fromJson(x)),
+            ),
+    rideRoute: json["ride_route"],
+    price: json["price"] == null ? null : Price.fromJson(json["price"]),
+    route:
+        json["route"] == null
             ? []
             : List<dynamic>.from(json["route"]!.map((x) => x)),
-        rideVehicle: json["ride_vehicle"],
-        rideType: json["ride_type"],
-        tripsNearDropoff: json["trips_near_dropoff"],
-        rideAval: json["ride_aval"],
-        rideAvalTime: json["ride_aval_time"],
-        vehicleType: json["vehicle_type"],
-        rideFeature: json["ride_feature"],
-        travelMode: json["travel_mode"],
-        user: json["user"] == null ? null : User.fromJson(json["user"]),
-        payment:
-            json["payment"] == null ? null : Payment.fromJson(json["payment"]),
-        cancelRide: json["cancel_ride"],
-      );
+    rideVehicle: json["ride_vehicle"],
+    rideType: json["ride_type"],
+    tripsNearDropoff: json["trips_near_dropoff"],
+    rideAval: json["ride_aval"],
+    rideAvalTime: json["ride_aval_time"],
+    vehicleType: json["vehicle_type"],
+    rideFeature: json["ride_feature"],
+    travelMode: json["travel_mode"],
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    payment: json["payment"] == null ? null : Payment.fromJson(json["payment"]),
+    cancelRide: json["cancel_ride"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "trip_id": tripId,
-        "ride_id": rideId,
-        "user_message": userMessage,
-        "driver": driver?.toJson(),
-        "promo": promo?.toJson(),
-        "booked_by": bookedBy,
-        "booked_by_contact": bookedByContact,
-        "booked_for": bookedFor,
-        "booked_for_contact": bookedForContact,
-        "created_by": createdBy?.toJson(),
-        "ride_status": rideStatus,
-        "pickup_details": pickupDetails?.toJson(),
-        "trip_details": tripDetails?.toJson(),
-        "driver_details": driverDetails?.toJson(),
-        "trip_sequence": tripSequence == null
+    "trip_id": tripId,
+    "ride_id": rideId,
+    "user_message": userMessage,
+    "driver": driver?.toJson(),
+    "promo": promo?.toJson(),
+    "booked_by": bookedBy,
+    "booked_by_contact": bookedByContact,
+    "booked_for": bookedFor,
+    "booked_for_contact": bookedForContact,
+    "created_by": createdBy?.toJson(),
+    "ride_status": rideStatus,
+    "pickup_details": pickupDetails?.toJson(),
+    "trip_details": tripDetails?.toJson(),
+    "driver_details": driverDetails?.toJson(),
+    "trip_sequence":
+        tripSequence == null
             ? []
             : List<dynamic>.from(tripSequence!.map((x) => x.toJson())),
-        "ride_route": rideRoute,
-        "price": price?.toJson(),
-        "route": route == null ? [] : List<dynamic>.from(route!.map((x) => x)),
-        "ride_vehicle": rideVehicle,
-        "ride_type": rideType,
-        "trips_near_dropoff": tripsNearDropoff,
-        "ride_aval": rideAval,
-        "ride_aval_time": rideAvalTime,
-        "vehicle_type": vehicleType,
-        "ride_feature": rideFeature,
-        "travel_mode": travelMode,
-        "user": user?.toJson(),
-        "payment": payment?.toJson(),
-        "cancel_ride": cancelRide,
-      };
+    "ride_route": rideRoute,
+    "price": price?.toJson(),
+    "route": route == null ? [] : List<dynamic>.from(route!.map((x) => x)),
+    "ride_vehicle": rideVehicle,
+    "ride_type": rideType,
+    "trips_near_dropoff": tripsNearDropoff,
+    "ride_aval": rideAval,
+    "ride_aval_time": rideAvalTime,
+    "vehicle_type": vehicleType,
+    "ride_feature": rideFeature,
+    "travel_mode": travelMode,
+    "user": user?.toJson(),
+    "payment": payment?.toJson(),
+    "cancel_ride": cancelRide,
+  };
 }
 
 class UpcomingRideDriverDetails {
@@ -845,13 +874,32 @@ class UpcomingRideDriverDetails {
       );
 
   Map<String, dynamic> toJson() => {
-        "user_id": userId,
-        "device_token": deviceToken,
-        "lp_id": lpId,
-        "first_name": firstName,
-        "vehicle_number": vehicleNumber,
-        "vehicle_name": vehicleName,
-        "vehicle_model": vehicleModel,
-        "phone_number": phoneNumber,
-      };
+    "user_id": userId,
+    "device_token": deviceToken,
+    "lp_id": lpId,
+    "first_name": firstName,
+    "vehicle_number": vehicleNumber,
+    "vehicle_name": vehicleName,
+    "vehicle_model": vehicleModel,
+    "phone_number": phoneNumber,
+  };
+}
+
+class Revenue {
+  int? amount;
+  String? currency;
+
+  Revenue({this.amount, this.currency});
+
+  Revenue.fromJson(Map<String, dynamic> json) {
+    amount = json['amount'];
+    currency = json['currency'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['amount'] = this.amount;
+    data['currency'] = this.currency;
+    return data;
+  }
 }

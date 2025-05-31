@@ -122,7 +122,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
       await Future.wait([
         mainHomeCubit.updateDeviceToken(),
         // mainHomeCubit.getUserData(),
-        mainHomeCubit.getDriverBusinessOverview(),
+        //  mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),
         // mainHomeCubit.getRideHomeData(),
         // mainHomeCubit.getRidesMatrix(),
@@ -168,15 +168,14 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
       body: BlocBuilder<MainHomeCubit, MainHomeState>(
         builder: (context, state) {
           /// Show loading shimmer while data is being fetched.
-          if (state.mainHomeApiStatus.isLoading ||
-              state.getProfileData.isLoading ||
-              state.ridesMatrixApiStatus.isLoading) {
+          if (state.getProfileData.isLoading ||
+              state.upComingRideApiStatus.isLoading) {
             return HomeWidgets.newDriverHomeShimmer();
           }
 
           /// Render main content when data is successfully fetched.
-          if (state.ridesMatrixApiStatus.success) {
-            final getHomeData = state.dlvyBusinessOverviewData?.data;
+          if (state.upComingRideApiStatus.success) {
+            final getHomeData = state.upComingRideData?.data;
 
             return Stack(
               children: [
@@ -224,8 +223,8 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                           });
 
                           /// Fetch metrics based on the selected filter.
-                          await mainHomeCubit.getDriverBusinessOverview(
-                            date: selectedDate,
+                          await mainHomeCubit.getUpcomingOnTripRideData(
+                            dateFilter: selectedDate,
                           );
                         },
                         selectedDate: selectedDate,
@@ -293,8 +292,8 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                         /// Banner indicating no new orders.
                         HomeWidgets.noNewOrder(
                           onTap: () async {
-                            await mainHomeCubit.getDriverBusinessOverview(
-                              date: selectedDate,
+                            await mainHomeCubit.getUpcomingOnTripRideData(
+                              dateFilter: selectedDate,
                             );
                           },
                         ),
