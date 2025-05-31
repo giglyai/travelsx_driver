@@ -41,7 +41,7 @@ class NotificationService {
           channelDescription: 'GiglyAI Driver Notifications',
           importance: Importance.max,
           priority: Priority.high,
-          playSound: false,
+          playSound: true,
           enableVibration: true,
           //sound: RawResourceAndroidNotificationSound('alert_sound'),
         );

@@ -10,22 +10,6 @@ import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
 
-// Future<void> initializeBackgroundService() async {
-//   final service = FlutterBackgroundService();
-//   await service.configure(
-//     iosConfiguration: IosConfiguration(
-//       autoStart: true,
-//       onForeground: onStart,
-//       onBackground: onIosBackground,
-//     ),
-//     androidConfiguration: AndroidConfiguration(
-//       onStart: onStart,
-//       isForegroundMode: true,
-//       autoStart: true,
-//     ),
-//   );
-// }
-
 Future<void> initializeBackgroundService() async {
   final service = FlutterBackgroundService();
 
@@ -34,8 +18,11 @@ Future<void> initializeBackgroundService() async {
       onStart: onStart,
       autoStart: true,
       isForegroundMode: true,
-      notificationChannelId: 'travelsx_driver_channel',
-      //initialNotificationTitle: 'TravelsX Driver Running',
+      notificationChannelId: 'background_service_channel',
+      initialNotificationTitle:
+          F.appFlavor == Flavor.kurinjidriver
+              ? 'Kurinji Driver Running'
+              : 'TravelsX Driver Running',
       initialNotificationContent: 'Tap to return to the app',
       foregroundServiceNotificationId: 888,
     ),
@@ -72,7 +59,7 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  Timer.periodic(const Duration(minutes: 10), (timer) async {
+  Timer.periodic(const Duration(minutes: 1), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         print("forground service running");
