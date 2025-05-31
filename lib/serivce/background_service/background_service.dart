@@ -35,7 +35,7 @@ Future<void> initializeBackgroundService() async {
       autoStart: true,
       isForegroundMode: true,
       notificationChannelId: 'travelsx_driver_channel',
-      initialNotificationTitle: 'TravelsX Driver Running',
+      //initialNotificationTitle: 'TravelsX Driver Running',
       initialNotificationContent: 'Tap to return to the app',
       foregroundServiceNotificationId: 888,
     ),

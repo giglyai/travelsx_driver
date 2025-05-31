@@ -154,7 +154,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                       // bottom: 6, // slight spacing below label
                     ),
                     child: Text(
-                      "Enter your email address",
+                      "Enter your phone number",
                       style: AppTextStyle.text14black0000W800?.copyWith(
                         fontSize: 20, // slightly increased for clarity
                         color: Colors.black87, // more legible than pure black
@@ -264,7 +264,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                   decoration: InputDecoration(
                     prefix: SizedBox(width: 20 * SizeConfig.widthMultiplier!),
                     hintStyle: AppTextStyle.text14kBlackTextColorW500,
-                    hintText: "Enter your mobile number",
+                    hintText: "Phone number",
                     fillColor: AppColors.kWhiteFFFF,
                     filled: true,
                     focusedBorder: OutlineInputBorder(
