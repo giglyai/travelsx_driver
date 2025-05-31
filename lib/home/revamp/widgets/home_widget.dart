@@ -6,11 +6,13 @@ import 'package:travelx_driver/shared/constants/app_colors/app_colors.dart';
 import 'package:travelx_driver/shared/constants/app_styles/app_styles.dart';
 import 'package:travelx_driver/shared/constants/revamp/imagePath/new_imagePath.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
+import 'package:travelx_driver/shared/utils/enums/common_enums.dart';
 import 'package:travelx_driver/shared/utils/image_loader/image_loader.dart';
 import 'package:travelx_driver/shared/widgets/buttons/blue_button.dart';
 import 'package:travelx_driver/shared/widgets/cutom_drop_down/inventory_drop/inventory_drop_down.dart';
 import 'package:travelx_driver/shared/widgets/size_config/size_config.dart';
 import 'package:travelx_driver/user/account/enitity/profile_model.dart';
+import 'package:travelx_driver/user/trip/screens/trip_screen.dart';
 
 import '../../../shared/widgets/custom_sized_box/custom_sized_box.dart';
 import '../entity/dlvy_biz_overview_entity.dart';
@@ -159,26 +161,32 @@ class HomeWidgets {
                 count: getHomeData?.all,
                 title: "All",
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => OrderReadyScreen(
-                  //               fromHome: true,
-                  //               orderStatus: OrderStatus.all,
-                  //             )));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => UserTripScreen(
+                            fromHome: true,
+                            rideStatus: TripStatus.all,
+                          ),
+                    ),
+                  );
                 },
               ),
               orderDetailsCard(
                 title: "Assigned",
                 count: getHomeData?.acceptedCount,
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => OrderReadyScreen(
-                  //               fromHome: true,
-                  //               orderStatus: OrderStatus.acceptedOrder,
-                  //             )));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => UserTripScreen(
+                            fromHome: true,
+                            rideStatus: TripStatus.assigned,
+                          ),
+                    ),
+                  );
                 },
               ),
             ],
@@ -191,26 +199,32 @@ class HomeWidgets {
                 title: "Completed",
                 count: getHomeData?.completedCount,
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => OrderReadyScreen(
-                  //               fromHome: true,
-                  //               orderStatus: OrderStatus.delivered,
-                  //             )));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => UserTripScreen(
+                            fromHome: true,
+                            rideStatus: TripStatus.completed,
+                          ),
+                    ),
+                  );
                 },
               ),
               orderDetailsCard(
                 title: "Cancelled",
                 count: getHomeData?.cancelledCount,
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => OrderReadyScreen(
-                  //               fromHome: true,
-                  //               orderStatus: OrderStatus.cancel,
-                  //             )));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => UserTripScreen(
+                            fromHome: true,
+                            rideStatus: TripStatus.cancelled,
+                          ),
+                    ),
+                  );
                 },
               ),
             ],

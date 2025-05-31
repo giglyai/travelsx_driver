@@ -258,7 +258,7 @@ mixin GenerateRoute {
         );
       case RouteName.userTripScreen:
         return MaterialPageRoute(
-          builder: (context) => const UserTripScreen(),
+          builder: (context) => UserTripScreen(),
           settings: settings,
         );
       case RouteName.privacyPolicy:
