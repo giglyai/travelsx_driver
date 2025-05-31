@@ -12,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_kurinjidriver.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_travelsxdriver.dart';
 import 'package:travelx_driver/core/remote_config/remote_config.dart';
@@ -52,6 +53,9 @@ Future<void> main({Flavor? flavor}) async {
   }
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('flavor', F.appFlavor.toString());
 
   if (flavor == Flavor.kurinjidriver) {
     if (Firebase.apps.isEmpty) {

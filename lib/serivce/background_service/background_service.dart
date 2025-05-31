@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
@@ -13,16 +14,21 @@ import 'package:travelx_driver/flavors.dart';
 Future<void> initializeBackgroundService() async {
   final service = FlutterBackgroundService();
 
+  final prefs = await SharedPreferences.getInstance();
+  final currentFlavor = prefs.getString('flavor') ?? 'travelsxdriver';
+
+  String title =
+      currentFlavor.contains('kurinjidriver')
+          ? 'Kurinji Driver'
+          : 'TravelsX Driver';
+
   await service.configure(
     androidConfiguration: AndroidConfiguration(
       onStart: onStart,
       autoStart: true,
       isForegroundMode: true,
       notificationChannelId: 'background_service_channel',
-      initialNotificationTitle:
-          F.appFlavor == Flavor.kurinjidriver
-              ? 'Kurinji Driver Running'
-              : 'TravelsX Driver Running',
+      initialNotificationTitle: title,
       initialNotificationContent: 'Tap to return to the app',
       foregroundServiceNotificationId: 888,
     ),
@@ -47,7 +53,17 @@ Future<bool> onIosBackground(ServiceInstance service) async {
 void onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
 
+  final prefs = await SharedPreferences.getInstance();
+  final currentFlavor = prefs.getString('flavor') ?? 'travelsxdriver';
+
+  String title =
+      currentFlavor.contains('kurinjidriver')
+          ? 'Kurinji Driver'
+          : 'TravelsX Driver';
+
   if (service is AndroidServiceInstance) {
+    service.setForegroundNotificationInfo(title: title, content: "Running");
+
     service.on('setAsForeground').listen((event) {
       service.setAsForegroundService();
     });
@@ -62,32 +78,8 @@ void onStart(ServiceInstance service) async {
   Timer.periodic(const Duration(minutes: 1), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
-        print("forground service running");
         await HomeCubit().postUserCurrentLocation(source: "bg_service");
-
-        String title;
-
-        if (F.appFlavor == Flavor.kurinjidriver) {
-          title = "Kurinji Driver";
-        } else if (F.appFlavor == Flavor.travelsxdriver) {
-          title = "TravelsX Driver";
-        } else {
-          title = "TravelsX Driver";
-        }
-
-        service.setForegroundNotificationInfo(title: title, content: "Running");
       } else {
-        print("background service running");
-        String title;
-        if (F.appFlavor == Flavor.kurinjidriver) {
-          title = "Kurinji Driver";
-        } else if (F.appFlavor == Flavor.travelsxdriver) {
-          title = "TravelsX Driver";
-        } else {
-          title = "TravelsX Driver";
-        }
-
-        service.setForegroundNotificationInfo(title: title, content: "Running");
         await HomeCubit().postUserCurrentLocation(source: "bg_service");
       }
     } else if (service is IOSServiceInstance) {
