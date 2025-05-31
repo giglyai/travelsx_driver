@@ -14,15 +14,9 @@
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
   <application android:label="@string/app_name" android:name="${applicationName}"
-    android:icon="@mipmap/ic_launcher"
-    android:usesCleartextTraffic="true"
-    android:foregroundServiceType="mediaPlayback"
-  >
+    android:icon="@mipmap/ic_launcher">
     <meta-data android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo"
-    />
-
-
+      android:value="AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo" />
     <!-- AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo -->
     <meta-data android:name="com.google.android.gms.version"
       android:value="@integer/google_play_services_version" />
@@ -52,9 +46,6 @@
       android:exported="false"
       android:foregroundServiceType="location|dataSync"
       tools:replace="android:exported" />
-
-    <service android:name="com.ryanheise.audioservice.AudioService" android:exported="false" />
-
   </application>
   <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
