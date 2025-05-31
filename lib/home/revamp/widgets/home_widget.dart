@@ -590,7 +590,7 @@ class HomeWidgets {
     Color baseColor = Colors.grey.withOpacity(0.25);
     Color highlightColor = Colors.white.withOpacity(0.6);
     return Padding(
-      padding: EdgeInsets.only(bottom: 190 * SizeConfig.heightMultiplier!),
+      padding: EdgeInsets.only(top: 80 * SizeConfig.heightMultiplier!),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
@@ -606,7 +606,6 @@ class HomeWidgets {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomSizedBox(height: 20),
                     Padding(
                       padding: EdgeInsets.only(
                         bottom: 10 * SizeConfig.heightMultiplier!,
@@ -615,7 +614,7 @@ class HomeWidgets {
                         highlightColor: highlightColor,
                         baseColor: baseColor,
                         child: Container(
-                          width: SizeConfig.widthMultiplier! * 328,
+                          width: SizeConfig.widthMultiplier! * 320,
                           height: SizeConfig.heightMultiplier! * 40,
                           decoration: BoxDecoration(
                             color: containerColor,

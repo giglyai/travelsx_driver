@@ -48,10 +48,11 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
 
   /// List of earning activity filters.
   List<String> earningActivityList = [
+    EarningActivity.thisWeek.getEarningActivityString,
+
     EarningActivity.today.getEarningActivityString,
     EarningActivity.yesterday.getEarningActivityString,
     EarningActivity.lastweek.getEarningActivityString,
-    EarningActivity.thisWeek.getEarningActivityString,
     EarningActivity.lastmonth.getEarningActivityString,
     EarningActivity.thisMonth.getEarningActivityString,
   ];
