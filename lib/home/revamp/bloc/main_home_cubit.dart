@@ -1267,7 +1267,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal:
-                                                      14 *
+                                                      10 *
                                                       SizeConfig
                                                           .widthMultiplier!,
                                                 ),
@@ -1302,7 +1302,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                   ConstrainedBox(
                                                     constraints: BoxConstraints(
                                                       maxWidth:
-                                                          140 *
+                                                          120 *
                                                           SizeConfig
                                                               .widthMultiplier!, // Adjust this value as per your requirement
                                                       // or set a specific maxWidth value if needed
@@ -1388,7 +1388,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                       Text(
                                                         "${acceptedRide?.payment?.amount.toString()}",
                                                         style: AppTextStyle
-                                                            .text50kBlue0644AAW900
+                                                            .text45kBlue0644AAW900
                                                             ?.copyWith(
                                                               height: 0.8,
                                                             ),
@@ -2032,7 +2032,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                               Padding(
                                                 padding: EdgeInsets.only(
                                                   left:
-                                                      14 *
+                                                      5 *
                                                       SizeConfig
                                                           .widthMultiplier!,
                                                   right:
@@ -2057,7 +2057,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                         ConstrainedBox(
                                                           constraints: BoxConstraints(
                                                             maxWidth:
-                                                                140 *
+                                                                120 *
                                                                 SizeConfig
                                                                     .widthMultiplier!, // Adjust this value as per your requirement
                                                             // or set a specific maxWidth value if needed
@@ -2144,7 +2144,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                             Text(
                                                               "${acceptedRide?.payment?.amount.toString()}",
                                                               style: AppTextStyle
-                                                                  .text50kBlue0644AAW900
+                                                                  .text45kBlue0644AAW900
                                                                   ?.copyWith(
                                                                     height: 0.8,
                                                                   ),

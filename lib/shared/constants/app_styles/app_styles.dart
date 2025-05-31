@@ -29,6 +29,12 @@ class AppTextStyle {
     fontWeight: FontWeight.w900,
     fontSize: 50 * SizeConfig.textMultiplier!,
   );
+
+  static TextStyle? text45kBlue0644AAW900 = TextStyle(
+    color: AppColors.kBlue0644AA,
+    fontWeight: FontWeight.w900,
+    fontSize: 45 * SizeConfig.textMultiplier!,
+  );
   static TextStyle? text14black0000W800 = TextStyle(
     color: AppColors.kBlackTextColor,
     fontWeight: FontWeight.w800,
