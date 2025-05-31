@@ -38,51 +38,64 @@ class MainActivity : FlutterActivity() {
             }
     }
 
-
-   override fun onCreate(savedInstanceState: Bundle?) {
+override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val currentPackage = applicationContext.packageName
-        val (channelId, channelName, soundFile) = when (currentPackage) {
+
+        // Flavor-specific alert channel
+        val (alertChannelId, alertChannelName, soundFile) = when (currentPackage) {
             "com.travelx.driver.kurinji" -> Triple(
-                "kurinji_driver_channel",
-                "Kurinji Driver Alerts",
+                "kurinji_driver_alert_channel",
+                "Kurinji Alerts",
                 "kurinji_driver_ride_alert"
             )
             "com.travelx.driver" -> Triple(
-                "travelsx_driver_channel",
-                "TravelsX Driver Alerts",
+                "travelsx_driver_alert_channel",
+                "TravelsX Alerts",
                 "travelsx_driver_ride_alert"
             )
             else -> Triple(
-                "default_channel",
+                "default_alert_channel",
                 "Default Alerts",
-                "default_sound"
+                "default_alert"
             )
         }
 
         val soundUri = Uri.parse("android.resource://$currentPackage/raw/$soundFile")
-
         val attributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_NOTIFICATION)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .build()
 
-        val channel = NotificationChannel(
-            channelId,
-            channelName,
+        val alertChannel = NotificationChannel(
+            alertChannelId,
+            alertChannelName,
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
             setSound(soundUri, attributes)
             enableVibration(true)
-            description = "Notification channel for $channelName"
+            description = "Alert channel for foreground notifications"
+        }
+
+        // Silent background channel
+        val bgChannel = NotificationChannel(
+            "background_service_channel",
+            "Background Service",
+            NotificationManager.IMPORTANCE_LOW
+        ).apply {
+            setSound(null, null)
+            enableVibration(false)
+            description = "Used for silent background service notifications"
         }
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        notificationManager.createNotificationChannel(alertChannel)
+        notificationManager.createNotificationChannel(bgChannel)
     }
 }
+
 
 
 
