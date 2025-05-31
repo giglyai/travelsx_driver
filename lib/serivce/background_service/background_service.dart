@@ -10,20 +10,43 @@ import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
 
+// Future<void> initializeBackgroundService() async {
+//   final service = FlutterBackgroundService();
+//   await service.configure(
+//     iosConfiguration: IosConfiguration(
+//       autoStart: true,
+//       onForeground: onStart,
+//       onBackground: onIosBackground,
+//     ),
+//     androidConfiguration: AndroidConfiguration(
+//       onStart: onStart,
+//       isForegroundMode: true,
+//       autoStart: true,
+//     ),
+//   );
+// }
+
 Future<void> initializeBackgroundService() async {
   final service = FlutterBackgroundService();
+
   await service.configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      autoStart: true,
+      isForegroundMode: true,
+      notificationChannelId: 'travelsx_driver_channel',
+      initialNotificationTitle: 'TravelsX Driver Running',
+      initialNotificationContent: 'Tap to return to the app',
+      foregroundServiceNotificationId: 888,
+    ),
     iosConfiguration: IosConfiguration(
       autoStart: true,
       onForeground: onStart,
       onBackground: onIosBackground,
     ),
-    androidConfiguration: AndroidConfiguration(
-      onStart: onStart,
-      isForegroundMode: true,
-      autoStart: true,
-    ),
   );
+
+  await service.startService();
 }
 
 @pragma('vm:entry-point')
