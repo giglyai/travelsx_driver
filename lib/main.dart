@@ -110,11 +110,13 @@ Future<void> main({Flavor? flavor}) async {
   await FireBaseApi().initNotification();
   // await NotificationService().init(); // <- Must be before runApp
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  initializeBackgroundService();
-
   runApp(const MyApp());
+
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await Future.delayed(const Duration(seconds: 2));
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    initializeBackgroundService();
+  });
 }
 
 @pragma('vm:entry-point')
