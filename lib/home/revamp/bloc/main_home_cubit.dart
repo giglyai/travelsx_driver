@@ -653,7 +653,15 @@ class MainHomeCubit extends Cubit<MainHomeState> {
       } else {
         emit(
           state.copyWith(
-            upComingRideData: upcoming.UpcomingOntripRideRes(),
+            upComingRideData: upcoming.UpcomingOntripRideRes(
+              data: upcoming.UpcomingOntripRideResData(
+                cancelledRide: upcomingOntripRideRes.data?.cancelledRide,
+                completedRide: upcomingOntripRideRes.data?.completedRide,
+                all: upcomingOntripRideRes.data?.all,
+                assignedRide: upcomingOntripRideRes.data?.assignedRide,
+                revenue: upcomingOntripRideRes.data?.revenue,
+              ),
+            ),
             isOnTripBottomSheetIsOpen: true,
             upComingRideApiStatus: ApiStatus.empty,
           ),

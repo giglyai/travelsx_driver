@@ -174,7 +174,8 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
           }
 
           /// Render main content when data is successfully fetched.
-          if (state.upComingRideApiStatus.success) {
+          if (state.upComingRideApiStatus.success ||
+              state.upComingRideApiStatus.empty) {
             final getHomeData = state.upComingRideData?.data;
 
             return Stack(
