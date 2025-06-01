@@ -121,7 +121,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     Future.microtask(() async {
       await Future.wait([
         mainHomeCubit.updateDeviceToken(),
-        // mainHomeCubit.getUserData(),
+        mainHomeCubit.getUserData(),
         //  mainHomeCubit.getDriverBusinessOverview(),
         mainHomeCubit.getUpcomingOnTripRideData(),
         // mainHomeCubit.getRideHomeData(),

@@ -70,7 +70,7 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  Timer.periodic(const Duration(minutes: 1), (timer) async {
+  Timer.periodic(const Duration(minutes: 10), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         await HomeCubit().postUserCurrentLocation(source: "bg_service");
