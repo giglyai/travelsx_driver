@@ -36,8 +36,8 @@ class FireBaseApi {
     final title = message.notification?.title ?? "";
     final body = message.notification?.body ?? "";
 
-    if (title.contains("New Trip available for you") ||
-        title.contains("New Trip assigned to you")) {
+    if (title.contains("TravelsX Driver, New ride available for you") ||
+        title.contains("TravelsX Driver, New ride assigned to you")) {
       _navigateToHomeScreen();
     } else if (title == "Account Verified") {
       ProfileRepository.instance.setUserProfileAccountStatus("Verified");
