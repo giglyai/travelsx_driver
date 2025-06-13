@@ -1692,33 +1692,57 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                     ),
                                                     child: Row(
                                                       children: [
-                                                        Row(
+                                                        // Left Side: Icon + Commission (if any) + Amount
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
-                                                            ImageLoader.svgPictureAssetImage(
-                                                              width:
-                                                                  18 *
-                                                                  SizeConfig
-                                                                      .widthMultiplier!,
-                                                              height:
-                                                                  18 *
-                                                                  SizeConfig
-                                                                      .widthMultiplier!,
-                                                              imagePath:
-                                                                  ImagePath
-                                                                      .billNotesIcon,
-                                                            ),
-                                                            CustomSizedBox(
-                                                              width: 10,
-                                                            ),
+                                                            if ((acceptedRide
+                                                                        ?.commAmount ??
+                                                                    0) >
+                                                                0)
+                                                              CustomSizedBox(
+                                                                width: 10,
+                                                              ),
                                                             Text(
-                                                              'Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                              'Commission: INR ${acceptedRide?.commAmount}',
                                                               style:
                                                                   AppTextStyle
-                                                                      .text18black0000W700,
+                                                                      .text16black0000W600,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                ImageLoader.svgPictureAssetImage(
+                                                                  width:
+                                                                      18 *
+                                                                      SizeConfig
+                                                                          .widthMultiplier!,
+                                                                  height:
+                                                                      18 *
+                                                                      SizeConfig
+                                                                          .widthMultiplier!,
+                                                                  imagePath:
+                                                                      ImagePath
+                                                                          .billNotesIcon,
+                                                                ),
+                                                                CustomSizedBox(
+                                                                  width: 10,
+                                                                ),
+                                                                Text(
+                                                                  'Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                                  style:
+                                                                      AppTextStyle
+                                                                          .text18black0000W700,
+                                                                ),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),
+
                                                         const Spacer(),
+
+                                                        // Right Side: Payment Mode Chip
                                                         Padding(
                                                           padding:
                                                               EdgeInsets.symmetric(
@@ -2463,33 +2487,51 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                           ),
                                                           child: Row(
                                                             children: [
-                                                              Row(
+                                                              // Left Side: Icon + Commission (if any) + Amount
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
-                                                                  ImageLoader.svgPictureAssetImage(
-                                                                    width:
-                                                                        18 *
-                                                                        SizeConfig
-                                                                            .widthMultiplier!,
-                                                                    height:
-                                                                        18 *
-                                                                        SizeConfig
-                                                                            .widthMultiplier!,
-                                                                    imagePath:
-                                                                        ImagePath
-                                                                            .billNotesIcon,
-                                                                  ),
-                                                                  CustomSizedBox(
-                                                                    width: 10,
-                                                                  ),
-                                                                  Text(
-                                                                    'Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
-                                                                    style:
-                                                                        AppTextStyle
-                                                                            .text18black0000W700,
+                                                                  if ((acceptedRide
+                                                                              ?.commAount ??
+                                                                          0) >
+                                                                      0)
+                                                                    Text(
+                                                                      'Commission: INR ${acceptedRide?.commAount}',
+                                                                      style:
+                                                                          AppTextStyle
+                                                                              .text16black0000W600,
+                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      ImageLoader.svgPictureAssetImage(
+                                                                        width:
+                                                                            18 *
+                                                                            SizeConfig.widthMultiplier!,
+                                                                        height:
+                                                                            18 *
+                                                                            SizeConfig.widthMultiplier!,
+                                                                        imagePath:
+                                                                            ImagePath.billNotesIcon,
+                                                                      ),
+                                                                      CustomSizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        'Amount : ${acceptedRide?.payment?.currency} ${(acceptedRide?.payment?.amount)}',
+                                                                        style:
+                                                                            AppTextStyle.text18black0000W700,
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
+
                                                               const Spacer(),
+
+                                                              // Right Side: Payment Mode Chip
                                                               Padding(
                                                                 padding: EdgeInsets.symmetric(
                                                                   horizontal:

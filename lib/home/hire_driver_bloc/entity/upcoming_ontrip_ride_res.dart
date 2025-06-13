@@ -128,6 +128,7 @@ class OntripRide {
   User? user;
   Payment? payment;
   String? userMessage;
+  int? commAount;
 
   OntripRide({
     this.tripId,
@@ -158,6 +159,7 @@ class OntripRide {
     this.user,
     this.payment,
     this.userMessage,
+    this.commAount,
   });
 
   factory OntripRide.fromJson(Map<String, dynamic> json) => OntripRide(
@@ -209,6 +211,7 @@ class OntripRide {
     travelMode: json["travel_mode"],
     user: json["user"] == null ? null : User.fromJson(json["user"]),
     payment: json["payment"] == null ? null : Payment.fromJson(json["payment"]),
+    commAount: json["comm_amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -243,6 +246,7 @@ class OntripRide {
     "travel_mode": travelMode,
     "user": user?.toJson(),
     "payment": payment?.toJson(),
+    "comm_amount": commAount,
   };
 }
 
@@ -280,6 +284,7 @@ class NewRide {
   Payment? payment;
   String? userMessage;
   bool? cancelRide;
+  int? commAount;
 
   NewRide({
     this.tripId,
@@ -314,6 +319,7 @@ class NewRide {
     this.payment,
     this.userMessage,
     this.cancelRide,
+    this.commAount,
   });
 
   factory NewRide.fromJson(Map<String, dynamic> json) => NewRide(
@@ -366,6 +372,7 @@ class NewRide {
     payment: json["payment"] == null ? null : Payment.fromJson(json["payment"]),
     userMessage: json["user_message"],
     cancelRide: json["cancel_ride"],
+    commAount: json["comm_amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -404,6 +411,7 @@ class NewRide {
     "payment": payment?.toJson(),
     "user_message": userMessage,
     "cancel_ride": cancelRide,
+    "comm_amount": commAount,
   };
 }
 
@@ -719,6 +727,7 @@ class UpcomingRide {
   Payment? payment;
   bool? cancelRide;
   String? userMessage;
+  int? commAmount;
 
   UpcomingRide({
     this.tripId,
@@ -750,6 +759,7 @@ class UpcomingRide {
     this.payment,
     this.cancelRide,
     this.userMessage,
+    this.commAmount,
   });
 
   factory UpcomingRide.fromJson(Map<String, dynamic> json) => UpcomingRide(
@@ -802,6 +812,7 @@ class UpcomingRide {
     user: json["user"] == null ? null : User.fromJson(json["user"]),
     payment: json["payment"] == null ? null : Payment.fromJson(json["payment"]),
     cancelRide: json["cancel_ride"],
+    commAmount: json["comm_amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -837,6 +848,7 @@ class UpcomingRide {
     "user": user?.toJson(),
     "payment": payment?.toJson(),
     "cancel_ride": cancelRide,
+    "comm_amount": commAmount,
   };
 }
 
