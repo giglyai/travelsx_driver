@@ -136,6 +136,18 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     height: 200 * SizeConfig.heightMultiplier!,
                     width: 196 * SizeConfig.widthMultiplier!,
                   )
+                else if (F.appFlavor == Flavor.goguldriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashGogulDriverIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
+                else if (F.appFlavor == Flavor.uzhavandriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashUzhavanDriverIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
                 else if (F.appFlavor == Flavor.travelsxdriver)
                   ImageLoader.assetImage(
                     imagePath: ImagePath.splashTravelsxIcon,

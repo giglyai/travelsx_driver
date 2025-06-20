@@ -1703,13 +1703,13 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                     0) >
                                                                 0)
                                                               CustomSizedBox(
-                                                                width: 10,
+                                                                width: 20,
                                                               ),
                                                             Text(
                                                               'Commission: INR ${acceptedRide?.commAmount}',
                                                               style:
                                                                   AppTextStyle
-                                                                      .text16black0000W600,
+                                                                      .text12kGrey909093W400,
                                                             ),
                                                             Row(
                                                               children: [

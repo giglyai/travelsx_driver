@@ -6,6 +6,20 @@ flavors:
       applicationId: "com.travelx.driver.kurinji"
     ios:
       bundleId: "com.travelx.driver.kurinji"
+  goguldriver:
+    app:
+      name: "Gogul Cabs Driver"
+    android:
+      applicationId: "com.travelx.driver.gogul"
+    ios:
+      bundleId: "com.travelx.driver.gogul"
+  uzhavandriver:
+    app:
+      name: "Uzhavan Taxi Driver"
+    android:
+      applicationId: "com.travelx.driver.uzhavan"
+    ios:
+      bundleId: "com.travelx.driver.uzhavan"
   travelsxdriver:
     app:
       name: "TravelsX Driver"

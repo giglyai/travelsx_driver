@@ -51,6 +51,16 @@ override fun onCreate(savedInstanceState: Bundle?) {
                 "Kurinji Alerts",
                 "kurinji_driver_ride_alert"
             )
+            "com.travelx.driver.gogul" -> Triple(
+                "gogul_driver_alert_channel",
+                "Gogul Alerts",
+                "gogul_driver_ride_alert"
+            )
+            "com.travelx.driver.uzhavan" -> Triple(
+                "uzhavan_driver_alert_channel",
+                "Uzhavan Alerts",
+                "uzhavan_driver_ride_alert"
+            )
             "com.travelx.driver" -> Triple(
                 "travelsx_driver_alert_channel",
                 "TravelsX Alerts",

@@ -93,7 +93,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(ImagePath.splashBackground),
+                image: AssetImage(ImagePath.loginBackground),
                 fit: BoxFit.cover,
               ),
             ),
@@ -127,6 +127,18 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                 if (F.appFlavor == Flavor.kurinjidriver)
                   ImageLoader.assetImage(
                     imagePath: ImagePath.splashKurinjiIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
+                else if (F.appFlavor == Flavor.goguldriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashGogulDriverIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
+                else if (F.appFlavor == Flavor.uzhavandriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashUzhavanDriverIcon,
                     height: 200 * SizeConfig.heightMultiplier!,
                     width: 196 * SizeConfig.widthMultiplier!,
                   )

@@ -1,4 +1,5 @@
 class ImagePath {
+  static String loginBackground = 'images/login/login_backgroud.png';
   static String mapPinIcon = 'images/location_pin_on_map 1.png';
   static String refreshLoader = 'images/home/refresh_loader.json';
   static String onlyCallIcon = 'images/common_images/call_icons.svg';
@@ -15,6 +16,10 @@ class ImagePath {
   static String splashBmtIcon = 'assets/icons/bmt-icon.png';
   static String splashKurinjiIcon =
       'images/app_icons/kurinjidriver/app_icon.png';
+  static String splashGogulDriverIcon =
+      'images/app_icons/goguldriver/app_icon.png';
+  static String splashUzhavanDriverIcon =
+      'images/app_icons/uzhavandriver/app_icon.png';
   static String splashTravelsxIcon =
       'images/app_icons/travelsxdriver/app_icon.png';
   static String splashOorugoDriverIcon = 'assets/icons/oorugo-driver-icon.png';

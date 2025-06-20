@@ -68,6 +68,18 @@ class SplashScreenState extends State<SplashScreen> {
                 height: 200 * SizeConfig.heightMultiplier!,
                 width: 196 * SizeConfig.widthMultiplier!,
               );
+            } else if (F.appFlavor == Flavor.goguldriver) {
+              return ImageLoader.assetImage(
+                imagePath: ImagePath.splashGogulDriverIcon,
+                height: 200 * SizeConfig.heightMultiplier!,
+                width: 196 * SizeConfig.widthMultiplier!,
+              );
+            } else if (F.appFlavor == Flavor.uzhavandriver) {
+              return ImageLoader.assetImage(
+                imagePath: ImagePath.splashUzhavanDriverIcon,
+                height: 200 * SizeConfig.heightMultiplier!,
+                width: 196 * SizeConfig.widthMultiplier!,
+              );
             } else if (F.appFlavor == Flavor.travelsxdriver) {
               return ImageLoader.assetImage(
                 imagePath: ImagePath.splashTravelsxIcon,

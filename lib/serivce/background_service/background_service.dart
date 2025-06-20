@@ -51,10 +51,19 @@ void onStart(ServiceInstance service) async {
   final prefs = await SharedPreferences.getInstance();
   final currentFlavor = prefs.getString('flavor') ?? 'travelsxdriver';
 
-  String title =
-      currentFlavor.contains('kurinjidriver')
-          ? 'Kurinji Driver'
-          : 'TravelsX Driver';
+  String title = "";
+
+  if (currentFlavor.contains('goguldriver')) {
+    title = "Gogul Taxi Driver";
+  } else if (currentFlavor.contains('uzhavandriver')) {
+    title = "Uzhavan Driver";
+  } else if (currentFlavor.contains('kurinjidriver')) {
+    title = "Kurinji Driver";
+  } else if (currentFlavor.contains('travelsxdriver')) {
+    title = "TravelsX Driver";
+  } else {
+    title = "TravelsX Driver";
+  }
 
   if (service is AndroidServiceInstance) {
     service.setForegroundNotificationInfo(title: title, content: "Running");

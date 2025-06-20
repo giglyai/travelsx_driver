@@ -13,8 +13,10 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travelx_driver/config/firebase/firebase_options_goguldriver.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_kurinjidriver.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_travelsxdriver.dart';
+import 'package:travelx_driver/config/firebase/firebase_options_uzhavandriver.dart';
 import 'package:travelx_driver/core/remote_config/remote_config.dart';
 import 'package:travelx_driver/documents/bloc/document_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
@@ -63,8 +65,19 @@ Future<void> main({Flavor? flavor}) async {
         options: KurinjiDriverFirebaseOptions.currentPlatform,
       );
     }
-  }
-  if (flavor == Flavor.travelsxdriver) {
+  } else if (flavor == Flavor.goguldriver) {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: GogulDriverFirebaseOptions.currentPlatform,
+      );
+    }
+  } else if (flavor == Flavor.uzhavandriver) {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: UzhavanDriverFirebaseOptions.currentPlatform,
+      );
+    }
+  } else if (flavor == Flavor.travelsxdriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         options: TravelsXDriverFirebaseOptions.currentPlatform,

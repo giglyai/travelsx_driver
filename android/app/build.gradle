@@ -16,6 +16,16 @@ android {
             applicationId "com.travelx.driver.kurinji"
             resValue "string", "app_name", "Kurinji Driver"
         }
+        goguldriver {
+            dimension "flavor-type"
+            applicationId "com.travelx.driver.gogul"
+            resValue "string", "app_name", "Gogul Cabs Driver"
+        }
+        uzhavandriver {
+            dimension "flavor-type"
+            applicationId "com.travelx.driver.uzhavan"
+            resValue "string", "app_name", "Uzhavan Taxi Driver"
+        }
         travelsxdriver {
             dimension "flavor-type"
             applicationId "com.travelx.driver"

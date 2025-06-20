@@ -1,0 +1,9 @@
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "images/app_icons/uzhavandriver/app_icon.png" # Your app icon path
+  adaptive_icon_foreground: "images/app_icons/uzhavandriver/app_icon_foreground.png" # (For Android Adaptive Icon)
+  adaptive_icon_background: "images/app_icons/uzhavandriver/app_icon_background.png" # (For Android Adaptive Icon)
+  remove_alpha_ios: true
+  ios_assets_folder: "Assets.xcassets"
+  ios_app_icon_name: "uzhavandriverAppIcon"
