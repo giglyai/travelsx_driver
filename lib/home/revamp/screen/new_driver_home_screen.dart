@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:install_plugin/install_plugin.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
 import 'package:travelx_driver/shared/local_storage/user_repository.dart';
@@ -100,6 +104,36 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     });
   }
 
+
+// Future<void> downloadAndInstallApk(BuildContext context) async {
+//     // Ask permissions
+//     if (!(await Permission.storage.request().isGranted)) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Storage permission required')),
+//       );
+//       return;
+//     }
+
+//     final dir = await getExternalStorageDirectory();
+//     final apkPath = "${dir!.path}/driver-latest.apk";
+
+//     try {
+//       // Download APK
+//       Dio dio = Dio();
+//       await dio.download("apkUrl", apkPath, onReceiveProgress: (r, t) {
+//         print("Download: ${((r / t) * 100).toStringAsFixed(0)}%");
+//       });
+
+//       // Install APK
+//       await InstallPlugin.installApk(apkPath, 'com.gigly.driverapp');
+//     } catch (e) {
+//       print("Error downloading/installing: $e");
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Failed to install APK')),
+//       );
+//     }
+//   }
+  
   @override
   void dispose() {
     _scrollController.dispose();
