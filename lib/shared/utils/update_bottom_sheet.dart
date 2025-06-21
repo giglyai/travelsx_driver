@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
@@ -133,18 +135,30 @@ class UpdateBottomSheet {
 
   Future<void> _downloadApk(BuildContext context) async {
     try {
-      final permission = await Permission.storage.request();
-      if (!permission.isGranted) {
+      final status = await Permission.storage.request();
+
+      if (Platform.isAndroid && status.isDenied) {
+        final manageStatus = await Permission.manageExternalStorage.request();
+        if (!manageStatus.isGranted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Storage access is required to download the update.",
+              ),
+            ),
+          );
+          return;
+        }
+      } else if (!status.isGranted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text("Storage permission denied")));
+        ).showSnackBar(SnackBar(content: Text("Storage permission denied.")));
         return;
       }
 
-      final dir = await getExternalStorageDirectory();
-      final filePath = "${dir!.path}/app-update.apk";
+      final dir = Directory('/storage/emulated/0/Download');
+      final filePath = "${dir.path}/app-update.apk";
 
-      // 🔥 Select APK URL based on flavor
       String apkUrl = "";
       if (F.appFlavor == Flavor.goguldriver) {
         apkUrl =
