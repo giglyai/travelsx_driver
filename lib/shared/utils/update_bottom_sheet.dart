@@ -187,7 +187,21 @@ class UpdateBottomSheet {
         },
       );
 
-      await OpenFile.open(filePath);
+      // Request install permission (required on Android 8+)
+      if (await Permission.requestInstallPackages.isDenied) {
+        await Permission.requestInstallPackages.request();
+      }
+
+      final result = await OpenFile.open(filePath);
+      if (result.type != ResultType.done) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Unable to open APK. Please install manually from Downloads.",
+            ),
+          ),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
