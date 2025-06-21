@@ -1,15 +1,13 @@
 import 'dart:io';
 
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:install_plugin/install_plugin.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:intl/intl.dart';
 import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
+import 'package:travelx_driver/shared/constants/app_colors/app_colors.dart';
 import 'package:travelx_driver/shared/local_storage/user_repository.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
@@ -59,7 +57,10 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     EarningActivity.lastweek.getEarningActivityString,
     EarningActivity.lastmonth.getEarningActivityString,
     EarningActivity.thisMonth.getEarningActivityString,
+    "Date Range",
   ];
+
+  String? customDateRangeLabel;
 
   void checkAndRequestLocationPermission() async {
     // Check location permission status
@@ -104,36 +105,35 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     });
   }
 
+  // Future<void> downloadAndInstallApk(BuildContext context) async {
+  //     // Ask permissions
+  //     if (!(await Permission.storage.request().isGranted)) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Storage permission required')),
+  //       );
+  //       return;
+  //     }
 
-// Future<void> downloadAndInstallApk(BuildContext context) async {
-//     // Ask permissions
-//     if (!(await Permission.storage.request().isGranted)) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Storage permission required')),
-//       );
-//       return;
-//     }
+  //     final dir = await getExternalStorageDirectory();
+  //     final apkPath = "${dir!.path}/driver-latest.apk";
 
-//     final dir = await getExternalStorageDirectory();
-//     final apkPath = "${dir!.path}/driver-latest.apk";
+  //     try {
+  //       // Download APK
+  //       Dio dio = Dio();
+  //       await dio.download("apkUrl", apkPath, onReceiveProgress: (r, t) {
+  //         print("Download: ${((r / t) * 100).toStringAsFixed(0)}%");
+  //       });
 
-//     try {
-//       // Download APK
-//       Dio dio = Dio();
-//       await dio.download("apkUrl", apkPath, onReceiveProgress: (r, t) {
-//         print("Download: ${((r / t) * 100).toStringAsFixed(0)}%");
-//       });
+  //       // Install APK
+  //       await InstallPlugin.installApk(apkPath, 'com.gigly.driverapp');
+  //     } catch (e) {
+  //       print("Error downloading/installing: $e");
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Failed to install APK')),
+  //       );
+  //     }
+  //   }
 
-//       // Install APK
-//       await InstallPlugin.installApk(apkPath, 'com.gigly.driverapp');
-//     } catch (e) {
-//       print("Error downloading/installing: $e");
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Failed to install APK')),
-//       );
-//     }
-//   }
-  
   @override
   void dispose() {
     _scrollController.dispose();
@@ -154,6 +154,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     // Fetch data concurrently to reduce waiting time
     Future.microtask(() async {
       await Future.wait([
+        mainHomeCubit.getAppVersion(),
         mainHomeCubit.updateDeviceToken(),
         mainHomeCubit.getUserData(),
         //  mainHomeCubit.getDriverBusinessOverview(),
@@ -264,6 +265,64 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                         },
                         selectedDate: selectedDate,
                         earningActivityList: earningActivityList,
+                        customDateRangeLabel:
+                            selectedDate == "Date Range"
+                                ? customDateRangeLabel ?? "Date Range"
+                                : selectedDate,
+
+                        onCustomTap: () async {
+                          final picked = await showDateRangePicker(
+                            context: context,
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime.now(),
+                            builder: (context, child) {
+                              return Theme(
+                                data: ThemeData.light().copyWith(
+                                  colorScheme: const ColorScheme.light(
+                                    primary: Colors.black,
+                                    onPrimary: Colors.white,
+                                    surface: Colors.white,
+                                    onSurface: Colors.black,
+                                  ),
+                                  dialogBackgroundColor: Colors.white,
+                                  textTheme: const TextTheme(
+                                    bodyMedium: TextStyle(color: Colors.black),
+                                  ),
+                                  datePickerTheme: DatePickerThemeData(
+                                    todayBackgroundColor:
+                                        MaterialStatePropertyAll(Colors.grey),
+                                    rangePickerHeaderBackgroundColor:
+                                        Colors.white,
+                                    rangeSelectionBackgroundColor:
+                                        AppColors.kBlue3D6,
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          );
+
+                          if (picked != null) {
+                            final formatted =
+                                "${DateFormat('dd MMM').format(picked.start)} - ${DateFormat('dd MMM yyyy').format(picked.end)}";
+                            final rangeString =
+                                "${DateFormat('yyyy-MM-dd').format(picked.start)},${DateFormat('yyyy-MM-dd').format(picked.end)}";
+
+                            setState(() {
+                              customDateRangeLabel = formatted;
+                              selectedDate = "Date Range";
+                            });
+
+                            print(rangeString);
+
+                            mainHomeCubit.getUpcomingOnTripRideData(
+                              dateFilter: rangeString,
+                            );
+                          } else {
+                            customDateRangeLabel = null;
+                            setState(() {});
+                          }
+                        },
                       ),
 
                       /// Spacing below the business overview.

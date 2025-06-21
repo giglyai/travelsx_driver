@@ -9,17 +9,22 @@ class HomeScreenDropDown extends StatefulWidget {
   final List<String> items;
   final String selectedItem;
   final ValueChanged<String?> onChanged;
-  final ValueChanged<int>? onIndexChanged; // Returns selected index
+  final ValueChanged<int>? onIndexChanged;
+  final VoidCallback? onCustomTap;
+  final double? overlaySize;
+  final double? verticalHeight;
+  final String?
+  displayLabel; // NEW: custom label to display instead of selectedItem
 
-  double? overlaySize;
-  double? verticalHeight;
   HomeScreenDropDown({
     required this.items,
     required this.selectedItem,
     required this.onChanged,
     this.onIndexChanged,
+    this.onCustomTap,
     this.overlaySize,
     this.verticalHeight,
+    this.displayLabel, // NEW
     Key? key,
   }) : super(key: key);
 
@@ -95,11 +100,17 @@ class _HomeScreenDropDownState extends State<HomeScreenDropDown>
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     itemCount: widget.items.length,
                     itemBuilder: (context, index) {
+                      final item = widget.items[index];
                       return InkWell(
                         onTap: () {
-                          widget.onChanged(widget.items[index]); // Return value
-
                           _closeDropdown();
+                          if (item == "Date Range") {
+                            // Custom tap handler for custom date range
+                            widget.onCustomTap?.call();
+                          } else {
+                            widget.onChanged(item);
+                            widget.onIndexChanged?.call(index);
+                          }
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -107,7 +118,7 @@ class _HomeScreenDropDownState extends State<HomeScreenDropDown>
                             horizontal: 12 * SizeConfig.widthMultiplier!,
                           ),
                           child: Text(
-                            widget.items[index],
+                            item,
                             style: AppTextStyle.text14black0000W700,
                           ),
                         ),
@@ -163,7 +174,7 @@ class _HomeScreenDropDownState extends State<HomeScreenDropDown>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.selectedItem,
+                  widget.displayLabel ?? widget.selectedItem,
                   style: AppTextStyle.text14black0000W700,
                 ),
                 Container(

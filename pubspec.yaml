@@ -100,8 +100,9 @@ dependencies:
   shared_preferences: ^2.3.2
   custom_refresh_indicator: ^4.0.1
   cached_network_image: ^3.4.1
-  install_plugin: ^2.1.0
+#  install_plugin: ^2.1.0
   path_provider: ^2.1.5
+  payu_checkoutpro_flutter: ^1.3.0
 
 dev_dependencies:
   flutter_test:

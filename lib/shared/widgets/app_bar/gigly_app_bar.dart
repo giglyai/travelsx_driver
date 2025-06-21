@@ -8,6 +8,7 @@ import 'package:travelx_driver/home/bloc/home_cubit.dart';
 import 'package:travelx_driver/login/screen/mobile_login_screen.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
+
 import '../../../user/user_details/user_details_data.dart';
 import '../../constants/app_colors/app_colors.dart';
 import '../../constants/app_styles/app_styles.dart';
@@ -426,6 +427,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         ],
                       ),
                     ),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     PayUPaymentManager(context).pay(amount: "100");
+                    //   },
+                    //   child: const Text("Pay ₹100"),
+                    // ),
                     // CustomSizedBox(height: 15),
                     // GestureDetector(
                     //   onTap: () {

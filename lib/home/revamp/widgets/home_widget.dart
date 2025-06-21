@@ -109,6 +109,9 @@ class HomeWidgets {
     required Function(String?) onChanged,
     required String selectedDate,
     required List<String> earningActivityList,
+
+    required String customDateRangeLabel,
+    final VoidCallback? onCustomTap, // ✅ NEW
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -131,6 +134,12 @@ class HomeWidgets {
             items: earningActivityList,
             selectedItem: selectedDate,
             onChanged: onChanged,
+            onCustomTap: onCustomTap,
+
+            displayLabel:
+                selectedDate == "Date Range"
+                    ? customDateRangeLabel ?? "Custom Date Range"
+                    : selectedDate,
           ),
           CustomSizedBox(height: 20),
           revenueSection(

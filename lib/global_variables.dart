@@ -38,10 +38,10 @@ CountryCodeList? countryCodeList;
 ///user convert fee if the user plan is basic
 //TODO change this to production APi
 
-//String parentApi = 'https://prod.gigly.ai/';
+String parentApi = 'https://prod.gigly.ai/';
 //String parentApi = 'http://10.0.2.2:9001/';
 //String parentApi = 'http://192.168.1.6:9001/'; // iOS local app
-String parentApi = 'http://192.168.29.243:9001/';
+// String parentApi = 'http://192.168.29.243:9001/';
 
 Map<String, String> header = {
   'authority': 'https://prod.gigly.ai',
