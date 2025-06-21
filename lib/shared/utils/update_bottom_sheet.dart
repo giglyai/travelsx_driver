@@ -152,6 +152,9 @@ class UpdateBottomSheet {
       } else if (F.appFlavor == Flavor.uzhavandriver) {
         apkUrl =
             "https://giglyusers.blob.core.windows.net/apk/uzhavantaxi/app-uzhavandriver-release.apk";
+      } else if (F.appFlavor == Flavor.travelsxdriver) {
+        apkUrl =
+            "https://giglyusers.blob.core.windows.net/apk/travelsx-driver/app-travelsxdriver-release.apk";
       } else {
         ScaffoldMessenger.of(
           context,
