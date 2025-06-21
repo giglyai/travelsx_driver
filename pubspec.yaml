@@ -103,6 +103,7 @@ dependencies:
 #  install_plugin: ^2.1.0
   path_provider: ^2.1.5
   payu_checkoutpro_flutter: ^1.3.0
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:
