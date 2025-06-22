@@ -45,7 +45,7 @@ class FireBaseApi {
       ProfileRepository.instance.setUserProfileAccountStatus("Verified");
       ProfileRepository.instance.init();
       _navigateToHomeScreen();
-    } else if (title == "Ride accepted by other driver") {
+    } else if (title == "Ride has been accepted by another driver") {
       _navigateToHomeScreen();
     }
   }

@@ -349,7 +349,7 @@ class _HireDriverRideDirectionsScreenState
                         if (double.parse(
                               widget.params.ride.tripDetails!.distance!,
                             ) >
-                            50) {
+                            3) {
                           await _hireDriverCubit
                               .showEnterReachedMeterBottomSheet(
                                 onRoute: false,
