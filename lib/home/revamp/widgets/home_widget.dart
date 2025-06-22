@@ -424,11 +424,6 @@ class HomeWidgets {
               style: AppTextStyle.text35kkBlue053688W700?.copyWith(height: 1),
               textAlign: TextAlign.center,
             ),
-            Text(
-              currency ?? "",
-              style: AppTextStyle.text14kkBlue053688W300?.copyWith(height: 1),
-              textAlign: TextAlign.center,
-            ),
             if (commission != null && commission.isNotEmpty)
               Text(
                 "Commission: $commission",
@@ -437,6 +432,11 @@ class HomeWidgets {
                   height: 1.2,
                 ),
               ),
+            Text(
+              currency ?? "",
+              style: AppTextStyle.text14kkBlue053688W300?.copyWith(height: 1),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ],
