@@ -1183,7 +1183,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
       snap: false,
       minChildSize: 0.3 * SizeConfig.heightMultiplier!,
       initialChildSize: 0.3 * SizeConfig.heightMultiplier!,
-      maxChildSize: 0.72 * SizeConfig.heightMultiplier!,
+      maxChildSize: 0.75 * SizeConfig.heightMultiplier!,
       builder: (context, scrollController) {
         return StatefulBuilder(
           builder: (context, setState1) {
@@ -1295,7 +1295,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                   ],
                                                 ),
                                               ),
-                                                                                  Padding(
+                                              Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal:
                                                       10 *
@@ -2129,7 +2129,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal:
-                                                  10 *
+                                                      10 *
                                                       SizeConfig
                                                           .widthMultiplier!,
                                                 ),
@@ -2138,8 +2138,8 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                     Text(
                                                       "${acceptedRide?.createdBy?.name}",
                                                       style:
-                                                      AppTextStyle
-                                                          .text14Black0000W800,
+                                                          AppTextStyle
+                                                              .text14Black0000W800,
                                                     ),
                                                   ],
                                                 ),
