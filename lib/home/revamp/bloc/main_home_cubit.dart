@@ -1343,7 +1343,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                   .heightMultiplier!,
                                                         ),
                                                         child: Text(
-                                                          "${acceptedRide?.createdBy?.name.toString()}",
+                                                          "${acceptedRide?.tripSequence?[0].firstName.toString()}",
                                                           style:
                                                               AppTextStyle
                                                                   .text14black0000W800,
@@ -1416,6 +1416,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                 ],
                                               ),
                                               CustomSizedBox(height: 10),
+
                                               Row(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -1541,6 +1542,76 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                     .withOpacity(0.10),
                                               ),
                                               CustomSizedBox(height: 5),
+
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  ContainerWithBorder(
+                                                    wantPadding: true,
+                                                    containerColor:
+                                                        acceptedRide?.rideType ==
+                                                                "Ride"
+                                                            ? AppColors
+                                                                .kBlack1E2E2E
+                                                            : acceptedRide
+                                                                    ?.rideType ==
+                                                                "Tour"
+                                                            ? AppColors
+                                                                .kOrangeFFA700
+                                                            : AppColors
+                                                                .kGreen40B59F,
+                                                    borderColor:
+                                                        acceptedRide?.rideType ==
+                                                                "Ride"
+                                                            ? AppColors
+                                                                .kBlack1E2E2E
+                                                            : acceptedRide
+                                                                    ?.rideType ==
+                                                                "Tour"
+                                                            ? AppColors
+                                                                .kOrangeFFA700
+                                                            : AppColors
+                                                                .kGreen40B59F,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                        left:
+                                                            15 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        right:
+                                                            15 *
+                                                            SizeConfig
+                                                                .widthMultiplier!,
+                                                        top:
+                                                            2 *
+                                                            SizeConfig
+                                                                .heightMultiplier!,
+                                                        bottom:
+                                                            2 *
+                                                            SizeConfig
+                                                                .heightMultiplier!,
+                                                      ),
+                                                      child: Text(
+                                                        acceptedRide
+                                                                ?.rideType ??
+                                                            "",
+                                                        style:
+                                                            acceptedRide?.rideType ==
+                                                                    "Ride"
+                                                                ? AppTextStyle
+                                                                    .text12kWhiteFFW500
+                                                                : AppTextStyle
+                                                                    .text12Bblack0000W500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              CustomSizedBox(height: 5),
+
                                               Row(
                                                 children: [
                                                   ImageLoader.svgPictureAssetImage(
@@ -2035,6 +2106,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               CustomSizedBox(height: 10),
+
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal:
@@ -2122,7 +2194,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                                         .heightMultiplier!,
                                                               ),
                                                               child: Text(
-                                                                "${acceptedRide?.createdBy?.name.toString()}",
+                                                                "${acceptedRide?.tripSequence?[0].firstName.toString()}",
                                                                 style:
                                                                     AppTextStyle
                                                                         .text14black0000W800,
@@ -2325,6 +2397,77 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                       color: AppColors
                                                           .kBlackTextColor
                                                           .withOpacity(0.10),
+                                                    ),
+                                                    CustomSizedBox(height: 5),
+
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        ContainerWithBorder(
+                                                          wantPadding: true,
+                                                          containerColor:
+                                                              acceptedRide?.rideType ==
+                                                                      "Ride"
+                                                                  ? AppColors
+                                                                      .kBlack1E2E2E
+                                                                  : acceptedRide
+                                                                          ?.rideType ==
+                                                                      "Tour"
+                                                                  ? AppColors
+                                                                      .kOrangeFFA700
+                                                                  : AppColors
+                                                                      .kGreen40B59F,
+                                                          borderColor:
+                                                              acceptedRide?.rideType ==
+                                                                      "Ride"
+                                                                  ? AppColors
+                                                                      .kBlack1E2E2E
+                                                                  : acceptedRide
+                                                                          ?.rideType ==
+                                                                      "Tour"
+                                                                  ? AppColors
+                                                                      .kOrangeFFA700
+                                                                  : AppColors
+                                                                      .kGreen40B59F,
+                                                          child: Padding(
+                                                            padding: EdgeInsets.only(
+                                                              left:
+                                                                  15 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              right:
+                                                                  15 *
+                                                                  SizeConfig
+                                                                      .widthMultiplier!,
+                                                              top:
+                                                                  2 *
+                                                                  SizeConfig
+                                                                      .heightMultiplier!,
+                                                              bottom:
+                                                                  2 *
+                                                                  SizeConfig
+                                                                      .heightMultiplier!,
+                                                            ),
+                                                            child: Text(
+                                                              acceptedRide
+                                                                      ?.rideType ??
+                                                                  "",
+                                                              style:
+                                                                  acceptedRide?.rideType ==
+                                                                          "Ride"
+                                                                      ? AppTextStyle
+                                                                          .text12kWhiteFFW500
+                                                                      : AppTextStyle
+                                                                          .text12Bblack0000W500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     CustomSizedBox(height: 5),
                                                     Row(
