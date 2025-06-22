@@ -2134,43 +2134,43 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                             ),
                                                           ),
                                                         ),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            try {
-                                                              Utils.launchPhoneDialer(
-                                                                acceptedRide
-                                                                        ?.tripSequence?[0]
-                                                                        .phoneNumber ??
-                                                                    '',
-                                                              );
-                                                            } catch (e) {}
-                                                          },
-                                                          child: Container(
-                                                            padding: EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  16 *
-                                                                  SizeConfig
-                                                                      .widthMultiplier!,
-                                                              vertical:
-                                                                  8 *
-                                                                  SizeConfig
-                                                                      .heightMultiplier!,
-                                                            ),
-                                                            decoration: BoxDecoration(
-                                                              shape:
-                                                                  BoxShape
-                                                                      .circle,
-                                                              color:
-                                                                  AppColors
-                                                                      .kGreenE8FAF0,
-                                                            ),
-                                                            child: ImageLoader.svgPictureAssetImage(
-                                                              imagePath:
-                                                                  ImagePath
-                                                                      .onlyCallIcon,
-                                                            ),
-                                                          ),
-                                                        ),
+                                                        // GestureDetector(
+                                                        //   onTap: () {
+                                                        //     try {
+                                                        //       Utils.launchPhoneDialer(
+                                                        //         acceptedRide
+                                                        //                 ?.tripSequence?[0]
+                                                        //                 .phoneNumber ??
+                                                        //             '',
+                                                        //       );
+                                                        //     } catch (e) {}
+                                                        //   },
+                                                        //   child: Container(
+                                                        //     padding: EdgeInsets.symmetric(
+                                                        //       horizontal:
+                                                        //           16 *
+                                                        //           SizeConfig
+                                                        //               .widthMultiplier!,
+                                                        //       vertical:
+                                                        //           8 *
+                                                        //           SizeConfig
+                                                        //               .heightMultiplier!,
+                                                        //     ),
+                                                        //     decoration: BoxDecoration(
+                                                        //       shape:
+                                                        //           BoxShape
+                                                        //               .circle,
+                                                        //       color:
+                                                        //           AppColors
+                                                        //               .kGreenE8FAF0,
+                                                        //     ),
+                                                        //     child: ImageLoader.svgPictureAssetImage(
+                                                        //       imagePath:
+                                                        //           ImagePath
+                                                        //               .onlyCallIcon,
+                                                        //     ),
+                                                        //   ),
+                                                        // ),
                                                         Spacer(),
                                                         Row(
                                                           crossAxisAlignment:
