@@ -1295,8 +1295,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                                   ],
                                                 ),
                                               ),
-                                              CustomSizedBox
-                                              Padding(
+                                                                                  Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal:
                                                       10 *
