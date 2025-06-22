@@ -145,6 +145,7 @@ class HomeWidgets {
           revenueSection(
             currency: getHomeData?.revenue?.currency,
             amount: getHomeData?.revenue?.amount.toString(),
+            commission: getHomeData?.revenue?.commission?.toString(),
           ),
           CustomSizedBox(height: 10),
         ],
@@ -369,12 +370,18 @@ class HomeWidgets {
     );
   }
 
-  static Widget revenueSection({String? currency, String? amount}) {
+  static Widget revenueSection({
+    String? currency,
+    String? amount,
+    String? commission,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        // Left side (label + icon)
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               padding: EdgeInsets.all(5 * SizeConfig.widthMultiplier!),
@@ -392,11 +399,24 @@ class HomeWidgets {
               ),
             ),
             CustomSizedBox(width: 8),
-            Text("Total Revenue", style: AppTextStyle.text20black0000W500),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Total Revenue", style: AppTextStyle.text20black0000W500),
+                // Text(
+                //   "Commission",
+                //   style: AppTextStyle.text20black0000W500?.copyWith(
+                //     fontSize: 12 * SizeConfig.textMultiplier!,
+                //     height: 1.2,
+                //   ),
+                // ),
+              ],
+            ),
           ],
         ),
+
+        // Right side (amount + commission)
         Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
@@ -409,6 +429,14 @@ class HomeWidgets {
               style: AppTextStyle.text14kkBlue053688W300?.copyWith(height: 1),
               textAlign: TextAlign.center,
             ),
+            if (commission != null && commission.isNotEmpty)
+              Text(
+                "Commission: $commission",
+                style: AppTextStyle.text35kkBlue053688W700?.copyWith(
+                  fontSize: 12 * SizeConfig.textMultiplier!,
+                  height: 1.2,
+                ),
+              ),
           ],
         ),
       ],

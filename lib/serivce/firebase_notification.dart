@@ -31,17 +31,21 @@ class FireBaseApi {
 
   Future<void> handleMessage(RemoteMessage? message) async {
     if (message == null) return;
-    notificationService.showNotifications(message); // Always show
+
     //notificationService.playAlertSound(message.data['alert_url'] ?? "");
     final title = message.notification?.title ?? "";
     final body = message.notification?.body ?? "";
 
     if (title.contains("TravelsX Driver, New ride available for you") ||
         title.contains("TravelsX Driver, New ride assigned to you")) {
+      notificationService.showNotifications(message); // Always show
       _navigateToHomeScreen();
     } else if (title == "Account Verified") {
+      notificationService.showNotifications(message); // Always show
       ProfileRepository.instance.setUserProfileAccountStatus("Verified");
       ProfileRepository.instance.init();
+      _navigateToHomeScreen();
+    } else if (title == "Ride accepted by other driver") {
       _navigateToHomeScreen();
     }
   }

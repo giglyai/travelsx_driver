@@ -899,18 +899,21 @@ class UpcomingRideDriverDetails {
 
 class Revenue {
   int? amount;
+  int? commission;
   String? currency;
 
-  Revenue({this.amount, this.currency});
+  Revenue({this.amount, this.commission, this.currency});
 
   Revenue.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
+    commission = json['commission'];
     currency = json['currency'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
+    data['commission'] = this.commission;
     data['currency'] = this.currency;
     return data;
   }
