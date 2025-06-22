@@ -1276,6 +1276,26 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               CustomSizedBox(height: 10),
+
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      10 *
+                                                      SizeConfig
+                                                          .widthMultiplier!,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "${acceptedRide?.createdBy?.name}",
+                                                      style:
+                                                          AppTextStyle
+                                                              .text14Black0000W800,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              CustomSizedBox
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal:
@@ -2106,6 +2126,26 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               CustomSizedBox(height: 10),
+
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                  10 *
+                                                      SizeConfig
+                                                          .widthMultiplier!,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "${acceptedRide?.createdBy?.name}",
+                                                      style:
+                                                      AppTextStyle
+                                                          .text14Black0000W800,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              CustomSizedBox(height: 5),
 
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
