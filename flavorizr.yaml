@@ -20,6 +20,13 @@ flavors:
       applicationId: "com.travelx.driver.uzhavan"
     ios:
       bundleId: "com.travelx.driver.uzhavan"
+  mayiltrackdriver:
+    app:
+      name: "Mayiltrack Driver"
+    android:
+      applicationId: "com.travelx.driver.mayiltrack"
+    ios:
+      bundleId: "com.travelx.driver.mayiltrack"
   travelsxdriver:
     app:
       name: "TravelsX Driver"

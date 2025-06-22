@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		010862DFBE174BD5D4C539C6 /* oorugodriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CFF1CAE959A9F556CC5331C4 /* oorugodriverRelease.xcconfig */; };
+		0D3C6F6A7B614110548F124F /* mayiltrackdriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651D6E9887BD6253A8EBE17D /* mayiltrackdriverLaunchScreen.storyboard */; };
+		10312E771F80920E0A9F20F2 /* mayiltrackdriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9975730E13EFFE58A29094E4 /* mayiltrackdriverProfile.xcconfig */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		1ADE11E2854C2E7FAF57B958 /* prithvidriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE9A178CBFB38C2836D32B9E /* prithvidriverLaunchScreen.storyboard */; };
 		1EA2AD7E1D0E371DAA6D5568 /* bmdriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 100ED29DC7B931E149748D6E /* bmdriverLaunchScreen.storyboard */; };
 		1F78326CAFB4BF79BB48656C /* prithvidriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 899C128893123CD9E6351BCA /* prithvidriverDebug.xcconfig */; };
 		29659D518B2B9094FB78BE08 /* bmdriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7EAA0BC7122AD92EB4767A7C /* bmdriverRelease.xcconfig */; };
 		2BF358D413AAB75A7888ACB2 /* oorugodriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BBBBA7689FD97BF9203B7751 /* oorugodriverDebug.xcconfig */; };
+		2C10C84C891747B9A6394E48 /* mayiltrackdriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4AC019B5595B3E4EED7A57D0 /* mayiltrackdriverRelease.xcconfig */; };
 		2F08B3AD2CF383185372CF10 /* goguldriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E9E93F04EEE1C5BA4931F026 /* goguldriverRelease.xcconfig */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		337E7B3553EF1047CDB9561A /* jppdriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B57E4BD80DA96FD6B354600D /* jppdriverRelease.xcconfig */; };
@@ -48,6 +51,7 @@
 		DE12A35CE9B3BA8E214B76D3 /* goguldriverLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAE9D890B037D3DC13AE0E0E /* goguldriverLaunchScreen.storyboard */; };
 		DE5A58A35A73F35F98066FC2 /* oorugodriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3F53CBA4E78F8044301EF4FD /* oorugodriverProfile.xcconfig */; };
 		DEB1DEF98753422CA24F72F6 /* uzhavandriverProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8DBD85FF91232D789D11AA30 /* uzhavandriverProfile.xcconfig */; };
+		E40C9CF4BEC582ABAEDAEF14 /* mayiltrackdriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 550B6F8F341D7FD6B276E615 /* mayiltrackdriverDebug.xcconfig */; };
 		E6E41C738CF76AD456BF4A62 /* giglyaidriverDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0D4B7ECC147B17584897A66D /* giglyaidriverDebug.xcconfig */; };
 		EAF91BC5EA204947132BBFF6 /* travelsxdriverRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 83EDA4A4B63A2F6292CDE9E7 /* travelsxdriverRelease.xcconfig */; };
 /* End PBXBuildFile section */
@@ -92,6 +96,9 @@
 		3F53CBA4E78F8044301EF4FD /* oorugodriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = oorugodriverProfile.xcconfig; path = Flutter/oorugodriverProfile.xcconfig; sourceTree = "<group>"; };
 		4597A76C3F940CCCD7BFB0B2 /* jppdriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = jppdriverLaunchScreen.storyboard; path = Runner/jppdriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A1B29B908CBCA0CD7E67326 /* jppdriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = jppdriverDebug.xcconfig; path = Flutter/jppdriverDebug.xcconfig; sourceTree = "<group>"; };
+		4AC019B5595B3E4EED7A57D0 /* mayiltrackdriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = mayiltrackdriverRelease.xcconfig; path = Flutter/mayiltrackdriverRelease.xcconfig; sourceTree = "<group>"; };
+		550B6F8F341D7FD6B276E615 /* mayiltrackdriverDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = mayiltrackdriverDebug.xcconfig; path = Flutter/mayiltrackdriverDebug.xcconfig; sourceTree = "<group>"; };
+		651D6E9887BD6253A8EBE17D /* mayiltrackdriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = mayiltrackdriverLaunchScreen.storyboard; path = Runner/mayiltrackdriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		65350683ECAECC06213B7DCC /* travelsxdriverLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = travelsxdriverLaunchScreen.storyboard; path = Runner/travelsxdriverLaunchScreen.storyboard; sourceTree = "<group>"; };
 		655FDF78A95ED993580DCDE1 /* uzhavandriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = uzhavandriverRelease.xcconfig; path = Flutter/uzhavandriverRelease.xcconfig; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -109,6 +116,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9975730E13EFFE58A29094E4 /* mayiltrackdriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = mayiltrackdriverProfile.xcconfig; path = Flutter/mayiltrackdriverProfile.xcconfig; sourceTree = "<group>"; };
 		9E51330B8A40C3E6E1115E72 /* bmdriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = bmdriverProfile.xcconfig; path = Flutter/bmdriverProfile.xcconfig; sourceTree = "<group>"; };
 		ACF09A54694BCB8EC6BE92C0 /* goguldriverProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = goguldriverProfile.xcconfig; path = Flutter/goguldriverProfile.xcconfig; sourceTree = "<group>"; };
 		B57E4BD80DA96FD6B354600D /* jppdriverRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = jppdriverRelease.xcconfig; path = Flutter/jppdriverRelease.xcconfig; sourceTree = "<group>"; };
@@ -182,6 +190,9 @@
 				DAD6D7A63C25FE207BAE876A /* uzhavandriverDebug.xcconfig */,
 				8DBD85FF91232D789D11AA30 /* uzhavandriverProfile.xcconfig */,
 				655FDF78A95ED993580DCDE1 /* uzhavandriverRelease.xcconfig */,
+				550B6F8F341D7FD6B276E615 /* mayiltrackdriverDebug.xcconfig */,
+				9975730E13EFFE58A29094E4 /* mayiltrackdriverProfile.xcconfig */,
+				4AC019B5595B3E4EED7A57D0 /* mayiltrackdriverRelease.xcconfig */,
 			);
 			name = Flutter;
 			sourceTree = "<group>";
@@ -202,6 +213,7 @@
 				65350683ECAECC06213B7DCC /* travelsxdriverLaunchScreen.storyboard */,
 				DAE9D890B037D3DC13AE0E0E /* goguldriverLaunchScreen.storyboard */,
 				22F0BF3552055E7B4460CECA /* uzhavandriverLaunchScreen.storyboard */,
+				651D6E9887BD6253A8EBE17D /* mayiltrackdriverLaunchScreen.storyboard */,
 			);
 			sourceTree = "<group>";
 		};
@@ -360,6 +372,10 @@
 				DEB1DEF98753422CA24F72F6 /* uzhavandriverProfile.xcconfig in Resources */,
 				B7C0D6910CA3A0C31B58F5A1 /* uzhavandriverRelease.xcconfig in Resources */,
 				9287F3864AC5A2BBF5DF67D2 /* uzhavandriverLaunchScreen.storyboard in Resources */,
+				E40C9CF4BEC582ABAEDAEF14 /* mayiltrackdriverDebug.xcconfig in Resources */,
+				10312E771F80920E0A9F20F2 /* mayiltrackdriverProfile.xcconfig in Resources */,
+				2C10C84C891747B9A6394E48 /* mayiltrackdriverRelease.xcconfig in Resources */,
+				0D3C6F6A7B614110548F124F /* mayiltrackdriverLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +674,76 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "Release-bmdriver";
+		};
+		1FE18C4E61C8A4A354BA55C3 /* Profile-mayiltrackdriver */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9975730E13EFFE58A29094E4 /* mayiltrackdriverProfile.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelx.driver.mayiltrack;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Profile-mayiltrackdriver";
 		};
 		207BA3C8027E9C1CD2CA0428 /* Release-giglyaidriver */ = {
 			isa = XCBuildConfiguration;
@@ -2091,6 +2177,78 @@
 			};
 			name = "Profile-prithvidriver";
 		};
+		A8EC1FD6E65ABBCE8DFC4648 /* Release-mayiltrackdriver */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AC019B5595B3E4EED7A57D0 /* mayiltrackdriverRelease.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelx.driver.mayiltrack;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-mayiltrackdriver";
+		};
 		A96912D6AF61BEF35D7947A7 /* Debug-uzhavandriver */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DAD6D7A63C25FE207BAE876A /* uzhavandriverDebug.xcconfig */;
@@ -2240,6 +2398,81 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Debug-kurinjidriver";
+		};
+		B6C5DBE642BC6C1EA25C0659 /* Debug-mayiltrackdriver */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 550B6F8F341D7FD6B276E615 /* mayiltrackdriverDebug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Flutter",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelx.driver.mayiltrack;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-mayiltrackdriver";
 		};
 		BB164A0C1B79E91F7D0B1BC8 /* Debug-travelsxdriver */ = {
 			isa = XCBuildConfiguration;
@@ -2723,6 +2956,9 @@
 				A96912D6AF61BEF35D7947A7 /* Debug-uzhavandriver */,
 				0EEEF84779838940518E4CD4 /* Profile-uzhavandriver */,
 				E10300D7A4BB8FDAC5F22A3B /* Release-uzhavandriver */,
+				B6C5DBE642BC6C1EA25C0659 /* Debug-mayiltrackdriver */,
+				1FE18C4E61C8A4A354BA55C3 /* Profile-mayiltrackdriver */,
+				A8EC1FD6E65ABBCE8DFC4648 /* Release-mayiltrackdriver */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

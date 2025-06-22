@@ -80,6 +80,12 @@ class SplashScreenState extends State<SplashScreen> {
                 height: 200 * SizeConfig.heightMultiplier!,
                 width: 196 * SizeConfig.widthMultiplier!,
               );
+            } else if (F.appFlavor == Flavor.mayiltrackdriver) {
+              return ImageLoader.assetImage(
+                imagePath: ImagePath.splashMayiltrackDriverIcon,
+                height: 200 * SizeConfig.heightMultiplier!,
+                width: 196 * SizeConfig.widthMultiplier!,
+              );
             } else if (F.appFlavor == Flavor.travelsxdriver) {
               return ImageLoader.assetImage(
                 imagePath: ImagePath.splashTravelsxIcon,

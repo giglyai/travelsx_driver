@@ -61,6 +61,11 @@ override fun onCreate(savedInstanceState: Bundle?) {
                 "Uzhavan Alerts",
                 "uzhavan_driver_ride_alert"
             )
+             "com.travelx.driver.mayiltrack" -> Triple(
+                "mayiltrack_driver_alert_channel",
+                "Mayiltrack Alerts",
+                "mayiltrack_driver_ride_alert"
+            )
             "com.travelx.driver" -> Triple(
                 "travelsx_driver_alert_channel",
                 "TravelsX Alerts",

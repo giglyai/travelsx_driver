@@ -26,6 +26,11 @@ android {
             applicationId "com.travelx.driver.uzhavan"
             resValue "string", "app_name", "Uzhavan Taxi Driver"
         }
+        mayiltrackdriver {
+            dimension "flavor-type"
+            applicationId "com.travelx.driver.mayiltrack"
+            resValue "string", "app_name", "Mayiltrack Driver"
+        }
         travelsxdriver {
             dimension "flavor-type"
             applicationId "com.travelx.driver"

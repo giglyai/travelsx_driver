@@ -57,6 +57,8 @@ void onStart(ServiceInstance service) async {
     title = "Gogul Taxi Driver";
   } else if (currentFlavor.contains('uzhavandriver')) {
     title = "Uzhavan Driver";
+  } else if (currentFlavor.contains('mayiltrackdriver')) {
+    title = "Mayiltrack Driver";
   } else if (currentFlavor.contains('kurinjidriver')) {
     title = "Kurinji Driver";
   } else if (currentFlavor.contains('travelsxdriver')) {

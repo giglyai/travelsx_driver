@@ -20,6 +20,8 @@ class ImagePath {
       'images/app_icons/goguldriver/app_icon.png';
   static String splashUzhavanDriverIcon =
       'images/app_icons/uzhavandriver/app_icon.png';
+  static String splashMayiltrackDriverIcon =
+      'images/app_icons/mayiltrackdriver/app_icon.png';
   static String splashTravelsxIcon =
       'images/app_icons/travelsxdriver/app_icon.png';
   static String splashOorugoDriverIcon = 'assets/icons/oorugo-driver-icon.png';
