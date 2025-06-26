@@ -1028,25 +1028,22 @@ class MainHomeCubit extends Cubit<MainHomeState> {
       case RideStatus.unresponsive:
         break;
       case RideStatus.arrivedAtPickup:
-        // TODO: Handle this case.
         break;
       case RideStatus.pickedUp:
-        // TODO: Handle this case.
         break;
       case RideStatus.arrivedAtDropOff:
-        // TODO: Handle this case.
         break;
       case RideStatus.delivered:
-        // TODO: Handle this case.
         break;
       case RideStatus.ontrip:
-        // TODO: Handle this case.
         break;
       case RideStatus.cancel:
-        // TODO: Handle this case.
         break;
       case RideStatus.none:
-        // TODO: Handle this case.
+        break;
+      case RideStatus.returnTrip:
+        break;
+
         break;
     }
   }

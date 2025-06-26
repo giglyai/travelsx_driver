@@ -378,6 +378,7 @@ extension SelectRideAvailableExtension on SelectRideAvailable? {
   }
 }
 
+// Modified enum to handle return trip status
 enum RideStatus {
   none,
   accepted,
@@ -389,22 +390,9 @@ enum RideStatus {
   delivered,
   ontrip,
   cancel,
-  started;
+  started,
+  returnTrip;
 
-  // static RideStatus fromString(String? status) {
-  //   switch (status) {
-  //     case 'ARRIVED':
-  //       return RideStatus.arrivedAtPickup;
-  //     case 'PICKEDUP':
-  //       return RideStatus.pickedUp;
-  //     case 'REACHED':
-  //       return RideStatus.arrivedAtDropOff;
-  //     case 'COMPLETED':
-  //       return RideStatus.delivered;
-  //     default:
-  //       return RideStatus.started;
-  //   }
-  // }
   static RideStatus fromString(String? status) {
     switch (status) {
       case 'ARRIVED':
@@ -413,10 +401,29 @@ enum RideStatus {
         return RideStatus.pickedUp;
       case 'REACHED':
         return RideStatus.arrivedAtDropOff;
+      case 'RETURNED':
+        return RideStatus.returnTrip;
       case 'COMPLETED':
         return RideStatus.delivered;
       default:
         return RideStatus.started;
+    }
+  }
+
+  String get getRideStatusString {
+    switch (this) {
+      case RideStatus.arrivedAtPickup:
+        return 'ARRIVED';
+      case RideStatus.pickedUp:
+        return 'PICKEDUP';
+      case RideStatus.arrivedAtDropOff:
+        return 'REACHED';
+      case RideStatus.returnTrip:
+        return 'RETURNED';
+      case RideStatus.delivered:
+        return 'COMPLETED';
+      default:
+        return 'STARTED';
     }
   }
 }
@@ -499,6 +506,9 @@ extension RideStatusString on RideStatus? {
         return 'CANCELLED_BY_DRIVER';
       case RideStatus.started:
         return 'STARTED';
+      case RideStatus.returnTrip:
+        return 'RETURNED';
+
       case null:
         return 'STARTED';
     }
@@ -514,6 +524,11 @@ extension RideStatusString on RideStatus? {
         return 'REACHED';
       case RideStatus.arrivedAtDropOff:
         return 'COMPLETED';
+
+      // ✅ Handle return trip values
+      case RideStatus.returnTrip:
+        return 'RETURNED';
+
       default:
         return 'ARRIVED';
     }

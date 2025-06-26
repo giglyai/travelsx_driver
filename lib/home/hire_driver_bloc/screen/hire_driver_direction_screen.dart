@@ -41,7 +41,6 @@ class _HireDriverRideDirectionsScreenState
     with WidgetsBindingObserver {
   late HomeCubit _homeCubit;
   late HireDriverCubit _hireDriverCubit;
-  // late Timer distanceTimeTimer;
   LogInStatus logInStatus = LogInStatus();
   final _googleMapWidgetStateKey = GlobalKey<GoogleMapWidgetState>();
   DistanceMatrix? distanceMatrix;
@@ -54,25 +53,85 @@ class _HireDriverRideDirectionsScreenState
   late StreamSubscription<loc.Position> positionStream;
   double markerDirection = 0.0;
   int rideSequence = 0;
-  int pickupSequence = 1;
-  int dropSequence = 0;
   bool isMapLoaded = false;
-  bool? isArrived;
-  bool? isArrivedAtDropUp;
   String? rideType;
-  bool buttonConfirmationEnabled = false;
+  bool isReturnTrip = false;
+
+  bool get hasReturnTrip {
+    return widget.params.ride.rideType == "return" ||
+        (widget.params.ride.tripSequence?.any(
+              (sequence) =>
+                  sequence.type == "pickup_re" || sequence.type == "dropoff_re",
+            ) ??
+            false);
+  }
+
+  int getCurrentSequenceIndex() {
+    final currentStatus =
+        _hireDriverCubit.state.onGoingRideStatus ?? RideStatus.started;
+    if (rideSequence == 0) {
+      if (currentStatus == RideStatus.started ||
+          currentStatus == RideStatus.arrivedAtPickup) {
+        return 0; // First pickup
+      } else if (currentStatus == RideStatus.pickedUp ||
+          currentStatus == RideStatus.arrivedAtDropOff) {
+        return 1; // First dropoff
+      }
+    } else if (rideSequence == 2) {
+      if (currentStatus == RideStatus.returnTrip ||
+          currentStatus == RideStatus.arrivedAtPickup) {
+        return 2; // Return pickup
+      } else if (currentStatus == RideStatus.pickedUp ||
+          currentStatus == RideStatus.arrivedAtDropOff) {
+        return 3; // Return dropoff
+      }
+    }
+    return 0; // Default to first pickup
+  }
+
+  bool shouldShowReturnButton() {
+    final currentStatus =
+        _hireDriverCubit.state.onGoingRideStatus ?? RideStatus.started;
+    return widget.params.ride.rideType == "return" &&
+        currentStatus == RideStatus.arrivedAtDropOff &&
+        rideSequence == 1;
+  }
+
+  bool shouldCallFinalAPI() {
+    final currentStatus =
+        _hireDriverCubit.state.onGoingRideStatus ?? RideStatus.started;
+    if (widget.params.ride.rideType != "return") {
+      return currentStatus == RideStatus.arrivedAtDropOff && rideSequence == 1;
+    } else {
+      return currentStatus == RideStatus.arrivedAtDropOff && rideSequence == 3;
+    }
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     _homeCubit = BlocProvider.of<HomeCubit>(context);
     _hireDriverCubit = BlocProvider.of<HireDriverCubit>(context);
     _hireDriverCubit.flushData();
     WidgetsBinding.instance.addObserver(this);
-    if (widget.params.ride.userMessage == "REACHED") {
+
+    rideType = widget.params.ride.rideType;
+    isReturnTrip = hasReturnTrip;
+
+    if (widget.params.ride.userMessage == "RETURNED") {
+      rideSequence = 2;
+    } else if (widget.params.ride.userMessage == "REACHED" && hasReturnTrip) {
+      rideSequence = 1;
+    }
+
+    if (widget.params.ride.userMessage == "REACHED" && shouldCallFinalAPI()) {
       _hireDriverCubit.getFinalRideDetails(
         rideID: widget.params.ride.rideId ?? "",
         mutationReason: '',
+        userDeviceToken: widget.params.ride.user?.deviceToken,
+        userAmount: widget.params.ride.payment?.amount,
+        userCurrency: widget.params.ride.payment?.currency,
+        userMode: widget.params.ride.payment?.mode,
+        userPaymentStatus: widget.params.ride.payment?.status,
       );
     } else if (widget.params.ride.userMessage == "ARRIVED") {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -93,6 +152,7 @@ class _HireDriverRideDirectionsScreenState
       latitude: widget.params.ride.driver.position.latitude,
       longitude: widget.params.ride.driver.position.longitude,
     );
+
     Future.delayed(const Duration(milliseconds: 500), () {
       Utils.getCurrentLocation()
           .then((LatLng position) {
@@ -111,7 +171,6 @@ class _HireDriverRideDirectionsScreenState
             });
           })
           .catchError((error) {
-            // Handle potential errors from getCurrentLocation
             print('Error getting location: $error');
           });
     });
@@ -129,73 +188,50 @@ class _HireDriverRideDirectionsScreenState
     Future.delayed(const Duration(seconds: 1), () {
       _hireDriverCubit.getDistanceMatrix(
         onRoute: false,
-        sourceLatLng: widget.params.ride.driver.position,
+        sourceLatLng: driverPosition,
         destinationLatLng:
             widget
                 .params
                 .ride
-                .tripSequence![(_hireDriverCubit.state.onGoingRideStatus ==
-                            RideStatus.started ||
-                        _hireDriverCubit.state.onGoingRideStatus ==
-                            RideStatus.arrivedAtPickup)
-                    ? 0
-                    : 1]
+                .tripSequence![getCurrentSequenceIndex()]
                 .position,
       );
     });
 
-    // distanceTimeTimer =
-    //     Timer.periodic(const Duration(minutes: 10), (timer) async {
-    //   onRoute = _googleMapWidgetStateKey.currentState?.isDriverOnroute(
-    //           LatLng(driverPosition.latitude, driverPosition.longitude)) ??
-    //       false;
-    //   // await _hireDriverCubit.getDistanceMatrix(
-    //   //   onRoute: onRoute,
-    //   //   sourceLatLng: driverPosition,
-    //   //   destinationLatLng:
-    //   //       widget.params.ride.tripSequence![rideSequence].position,
-    //   // );
-    //   //TODO remove static driver id
-    //
-    //   // await _hireDriverCubit.mutateHireDriverRides(
-    //   //   tripId: widget.params.ride.tripId ?? '',
-    //   //   rateID: widget.params.ride.price?.id ?? '',
-    //   //   rideID: widget.params.ride.rideId ?? '',
-    //   //   rideStatus: RideStatus.ontrip,
-    //   //   mutationReason: '',
-    //   // );
-    // });
     super.initState();
   }
 
-  gotoNextSequence() async {
-    isArrivedAtDropUp = true;
-    isArrived = null;
-    if ((rideSequence + 1) == widget.params.ride.tripSequence?.length) {
-      //TODO handle trip completion case
-      // _homeCubit.emitState(GetTripSettlementAmount(
-      //     settlementAmount:
-      //         (widget.params.ride.price?.totalPrice ?? 0).toString(),
-      //     pickupAddress: widget.params.ride.tripSequence?[0].address ?? "",
-      //     dropupAddress: widget.params.ride.tripSequence?[1].address ?? ""));
-    } else {
-      rideSequence++;
-      if (widget.params.ride.tripSequence![rideSequence].type ==
-          LocationRideType.pickup.getLocationRideTypeString) {
-        pickupSequence++;
-      } else {
-        dropSequence++;
+  void gotoNextSequence() {
+    final currentStatus =
+        _hireDriverCubit.state.onGoingRideStatus ?? RideStatus.started;
+    if (currentStatus == RideStatus.pickedUp) {
+      if (rideSequence == 0) {
+        rideSequence = 1; // First dropoff
+      } else if (rideSequence == 2) {
+        rideSequence = 3; // Return dropoff
+      }
+      _hireDriverCubit.updateRideStatus(RideStatus.arrivedAtDropOff);
+      if (rideSequence < widget.params.ride.tripSequence!.length) {
+        _hireDriverCubit.getDistanceMatrix(
+          onRoute: false,
+          sourceLatLng: driverPosition,
+          destinationLatLng:
+              widget.params.ride.tripSequence![rideSequence].position,
+        );
       }
     }
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // distanceTimeTimer.cancel();
-    //positionStream.cancel();
-    // _homeCubit.pauseResumeRideTimer(false);
-    super.dispose();
+  void initiateReturnTrip() {
+    if (widget.params.ride.rideType == "return") {
+      rideSequence = 2;
+      _hireDriverCubit.updateRideStatus(RideStatus.returnTrip);
+      _hireDriverCubit.getDistanceMatrix(
+        onRoute: false,
+        sourceLatLng: driverPosition,
+        destinationLatLng: widget.params.ride.tripSequence![2].position,
+      );
+    }
   }
 
   @override
@@ -206,7 +242,6 @@ class _HireDriverRideDirectionsScreenState
       onEvent: (FGBGType value) {
         final path =
             ModalRoute.of(navigatorKey.currentState!.context)?.settings.name;
-
         if (value == FGBGType.foreground && path == null) {
           callBackgroundApis();
         }
@@ -229,8 +264,6 @@ class _HireDriverRideDirectionsScreenState
                       rideID: widget.params.ride.rideId ?? '',
                       rideStatus: RideStatus.cancel,
                       onSubmit: () {
-                        // _homeCubit.pauseResumeRideTimer(false);
-
                         logInStatus.clearRide();
                         AnywhereDoor.pushReplacementNamed(
                           context,
@@ -269,20 +302,25 @@ class _HireDriverRideDirectionsScreenState
                 },
                 child: Container(),
               ),
-              BlocBuilder<HireDriverCubit, HireState>(
-                builder: (context, state) {
-                  if (state.driverMutateRideStatus.success) {
-                    if (state.rideStatus == RideStatus.arrivedAtPickup ||
-                        state.rideStatus == RideStatus.arrivedAtDropOff) {
-                      isArrived = true;
-                    } else if (state.rideStatus == RideStatus.pickedUp ||
-                        state.rideStatus == RideStatus.delivered) {
-                      gotoNextSequence();
-                    }
+              BlocListener<HireDriverCubit, HireState>(
+                listener: (context, state) {
+                  if (state.driverMutateRideStatus == ApiStatus.failure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Something went wrong"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   }
+                },
+                child: BlocBuilder<HireDriverCubit, HireState>(
+                  builder: (context, state) {
+                    final currentStatus =
+                        state.onGoingRideStatus ?? RideStatus.started;
 
-                  if (state.distanceMatrixStatus.success) {
-                    if (state.distanceMatrix?.routePath != null) {
+                    // Update map when distance matrix is available
+                    if (state.distanceMatrixStatus.success &&
+                        state.distanceMatrix?.routePath != null) {
                       _googleMapWidgetStateKey.currentState
                           ?.setNavigationRouteForRide(
                             markerDirection: markerDirection,
@@ -292,92 +330,146 @@ class _HireDriverRideDirectionsScreenState
                                 widget
                                     .params
                                     .ride
-                                    .tripSequence![rideSequence]
+                                    .tripSequence![getCurrentSequenceIndex()]
                                     .position,
                             type:
                                 widget
                                     .params
                                     .ride
-                                    .tripSequence![rideSequence]
+                                    .tripSequence![getCurrentSequenceIndex()]
                                     .type,
                           );
+                      distanceMatrix = state.distanceMatrix;
+                      isMapLoaded = true;
                     }
-                    distanceMatrix = state.distanceMatrix;
-                    isMapLoaded = true;
-                  }
 
-                  return HireDraggableRideCardScreen(
-                    status: state.onGoingRideStatus ?? RideStatus.started,
-                    isLoading: state.driverMutateRideStatus.isLoading,
-                    rideSequence:
-                        widget.params.ride.tripSequence?[(state
-                                        .onGoingRideStatus ==
-                                    RideStatus.started ||
-                                state.onGoingRideStatus ==
-                                    RideStatus.arrivedAtPickup)
-                            ? 0
-                            : 1],
-                    distanceMatrix: distanceMatrix,
-                    onArrival: () async {
-                      if (RideStatus.fromString(
-                                state.onGoingRideStatus.toValue,
-                              ) ==
-                              RideStatus.pickedUp &&
-                          double.parse(
-                                widget.params.ride.tripDetails!.distance!,
-                              ) >
-                              3) {
-                        await _hireDriverCubit.showEnterMeterBottomSheet(
-                          onRoute: false,
-                          sourceLatLng: driverPosition,
-                          destinationLatLng:
-                              widget.params.ride.tripSequence![1].position,
-                          mutationReason: '',
-                          rideID: widget.params.ride.rideId ?? '',
-                          userDeviceToken: widget.params.ride.user?.deviceToken,
-                          userAmount: widget.params.ride.payment?.amount,
-                          userCurrency: widget.params.ride.payment?.currency,
-                          userMode: widget.params.ride.payment?.mode,
-                          userPaymentStatus: widget.params.ride.payment?.status,
-                        );
-                      } else {
-                        await _hireDriverCubit.onGoingTripMutateRide(
-                          mutationReason: '',
-                          rideID: widget.params.ride.rideId ?? '',
-                          userDeviceToken: widget.params.ride.user?.deviceToken,
-                          userAmount: widget.params.ride.payment?.amount,
-                          userCurrency: widget.params.ride.payment?.currency,
-                          userMode: widget.params.ride.payment?.mode,
-                          userPaymentStatus: widget.params.ride.payment?.status,
-                          countyCode:
-                              widget.params.ride.tripSequence![0].countryCode ??
-                              "",
-                          phoneNumber:
-                              widget.params.ride.tripSequence![0].phoneNumber ??
-                              "",
-                        );
-                      }
+                    return HireDraggableRideCardScreen(
+                      status: currentStatus,
+                      isLoading: state.driverMutateRideStatus.isLoading,
+                      rideSequence:
+                          widget
+                              .params
+                              .ride
+                              .tripSequence?[getCurrentSequenceIndex()],
+                      distanceMatrix: distanceMatrix,
+                      showReturnButton: shouldShowReturnButton(),
+                      onReturn: initiateReturnTrip,
+                      rideType: widget.params.ride.rideType,
+                      onArrival: () async {
+                        final tripDistance =
+                            double.tryParse(
+                              widget.params.ride.tripDetails?.distance ?? "0",
+                            ) ??
+                            0;
 
-                      if (RideStatus.fromString(
-                            state.onGoingRideStatus.toValue,
-                          ) ==
-                          RideStatus.arrivedAtDropOff) {
-                        if (double.parse(
-                              widget.params.ride.tripDetails!.distance!,
-                            ) >
-                            3) {
-                          await _hireDriverCubit
-                              .showEnterReachedMeterBottomSheet(
-                                onRoute: false,
-                                sourceLatLng: driverPosition,
-                                destinationLatLng:
-                                    widget
-                                        .params
-                                        .ride
-                                        .tripSequence![1]
-                                        .position,
-                                mutationReason: '',
+                        if (currentStatus == RideStatus.started ||
+                            currentStatus == RideStatus.returnTrip) {
+                          await _hireDriverCubit.onGoingTripMutateRide(
+                            mutationReason: '',
+                            rideID: widget.params.ride.rideId ?? '',
+                            userDeviceToken:
+                                widget.params.ride.user?.deviceToken,
+                            userAmount: widget.params.ride.payment?.amount,
+                            userCurrency: widget.params.ride.payment?.currency,
+                            userMode: widget.params.ride.payment?.mode,
+                            userPaymentStatus:
+                                widget.params.ride.payment?.status,
+                            countyCode:
+                                widget
+                                    .params
+                                    .ride
+                                    .tripSequence![0]
+                                    .countryCode ??
+                                "",
+                            phoneNumber:
+                                widget
+                                    .params
+                                    .ride
+                                    .tripSequence![0]
+                                    .phoneNumber ??
+                                "",
+                          );
+                        } else if (currentStatus ==
+                            RideStatus.arrivedAtPickup) {
+                          if (tripDistance > 3) {
+                            await _hireDriverCubit.showEnterMeterBottomSheet(
+                              onRoute: false,
+                              sourceLatLng: driverPosition,
+                              destinationLatLng:
+                                  widget
+                                      .params
+                                      .ride
+                                      .tripSequence![rideSequence]
+                                      .position,
+                              mutationReason: '',
+                              rideID: widget.params.ride.rideId ?? '',
+                              userDeviceToken:
+                                  widget.params.ride.user?.deviceToken,
+                              userAmount: widget.params.ride.payment?.amount,
+                              userCurrency:
+                                  widget.params.ride.payment?.currency,
+                              userMode: widget.params.ride.payment?.mode,
+                              userPaymentStatus:
+                                  widget.params.ride.payment?.status,
+                            );
+                          } else {
+                            await _hireDriverCubit.onGoingTripMutateRide(
+                              mutationReason: '',
+                              rideID: widget.params.ride.rideId ?? '',
+                              userDeviceToken:
+                                  widget.params.ride.user?.deviceToken,
+                              userAmount: widget.params.ride.payment?.amount,
+                              userCurrency:
+                                  widget.params.ride.payment?.currency,
+                              userMode: widget.params.ride.payment?.mode,
+                              userPaymentStatus:
+                                  widget.params.ride.payment?.status,
+                              countyCode:
+                                  widget
+                                      .params
+                                      .ride
+                                      .tripSequence![0]
+                                      .countryCode ??
+                                  "",
+                              phoneNumber:
+                                  widget
+                                      .params
+                                      .ride
+                                      .tripSequence![0]
+                                      .phoneNumber ??
+                                  "",
+                            );
+                          }
+                        } else if (currentStatus == RideStatus.pickedUp) {
+                          gotoNextSequence();
+                          if (shouldCallFinalAPI()) {
+                            if (tripDistance > 3) {
+                              await _hireDriverCubit
+                                  .showEnterReachedMeterBottomSheet(
+                                    onRoute: false,
+                                    sourceLatLng: driverPosition,
+                                    destinationLatLng:
+                                        widget
+                                            .params
+                                            .ride
+                                            .tripSequence![rideSequence]
+                                            .position,
+                                    mutationReason: '',
+                                    rideID: widget.params.ride.rideId ?? '',
+                                    userDeviceToken:
+                                        widget.params.ride.user?.deviceToken,
+                                    userAmount:
+                                        widget.params.ride.payment?.amount,
+                                    userCurrency:
+                                        widget.params.ride.payment?.currency,
+                                    userMode: widget.params.ride.payment?.mode,
+                                    userPaymentStatus:
+                                        widget.params.ride.payment?.status,
+                                  );
+                            } else {
+                              await _hireDriverCubit.getFinalRideDetails(
                                 rideID: widget.params.ride.rideId ?? '',
+                                mutationReason: '',
                                 userDeviceToken:
                                     widget.params.ride.user?.deviceToken,
                                 userAmount: widget.params.ride.payment?.amount,
@@ -387,222 +479,65 @@ class _HireDriverRideDirectionsScreenState
                                 userPaymentStatus:
                                     widget.params.ride.payment?.status,
                               );
-                        } else if ((double.parse(
-                              widget.params.ride.tripDetails!.distance!,
-                            ) <
-                            3)) {
-                          // await _hireDriverCubit.onGoingTripMutateRide(
-                          //   mutationReason: '',
-                          //   rideID: widget.params.ride.rideId ?? '',
-                          //   userDeviceToken:
-                          //       widget.params.ride.user?.deviceToken,
-                          //   userAmount: widget.params.ride.payment?.amount,
-                          //   userCurrency: widget.params.ride.payment?.currency,
-                          //   userMode: widget.params.ride.payment?.mode,
-                          //   userPaymentStatus:
-                          //       widget.params.ride.payment?.status,
-                          //   countyCode:
-                          //       widget
-                          //           .params
-                          //           .ride
-                          //           .tripSequence![0]
-                          //           .countryCode ??
-                          //       "",
-                          //   phoneNumber:
-                          //       widget
-                          //           .params
-                          //           .ride
-                          //           .tripSequence![0]
-                          //           .phoneNumber ??
-                          //       "",
-                          // );
-                          await _hireDriverCubit.getFinalRideDetails(
-                            rideID: widget.params.ride.rideId!,
-                            mutationReason: '',
-                            userDeviceToken:
-                                widget.params.ride.user?.deviceToken ?? '',
-                            userAmount: widget.params.ride.payment?.amount,
-                            userCurrency: widget.params.ride.payment?.currency,
-                            userMode: widget.params.ride.payment?.mode,
-                            userPaymentStatus:
-                                widget.params.ride.payment?.status,
-                          );
-                        } else {
-                          await _hireDriverCubit.getFinalRideDetails(
-                            rideID: widget.params.ride.rideId!,
-                            mutationReason: '',
-                            userDeviceToken:
-                                widget.params.ride.user?.deviceToken ?? '',
-                            userAmount: widget.params.ride.payment?.amount,
-                            userCurrency: widget.params.ride.payment?.currency,
-                            userMode: widget.params.ride.payment?.mode,
-                            userPaymentStatus:
-                                widget.params.ride.payment?.status,
-                          );
+                            }
+                          }
+                        } else if (currentStatus ==
+                                RideStatus.arrivedAtDropOff &&
+                            shouldCallFinalAPI()) {
+                          if (tripDistance > 3) {
+                            await _hireDriverCubit
+                                .showEnterReachedMeterBottomSheet(
+                                  onRoute: false,
+                                  sourceLatLng: driverPosition,
+                                  destinationLatLng:
+                                      widget
+                                          .params
+                                          .ride
+                                          .tripSequence![rideSequence]
+                                          .position,
+                                  mutationReason: '',
+                                  rideID: widget.params.ride.rideId ?? '',
+                                  userDeviceToken:
+                                      widget.params.ride.user?.deviceToken,
+                                  userAmount:
+                                      widget.params.ride.payment?.amount,
+                                  userCurrency:
+                                      widget.params.ride.payment?.currency,
+                                  userMode: widget.params.ride.payment?.mode,
+                                  userPaymentStatus:
+                                      widget.params.ride.payment?.status,
+                                );
+                          } else {
+                            await _hireDriverCubit.getFinalRideDetails(
+                              rideID: widget.params.ride.rideId ?? '',
+                              mutationReason: '',
+                              userDeviceToken:
+                                  widget.params.ride.user?.deviceToken,
+                              userAmount: widget.params.ride.payment?.amount,
+                              userCurrency:
+                                  widget.params.ride.payment?.currency,
+                              userMode: widget.params.ride.payment?.mode,
+                              userPaymentStatus:
+                                  widget.params.ride.payment?.status,
+                            );
+                          }
                         }
-                      }
-
-                      // if (RideStatus.fromString(
-                      //       state.onGoingRideStatus.toValue,
-                      //     ) !=
-                      //     RideStatus.arrivedAtDropOff) {
-                      //   final isSuccess = await _hireDriverCubit
-                      //       .onGoingTripMutateRide(
-                      //         mutationReason: '',
-                      //         rideID: widget.params.ride.rideId ?? '',
-                      //         userDeviceToken:
-                      //             widget.params.ride.user?.deviceToken,
-                      //         userAmount: widget.params.ride.payment?.amount,
-                      //         userCurrency:
-                      //             widget.params.ride.payment?.currency,
-                      //         userMode: widget.params.ride.payment?.mode,
-                      //         userPaymentStatus:
-                      //             widget.params.ride.payment?.status,
-                      //         countyCode:
-                      //             widget
-                      //                 .params
-                      //                 .ride
-                      //                 .tripSequence![0]
-                      //                 .countryCode ??
-                      //             "",
-                      //         phoneNumber:
-                      //             widget
-                      //                 .params
-                      //                 .ride
-                      //                 .tripSequence![0]
-                      //                 .phoneNumber ??
-                      //             "",
-                      //       );
-                      //
-                      //   if (RideStatus.fromString(
-                      //         state.onGoingRideStatus.toValue,
-                      //       ) ==
-                      //       RideStatus.delivered) {
-                      //     if (isSuccess == true) {
-                      //       // _homeCubit.emitState(
-                      //       //   GetTripSettlementAmount(
-                      //       //     currency: widget.params.ride.price?.currency ?? "",
-                      //       //     settlementAmount:
-                      //       //         (widget.params.ride.price?.totalPrice ?? 0)
-                      //       //             .toString(),
-                      //       //     pickupAddress:
-                      //       //         widget.params.ride.tripSequence?[0].address ??
-                      //       //             "",
-                      //       //     dropupAddress:
-                      //       //         widget.params.ride.tripSequence?[1].address ??
-                      //       //             "",
-                      //       //   ),
-                      //       // );
-                      //
-                      //       // AnywhereDoor.pushReplacementNamed(context,
-                      //       //     routeName: RouteName.homeScreen);
-                      //     }
-                      //   }
-                      //   // if (RideStatus.fromString(
-                      //   //         state.onGoingRideStatus.toValue) ==
-                      //   //     RideStatus.pickedUp) {
-                      //   //   await _hireDriverCubit.getDistanceMatrix(
-                      //   //     onRoute: false,
-                      //   //     sourceLatLng: driverPosition,
-                      //   //     destinationLatLng:
-                      //   //         widget.params.ride.tripSequence![1].position,
-                      //   //   );
-                      //   // }
-                      // }
-                    },
-                    refreshTap: () async {
-                      await _hireDriverCubit.getDistanceMatrix(
-                        onRoute: onRoute,
-                        sourceLatLng: driverPosition,
-                        destinationLatLng:
-                            widget
-                                .params
-                                .ride
-                                .tripSequence![(_hireDriverCubit
-                                                .state
-                                                .onGoingRideStatus ==
-                                            RideStatus.started ||
-                                        _hireDriverCubit
-                                                .state
-                                                .onGoingRideStatus ==
-                                            RideStatus.arrivedAtPickup)
-                                    ? 0
-                                    : 1]
-                                .position,
-                      );
-                    },
-                    // isArrivedAtDropUp: isArrivedAtDropUp,
-                    // isArrived: isArrived,
-                    // currentSequence:
-                    //     widget.params.ride.tripSequence?[rideSequence].type ==
-                    //             LocationRideType.pickup.getLocationRideTypeString
-                    //         ? pickupSequence
-                    //         : dropSequence,
-                    // onConfirmation: () async {
-                    //   if (widget.params.ride.tripSequence?[rideSequence].type ==
-                    //       LocationRideType.dropoff.getLocationRideTypeString) {
-                    //     final isSuccess =
-                    //         await _hireDriverCubit.mutateHireDriverRides(
-                    //       rideStatus: RideStatus.delivered,
-                    //       mutationReason: '',
-                    //       userDeviceToken:
-                    //           widget.params.ride.user?.deviceToken ?? '',
-                    //       userAmount: widget.params.ride.payment?.amount ?? '',
-                    //       userCurrency:
-                    //           widget.params.ride.payment?.currency ?? '',
-                    //       userMode: widget.params.ride.payment?.mode ?? '',
-                    //       userPaymentStatus:
-                    //           widget.params.ride.payment?.status ?? '',
-                    //       rideID: widget.params.ride.rideId ?? '',
-                    //     );
-                    //     setState(() {});
-                    //     if (isSuccess == true) {
-                    //       _homeCubit.emitState(
-                    //         GetTripSettlementAmount(
-                    //           currency: widget.params.ride.price?.currency ?? "",
-                    //           settlementAmount:
-                    //               (widget.params.ride.price?.totalPrice ?? 0)
-                    //                   .toString(),
-                    //           pickupAddress:
-                    //               widget.params.ride.tripSequence?[0].address ??
-                    //                   "",
-                    //           dropupAddress:
-                    //               widget.params.ride.tripSequence?[1].address ??
-                    //                   "",
-                    //         ),
-                    //       );
-                    //     }
-                    //   } else if (widget
-                    //           .params.ride.tripSequence?[rideSequence].type ==
-                    //       LocationRideType.pickup.getLocationRideTypeString) {
-                    //     // await _hireDriverCubit.showEnterMeterBottomSheet();
-                    //
-                    //     await _hireDriverCubit.mutateHireDriverRides(
-                    //       rideStatus: widget.params.ride
-                    //                   .tripSequence?[rideSequence].type ==
-                    //               LocationRideType
-                    //                   .pickup.getLocationRideTypeString
-                    //           ? RideStatus.pickedUp
-                    //           : RideStatus.delivered,
-                    //       mutationReason: '',
-                    //       rideID: widget.params.ride.rideId ?? '',
-                    //     );
-                    //   }
-                    //   // {
-                    //   //      await _hireDriverCubit.mutateHireDriverRides(
-                    //   //        rideStatus: widget.params.ride
-                    //   //                    .tripSequence?[rideSequence].type ==
-                    //   //                LocationRideType
-                    //   //                    .pickup.getLocationRideTypeString
-                    //   //            ? RideStatus.pickedUp
-                    //   //            : RideStatus.delivered,
-                    //   //        mutationReason: '',
-                    //   //        rideID: widget.params.ride.rideId ?? '',
-                    //   //      );
-                    //   //    }
-                    // },
-                  );
-                },
+                      },
+                      refreshTap: () async {
+                        await _hireDriverCubit.getDistanceMatrix(
+                          onRoute: onRoute,
+                          sourceLatLng: driverPosition,
+                          destinationLatLng:
+                              widget
+                                  .params
+                                  .ride
+                                  .tripSequence![getCurrentSequenceIndex()]
+                                  .position,
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -617,27 +552,19 @@ class _HireDriverRideDirectionsScreenState
           LatLng(driverPosition.latitude, driverPosition.longitude),
         ) ??
         false;
+
     await _hireDriverCubit.getDistanceMatrix(
       onRoute: onRoute,
       sourceLatLng: driverPosition,
       destinationLatLng:
-          widget
-              .params
-              .ride
-              .tripSequence![(_hireDriverCubit.state.onGoingRideStatus ==
-                          RideStatus.started ||
-                      _hireDriverCubit.state.onGoingRideStatus ==
-                          RideStatus.arrivedAtPickup)
-                  ? 0
-                  : 1]
-              .position,
+          widget.params.ride.tripSequence![getCurrentSequenceIndex()].position,
     );
+  }
 
-    //TODO remove static driver id
-    // await _hireDriverCubit.mutateHireDriverRides(
-    //   rideID: widget.params.ride.rideId ?? '',
-    //   rideStatus: RideStatus.ontrip,
-    //   mutationReason: '',
-    // );
+  @override
+  void dispose() {
+    positionStream.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }

@@ -14,6 +14,7 @@ import 'package:travelx_driver/home/models/distance_matrix_model.dart';
 import 'package:travelx_driver/home/models/position_data_model.dart';
 import 'package:travelx_driver/home/models/ride_response_model.dart'
     as ride_model;
+import 'package:travelx_driver/home/screen/trip_settled_screen.dart';
 import 'package:travelx_driver/home/widget/container_with_border/container_with_border.dart';
 import 'package:travelx_driver/main.dart';
 import 'package:travelx_driver/shared/api_client/api_client.dart';
@@ -310,16 +311,16 @@ class HireDriverCubit extends Cubit<HireState> {
     }
   }
 
-  Future<bool?> onGoingTripMutateRide({
+  Future<bool> onGoingTripMutateRide({
     required String rideID,
     required String mutationReason,
     String? userDeviceToken,
-    String? countyCode,
-    String? phoneNumber,
     String? userAmount,
     String? userCurrency,
     String? userMode,
     String? userPaymentStatus,
+    String? countyCode,
+    String? phoneNumber,
     String? bookedFor,
     String? mode,
     int? startDist,
@@ -329,8 +330,34 @@ class HireDriverCubit extends Cubit<HireState> {
     DriverRideType? isRideOrDriver = DriverRideType.ride,
     bool? isFromFinalBottomsheet,
   }) async {
-    final status = state.onGoingRideStatus;
-    final nextStatus = RideStatus.fromString(status.toValue);
+    // Use a fallback status if currentStatus is null
+    final currentStatus = state.onGoingRideStatus ?? RideStatus.started;
+    RideStatus nextStatus;
+
+    // Determine the next status based on current status and context
+    if (isFromFinalBottomsheet == true) {
+      nextStatus = RideStatus.delivered;
+    } else {
+      switch (currentStatus) {
+        case RideStatus.started:
+        case RideStatus.returnTrip:
+          nextStatus = RideStatus.arrivedAtPickup;
+          break;
+        case RideStatus.arrivedAtPickup:
+          nextStatus = RideStatus.pickedUp;
+          break;
+        case RideStatus.pickedUp:
+          nextStatus = RideStatus.arrivedAtDropOff;
+          break;
+        case RideStatus.arrivedAtDropOff:
+          nextStatus =
+              RideStatus
+                  .delivered; // For one-way or final dropoff in return trip
+          break;
+        default:
+          nextStatus = RideStatus.started; // Fallback to a safe default status
+      }
+    }
 
     try {
       emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
@@ -357,10 +384,7 @@ class HireDriverCubit extends Cubit<HireState> {
         ),
         deviceToken: UserRepository.getDeviceToken ?? '',
         rideID: rideID,
-        rideStatus:
-            isFromFinalBottomsheet == true
-                ? RideStatus.delivered.getRideStatusString
-                : nextStatus.getRideStatusString,
+        rideStatus: nextStatus.getRideStatusString,
         mutationReason: mutationReason,
         firstName: ProfileRepository.getFirstName ?? '',
         vehicleModel: ProfileRepository.getVehicleModel ?? '',
@@ -372,8 +396,8 @@ class HireDriverCubit extends Cubit<HireState> {
 
       if (response['status'] == 'success') {
         if (response['message'] == "Trip STARTED successfully") {
-          showVerifyOtp(
-            rideID: rideID ?? "",
+          await showVerifyOtp(
+            rideID: rideID,
             startDist: startDist ?? 0,
             endDist: endDist ?? 0,
             userAmount: userAmount,
@@ -382,8 +406,12 @@ class HireDriverCubit extends Cubit<HireState> {
             userMode: userMode,
             userPaymentStatus: userPaymentStatus,
           );
-        } else if (isFromFinalBottomsheet == true) {
-          emit(state.copyWith(driverMutateRideStatus: ApiStatus.success));
+          emit(
+            state.copyWith(
+              driverMutateRideStatus: ApiStatus.success,
+              onGoingRideStatus: RideStatus.arrivedAtPickup,
+            ),
+          );
         } else {
           emit(
             state.copyWith(
@@ -392,13 +420,14 @@ class HireDriverCubit extends Cubit<HireState> {
             ),
           );
         }
-
         return true;
       } else {
         emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        return false;
       }
     } catch (e) {
       emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      return false;
     }
   }
 
@@ -977,30 +1006,26 @@ class HireDriverCubit extends Cubit<HireState> {
             AnywhereDoor.pop(navigatorKey.currentState!.context);
           }
         });
-
         break;
       case RideStatus.unresponsive:
         break;
       case RideStatus.arrivedAtPickup:
-        // TODO: Handle this case.
         break;
       case RideStatus.pickedUp:
-        // TODO: Handle this case.
         break;
       case RideStatus.arrivedAtDropOff:
-        // TODO: Handle this case.
         break;
       case RideStatus.delivered:
-        // TODO: Handle this case.
         break;
       case RideStatus.ontrip:
-        // TODO: Handle this case.
         break;
       case RideStatus.cancel:
-        // TODO: Handle this case.
         break;
       case RideStatus.none:
-        // TODO: Handle this case.
+        break;
+      case RideStatus.returnTrip:
+        break;
+
         break;
     }
   }
@@ -1390,7 +1415,7 @@ class HireDriverCubit extends Cubit<HireState> {
     );
   }
 
-  showEnterMeterBottomSheet({
+  Future<void> showEnterMeterBottomSheet({
     required bool onRoute,
     required DriverPosition sourceLatLng,
     required DriverPosition destinationLatLng,
@@ -1420,6 +1445,7 @@ class HireDriverCubit extends Cubit<HireState> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState1) {
+            bool localIsLoading = false;
             return PopScope(
               canPop: false,
               child: Padding(
@@ -1450,14 +1476,10 @@ class HireDriverCubit extends Cubit<HireState> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: 20 * SizeConfig.widthMultiplier!,
-                              ),
-                              child: Text(
-                                "Enter your meter number",
-                                style: AppTextStyle.text16black0000W600
-                                    ?.copyWith(color: AppColors.kBlue0D368C),
+                            Text(
+                              "Enter your meter number",
+                              style: AppTextStyle.text16black0000W600?.copyWith(
+                                color: AppColors.kBlue0D368C,
                               ),
                             ),
                             CustomSizedBox(width: 5),
@@ -1502,31 +1524,79 @@ class HireDriverCubit extends Cubit<HireState> {
                       BlocBuilder<HireDriverCubit, HireState>(
                         builder: (context, state) {
                           return BlueButton(
-                            isLoading: state.driverMutateRideStatus.isLoading,
+                            isLoading:
+                                state.driverMutateRideStatus.isLoading ||
+                                localIsLoading,
                             onTap: () async {
+                              if (startDist.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Please enter a meter reading.',
+                                    ),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+
+                              setState1(() => localIsLoading = true);
                               FocusScope.of(context).unfocus();
-                              final isSuccess = await startMeterPost(
+
+                              final isSuccess = await BlocProvider.of<
+                                HireDriverCubit
+                              >(context).startMeterPost(
                                 mutationReason: '',
                                 rideID: rideID,
-                                startDist: int.tryParse(startDist.text),
+                                startDist: int.tryParse(startDist.text) ?? 0,
                               );
+
                               if (isSuccess == true) {
-                                await getDistanceMatrix(
+                                await BlocProvider.of<HireDriverCubit>(
+                                  context,
+                                ).getDistanceMatrix(
                                   onRoute: false,
                                   sourceLatLng: sourceLatLng,
                                   destinationLatLng: destinationLatLng,
                                 );
-                                updateRideStatus(RideStatus.arrivedAtPickup);
-                                await onGoingTripMutateRide(
-                                  mutationReason: '',
-                                  userDeviceToken: userDeviceToken,
-                                  userAmount: userAmount,
-                                  userCurrency: userCurrency,
-                                  userMode: userMode,
-                                  userPaymentStatus: userPaymentStatus,
-                                  rideID: rideID,
+                                final mutateSuccess =
+                                    await BlocProvider.of<HireDriverCubit>(
+                                      context,
+                                    ).onGoingTripMutateRide(
+                                      mutationReason: '',
+                                      userDeviceToken: userDeviceToken,
+                                      userAmount: userAmount,
+                                      userCurrency: userCurrency,
+                                      userMode: userMode,
+                                      userPaymentStatus: userPaymentStatus,
+                                      rideID: rideID,
+                                      countyCode: '',
+                                      phoneNumber: '',
+                                    );
+                                if (mutateSuccess) {
+                                  updateRideStatus(RideStatus.pickedUp);
+                                  AnywhereDoor.pop(context);
+                                } else {
+                                  setState1(() => localIsLoading = false);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Failed to update ride status.',
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              } else {
+                                setState1(() => localIsLoading = false);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Failed to submit meter reading.',
+                                    ),
+                                    backgroundColor: Colors.red,
+                                  ),
                                 );
-                                AnywhereDoor.pop(context);
                               }
                             },
                           );
@@ -1543,7 +1613,7 @@ class HireDriverCubit extends Cubit<HireState> {
     );
   }
 
-  showEnterReachedMeterBottomSheet({
+  Future<void> showEnterReachedMeterBottomSheet({
     required bool onRoute,
     required DriverPosition sourceLatLng,
     required DriverPosition destinationLatLng,
@@ -1660,18 +1730,11 @@ class HireDriverCubit extends Cubit<HireState> {
                                 endDist: int.tryParse(endDist.text),
                               );
                               if (isSuccess == true) {
-                                // updateRideStatus(RideStatus.arrivedAtPickup);
-                                // await onGoingTripMutateRide(
-                                //   mutationReason: '',
-                                //   userDeviceToken: userDeviceToken,
-                                //   userAmount: userAmount,
-                                //   userCurrency: userCurrency,
-                                //   userMode: userMode,
-                                //   userPaymentStatus: userPaymentStatus,
-                                //   rideID: rideID,
-                                // );
                                 AnywhereDoor.pop(context);
-                                await getFinalRideDetails(
+                                updateRideStatus(RideStatus.delivered);
+                                await BlocProvider.of<HireDriverCubit>(
+                                  context,
+                                ).getFinalRideDetails(
                                   rideID: rideID,
                                   mutationReason: '',
                                   userDeviceToken: userDeviceToken,
@@ -1681,7 +1744,15 @@ class HireDriverCubit extends Cubit<HireState> {
                                   userPaymentStatus: userPaymentStatus,
                                 );
                               } else {
-                                updateRideStatus(RideStatus.pickedUp);
+                                // Show error message instead of reverting status
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Failed to submit meter reading. Please try again.',
+                                    ),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
                               }
                             },
                           );
@@ -1698,7 +1769,7 @@ class HireDriverCubit extends Cubit<HireState> {
     );
   }
 
-  showFinalDetailsBottomSheet({
+  Future<void> showFinalDetailsBottomSheet({
     GetFinalRideFullDetails? getFinalRideFullDetails,
     required String rideID,
     required String mutationReason,
@@ -1854,8 +1925,7 @@ class HireDriverCubit extends Cubit<HireState> {
                                   horizontal: 10 * SizeConfig.widthMultiplier!,
                                 ),
                                 child: Text(
-                                  getFinalRideFullDetails?.data?.totalTime ??
-                                      "",
+                                  "${getFinalRideFullDetails?.data?.totalTime ?? ""}",
                                   style: AppTextStyle.text14black0000W600,
                                 ),
                               ),
@@ -1877,11 +1947,11 @@ class HireDriverCubit extends Cubit<HireState> {
                               wantMargin: false,
                               isLoading:
                                   state.driverMutateRideStatus.isLoading ||
-                                  isLoading == true,
+                                  isLoading,
                               onTap: () async {
+                                setState1(() => isLoading = true);
                                 FocusScope.of(context).unfocus();
-                                // updateRideStatus(RideStatus.delivered);
-                                bool? isSuccess = await completedMutateRide(
+                                final isSuccess = await completedMutateRide(
                                   isFromFinalBottomsheet: true,
                                   mutationReason: '',
                                   userDeviceToken: userDeviceToken,
@@ -1892,17 +1962,40 @@ class HireDriverCubit extends Cubit<HireState> {
                                   rideID: rideID,
                                 );
                                 if (isSuccess == true) {
-                                  isLoading = true;
                                   updateRideStatus(RideStatus.delivered);
-                                  Future.delayed(const Duration(seconds: 2), () {
-                                    AnywhereDoor.pushReplacementNamed(
-                                      navigatorKey.currentState!.context,
-                                      routeName: RouteName.homeScreen,
-                                    );
-                                    setState1(() {
-                                      // Here you can write your code for open new view
-                                    });
-                                  });
+                                  AnywhereDoor.pop(context);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (BuildContext context) =>
+                                              RideSettlementScreen(
+                                                currency: userCurrency ?? "",
+                                                settlementAmount:
+                                                    userAmount ?? "0",
+                                                pickupAddress:
+                                                    getFinalRideFullDetails
+                                                        ?.data
+                                                        ?.pickup ??
+                                                    "",
+                                                dropupAddress:
+                                                    getFinalRideFullDetails
+                                                        ?.data
+                                                        ?.dropoff ??
+                                                    "",
+                                              ),
+                                    ),
+                                  );
+                                } else {
+                                  setState1(() => isLoading = false);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Failed to complete ride. Please try again.',
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
                                 }
                               },
                             );

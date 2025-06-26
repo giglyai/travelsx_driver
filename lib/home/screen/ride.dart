@@ -87,52 +87,52 @@ class _RidesScreenState extends State<RidesScreen> {
     }
   }
 
-  goToRideStatusRoute(RideStatus rideStatus) {
-    switch (rideStatus) {
-      case RideStatus.accepted:
-        // Navigator.pushReplacementNamed(
-        //   context,
-        //   arguments: rides[selectedRideIndex ?? 0],
-        //   RouteName.rideDirectionsScreen,
-        // );
-        break;
-      case RideStatus.declined:
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await AnywhereDoor.pop(context);
-        });
-
-        break;
-      case RideStatus.unresponsive:
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await AnywhereDoor.pop(context);
-        });
-        break;
-      case RideStatus.arrivedAtPickup:
-        // TODO: Handle this case.
-        break;
-      case RideStatus.pickedUp:
-        // TODO: Handle this case.
-        break;
-      case RideStatus.arrivedAtDropOff:
-        // TODO: Handle this case.
-        break;
-      case RideStatus.delivered:
-        // TODO: Handle this case.
-        break;
-      case RideStatus.ontrip:
-        // TODO: Handle this case.
-        break;
-      case RideStatus.cancel:
-        // TODO: Handle this case.
-        break;
-      case RideStatus.none:
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case RideStatus.started:
-        // TODO: Handle this case.
-        throw UnimplementedError();
-    }
-  }
+  // goToRideStatusRoute(RideStatus rideStatus) {
+  //   switch (rideStatus) {
+  //     case RideStatus.accepted:
+  //       // Navigator.pushReplacementNamed(
+  //       //   context,
+  //       //   arguments: rides[selectedRideIndex ?? 0],
+  //       //   RouteName.rideDirectionsScreen,
+  //       // );
+  //       break;
+  //     case RideStatus.declined:
+  //       WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //         await AnywhereDoor.pop(context);
+  //       });
+  //
+  //       break;
+  //     case RideStatus.unresponsive:
+  //       WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //         await AnywhereDoor.pop(context);
+  //       });
+  //       break;
+  //     case RideStatus.arrivedAtPickup:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case RideStatus.pickedUp:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case RideStatus.arrivedAtDropOff:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case RideStatus.delivered:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case RideStatus.ontrip:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case RideStatus.cancel:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case RideStatus.none:
+  //       // TODO: Handle this case.
+  //       throw UnimplementedError();
+  //     case RideStatus.started:
+  //       // TODO: Handle this case.
+  //       throw UnimplementedError();
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -206,7 +206,7 @@ class _RidesScreenState extends State<RidesScreen> {
                           timeRemainingToCancel = state.remainingTime;
                           if (timeRemainingToCancel == 0) {
                             // _homeCubit.pauseResumeRideTimer(false);
-                            await goToRideStatusRoute(RideStatus.unresponsive);
+                            // await goToRideStatusRoute(RideStatus.unresponsive);
                           }
                         }
                       },
