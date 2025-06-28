@@ -393,37 +393,35 @@ enum RideStatus {
   started,
   returnTrip;
 
+  // Factory method to parse from backend strings
   static RideStatus fromString(String? status) {
-    switch (status) {
-      case 'ARRIVED':
+    switch (status?.toUpperCase()) {
+      case 'NONE':
+        return RideStatus.none;
+      case 'ACCEPTED':
+        return RideStatus.accepted;
+      case 'DECLINED':
+        return RideStatus.declined;
+      case 'UNRESPONSIVE':
+        return RideStatus.unresponsive;
+      case 'ARRIVED_AT_PICKUP':
         return RideStatus.arrivedAtPickup;
       case 'PICKEDUP':
         return RideStatus.pickedUp;
-      case 'REACHED':
+      case 'ARRIVED_AT_DROPOFF':
         return RideStatus.arrivedAtDropOff;
-      case 'RETURNED':
-        return RideStatus.returnTrip;
       case 'COMPLETED':
         return RideStatus.delivered;
+      case 'ON_TRIP':
+        return RideStatus.ontrip;
+      case 'CANCELLED_BY_DRIVER':
+        return RideStatus.cancel;
+      case 'STARTED':
+        return RideStatus.started;
+      case 'RETURNED':
+        return RideStatus.returnTrip;
       default:
         return RideStatus.started;
-    }
-  }
-
-  String get getRideStatusString {
-    switch (this) {
-      case RideStatus.arrivedAtPickup:
-        return 'ARRIVED';
-      case RideStatus.pickedUp:
-        return 'PICKEDUP';
-      case RideStatus.arrivedAtDropOff:
-        return 'REACHED';
-      case RideStatus.returnTrip:
-        return 'RETURNED';
-      case RideStatus.delivered:
-        return 'COMPLETED';
-      default:
-        return 'STARTED';
     }
   }
 }
@@ -485,7 +483,7 @@ extension RideStatusString on RideStatus? {
   String get getRideStatusString {
     switch (this) {
       case RideStatus.none:
-        return 'None';
+        return 'NONE';
       case RideStatus.accepted:
         return 'ACCEPTED';
       case RideStatus.declined:
@@ -508,12 +506,12 @@ extension RideStatusString on RideStatus? {
         return 'STARTED';
       case RideStatus.returnTrip:
         return 'RETURNED';
-
       case null:
         return 'STARTED';
     }
   }
 
+  /// Progression mapping: "What's the next status for the UI?"
   String get toValue {
     switch (this) {
       case RideStatus.started:
@@ -524,11 +522,8 @@ extension RideStatusString on RideStatus? {
         return 'REACHED';
       case RideStatus.arrivedAtDropOff:
         return 'COMPLETED';
-
-      // ✅ Handle return trip values
       case RideStatus.returnTrip:
         return 'RETURNED';
-
       default:
         return 'ARRIVED';
     }
