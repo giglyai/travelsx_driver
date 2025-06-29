@@ -195,6 +195,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
             mainHomeCubit: context.read<MainHomeCubit>(),
             newOrderController: newOrderController,
             state: state,
+            selectDate: selectedDate,
           );
         },
       ),
@@ -233,6 +234,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
                       Row(
                         children: [
                           HomeWidgets.topBarMenuIcon(context: context),
+
                           const Spacer(),
                           HomeWidgets.onlineOfflineSwitch(
                             onToggle: (value) {

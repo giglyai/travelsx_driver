@@ -797,6 +797,8 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     String? userMode,
     String? userPaymentStatus,
     String? bookedFor,
+    String? date,
+
     int? index,
   }) async {
     try {
@@ -835,6 +837,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
       if (response['status'] == "error") {
         emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
         rideAcceptedByOtherDriver(
+          date: date,
           context: navigatorKey.currentState!.context,
           message: response['message'],
         );
@@ -1045,68 +1048,149 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     }
   }
 
+  // Future<void> rideAcceptedByOtherDriver({
+  //   required BuildContext context,
+  //   String? message,
+  // }) {
+  //   return showDialog(
+  //     context: context,
+  //     barrierColor: AppColors.kBlackTextColor.withOpacity(0.45),
+  //     barrierDismissible: true,
+  //     builder: (context) {
+  //       return Center(
+  //         child: Align(
+  //           alignment: Alignment.topCenter,
+  //           child: Padding(
+  //             padding: EdgeInsets.only(
+  //               top: 210 * SizeConfig.heightMultiplier!,
+  //               left: 20 * SizeConfig.widthMultiplier!,
+  //               right: 20 * SizeConfig.widthMultiplier!,
+  //             ),
+  //             child: Container(
+  //               height: 150 * SizeConfig.heightMultiplier!,
+  //               width: 320 * SizeConfig.widthMultiplier!,
+  //               decoration: BoxDecoration(
+  //                 color: AppColors.kRedD32F2F,
+  //                 borderRadius: BorderRadius.circular(
+  //                   5 * SizeConfig.widthMultiplier!,
+  //                 ),
+  //               ),
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Padding(
+  //                     padding: EdgeInsets.only(
+  //                       top: 14 * SizeConfig.heightMultiplier!,
+  //                       left: 10 * SizeConfig.widthMultiplier!,
+  //                     ),
+  //                     child: Row(
+  //                       children: [
+  //                         ImageLoader.svgPictureAssetImage(
+  //                           height: 24 * SizeConfig.heightMultiplier!,
+  //                           width: 24 * SizeConfig.widthMultiplier!,
+  //                           imagePath: ImagePath.errorOutlineIcon,
+  //                         ),
+  //                         CustomSizedBox(width: 7),
+  //                         Expanded(
+  //                           child: Text(
+  //                             message ?? "something went wrong..",
+  //                             style: AppTextStyle.text16kWhiteW600,
+  //                             textAlign: TextAlign.center,
+  //                           ),
+  //                         ),
+  //                         CustomSizedBox(width: 16),
+  //                         GestureDetector(
+  //                           onTap: () {
+  //                             AnywhereDoor.pop(context);
+  //                           },
+  //                           child: ImageLoader.svgPictureAssetImage(
+  //                             imagePath: ImagePath.cutIcon,
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
   Future<void> rideAcceptedByOtherDriver({
     required BuildContext context,
     String? message,
+    String? date,
   }) {
     return showDialog(
       context: context,
       barrierColor: AppColors.kBlackTextColor.withOpacity(0.45),
-      barrierDismissible: true,
+      barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: 210 * SizeConfig.heightMultiplier!,
-                left: 20 * SizeConfig.widthMultiplier!,
-                right: 20 * SizeConfig.widthMultiplier!,
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 210 * SizeConfig.heightMultiplier!,
+              left: 20 * SizeConfig.widthMultiplier!,
+              right: 20 * SizeConfig.widthMultiplier!,
+            ),
+            child: Material(
+              color: Colors.transparent,
               child: Container(
-                height: 150 * SizeConfig.heightMultiplier!,
-                width: 320 * SizeConfig.widthMultiplier!,
+                padding: EdgeInsets.all(16 * SizeConfig.widthMultiplier!),
                 decoration: BoxDecoration(
-                  color: AppColors.kRedD32F2F,
-                  borderRadius: BorderRadius.circular(
-                    5 * SizeConfig.widthMultiplier!,
-                  ),
+                  color: AppColors.kRedD32F2F.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 14 * SizeConfig.heightMultiplier!,
-                        left: 10 * SizeConfig.widthMultiplier!,
+                    // Cross button (top-right)
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          AnywhereDoor.pop(context);
+                          getUpcomingOnTripRideData(
+                            dateFilter: date ?? "Today",
+                          );
+                        },
+                        child: ImageLoader.svgPictureAssetImage(
+                          imagePath: ImagePath.cutIcon,
+                          height: 20 * SizeConfig.heightMultiplier!,
+                          width: 20 * SizeConfig.widthMultiplier!,
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          ImageLoader.svgPictureAssetImage(
-                            height: 24 * SizeConfig.heightMultiplier!,
-                            width: 24 * SizeConfig.widthMultiplier!,
-                            imagePath: ImagePath.errorOutlineIcon,
-                          ),
-                          CustomSizedBox(width: 7),
-                          Expanded(
-                            child: Text(
-                              message ?? "something went wrong..",
-                              style: AppTextStyle.text16kWhiteW600,
-                              textAlign: TextAlign.center,
+                    ),
+
+                    // Icon and Message
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 10 * SizeConfig.heightMultiplier!),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ImageLoader.svgPictureAssetImage(
+                              imagePath: ImagePath.errorOutlineIcon,
+                              height: 30 * SizeConfig.heightMultiplier!,
+                              width: 30 * SizeConfig.widthMultiplier!,
                             ),
-                          ),
-                          CustomSizedBox(width: 16),
-                          GestureDetector(
-                            onTap: () {
-                              AnywhereDoor.pop(context);
-                            },
-                            child: ImageLoader.svgPictureAssetImage(
-                              imagePath: ImagePath.cutIcon,
-                            ),
-                          ),
-                        ],
-                      ),
+                            SizedBox(width: 8),
+                            Text("Alert", style: AppTextStyle.text16kWhiteW600),
+                          ],
+                        ),
+                        SizedBox(height: 16 * SizeConfig.heightMultiplier!),
+                        Text(
+                          message ?? "Something went wrong...",
+                          style: AppTextStyle.text16kWhiteW600,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -1171,10 +1255,12 @@ class MainHomeCubit extends Cubit<MainHomeState> {
     );
   }
 
-  DraggableScrollableSheet showAcceptedRideBottomSheet() {
+  DraggableScrollableSheet showAcceptedRideBottomSheet({String? selectDate}) {
     DraggableScrollableController guestController =
         DraggableScrollableController();
+
     int? selectedRideIndex;
+
     return DraggableScrollableSheet(
       controller: guestController,
       snap: false,
@@ -2840,6 +2926,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
 
                                                             bool?
                                                             getValue = await mutateHireDriverRides(
+                                                              date: selectDate,
                                                               index:
                                                                   selectedRideIndex ??
                                                                   0,
