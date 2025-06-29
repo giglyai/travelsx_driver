@@ -5017,7 +5017,7 @@ class MainHomeCubit extends Cubit<MainHomeState> {
                                 tripId: tripId,
                                 rateID: rateID,
                                 rideID: rideId ?? '',
-                                rideStatus: RideStatus.cancel,
+                                rideStatus: RideStatus.declined,
                                 userDeviceToken: userDeviceToken ?? '',
                                 userAmount: userAmount ?? '',
                                 userCurrency: userCurrency ?? '',
