@@ -80,7 +80,6 @@ class DriverBottomNavBarState extends State<DriverBottomNavBar>
               NewDriverHomeScreen(),
               UserTripScreen(),
               DriverVehicleScreen(fromHome: true),
-
               Earnings(wantBackButton: false),
             ],
           );
