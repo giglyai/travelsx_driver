@@ -378,7 +378,6 @@ extension SelectRideAvailableExtension on SelectRideAvailable? {
   }
 }
 
-// Modified enum to handle return trip status
 enum RideStatus {
   none,
   accepted,
@@ -393,7 +392,6 @@ enum RideStatus {
   started,
   returnTrip;
 
-  // Factory method to parse from backend strings
   static RideStatus fromString(String? status) {
     switch (status?.toUpperCase()) {
       case 'NONE':
@@ -425,6 +423,142 @@ enum RideStatus {
     }
   }
 }
+
+// RideStatusString Extension
+extension RideStatusString on RideStatus? {
+  String get getRideStatusString {
+    switch (this) {
+      case RideStatus.none:
+        return 'NONE';
+      case RideStatus.accepted:
+        return 'ACCEPTED';
+      case RideStatus.declined:
+        return 'DECLINED';
+      case RideStatus.unresponsive:
+        return 'UNRESPONSIVE';
+      case RideStatus.arrivedAtPickup:
+        return 'ARRIVED_AT_PICKUP';
+      case RideStatus.pickedUp:
+        return 'PICKEDUP';
+      case RideStatus.arrivedAtDropOff:
+        return 'ARRIVED_AT_DROPOFF';
+      case RideStatus.delivered:
+        return 'COMPLETED';
+      case RideStatus.ontrip:
+        return 'ON_TRIP';
+      case RideStatus.cancel:
+        return 'CANCELLED_BY_DRIVER';
+      case RideStatus.started:
+        return 'STARTED';
+      case RideStatus.returnTrip:
+        return 'RETURNED';
+      case null:
+        return 'STARTED';
+    }
+  }
+}
+
+// extension RideStatusString on RideStatus? {
+//   String get getRideStatusString {
+//     switch (this) {
+//       case RideStatus.none:
+//         return 'NONE';
+//       case RideStatus.accepted:
+//         return 'ACCEPTED';
+//       case RideStatus.declined:
+//         return 'DECLINED';
+//       case RideStatus.unresponsive:
+//         return 'UNRESPONSIVE';
+//       case RideStatus.arrivedAtPickup:
+//         return 'ARRIVED_AT_PICKUP';
+//       case RideStatus.pickedUp:
+//         return 'PICKEDUP';
+//       case RideStatus.arrivedAtDropOff:
+//         return 'ARRIVED_AT_DROPOFF';
+//       case RideStatus.delivered:
+//         return 'COMPLETED';
+//       case RideStatus.ontrip:
+//         return 'ON_TRIP';
+//       case RideStatus.cancel:
+//         return 'CANCELLED_BY_DRIVER';
+//       case RideStatus.started:
+//         return 'STARTED';
+//       case RideStatus.returnTrip:
+//         return 'RETURNED';
+//       case null:
+//         return 'STARTED';
+//     }
+//   }
+//
+//   /// Progression mapping: "What's the next status for the UI?"
+//   String get toValue {
+//     switch (this) {
+//       case RideStatus.started:
+//         return 'ARRIVED';
+//       case RideStatus.arrivedAtPickup:
+//         return 'PICKEDUP';
+//       case RideStatus.pickedUp:
+//         return 'REACHED';
+//       case RideStatus.arrivedAtDropOff:
+//         return 'COMPLETED';
+//       case RideStatus.returnTrip:
+//         return 'RETURNED';
+//       default:
+//         return 'ARRIVED';
+//     }
+//   }
+// }
+
+// // Extension for RideStatus
+// extension RideStatusString on RideStatus? {
+//   String get getRideStatusString {
+//     switch (this) {
+//       case RideStatus.none:
+//         return 'NONE';
+//       case RideStatus.accepted:
+//         return 'ACCEPTED';
+//       case RideStatus.declined:
+//         return 'DECLINED';
+//       case RideStatus.unresponsive:
+//         return 'UNRESPONSIVE';
+//       case RideStatus.arrivedAtPickup:
+//         return 'ARRIVED_AT_PICKUP';
+//       case RideStatus.pickedUp:
+//         return 'PICKEDUP';
+//       case RideStatus.arrivedAtDropOff:
+//         return 'ARRIVED_AT_DROPOFF';
+//       case RideStatus.delivered:
+//         return 'COMPLETED';
+//       case RideStatus.ontrip:
+//         return 'ON_TRIP';
+//       case RideStatus.cancel:
+//         return 'CANCELLED_BY_DRIVER';
+//       case RideStatus.started:
+//         return 'STARTED';
+//       case RideStatus.returnTrip:
+//         return 'RETURNED';
+//       case null:
+//         return 'STARTED';
+//     }
+//   }
+//
+//   String get toValue {
+//     switch (this) {
+//       case RideStatus.started:
+//         return 'ARRIVED';
+//       case RideStatus.arrivedAtPickup:
+//         return 'PICKEDUP';
+//       case RideStatus.pickedUp:
+//         return 'REACHED';
+//       case RideStatus.arrivedAtDropOff:
+//         return 'COMPLETED';
+//       case RideStatus.returnTrip:
+//         return 'RETURNED';
+//       default:
+//         return 'ARRIVED';
+//     }
+//   }
+// }
 
 enum DriverStatus { online, offline, onTrip }
 
@@ -475,57 +609,6 @@ extension DeliveryStatusString on DeliveryStatus {
         return 'DELIVERED';
       case DeliveryStatus.ontrip:
         return 'ON_TRIP';
-    }
-  }
-}
-
-extension RideStatusString on RideStatus? {
-  String get getRideStatusString {
-    switch (this) {
-      case RideStatus.none:
-        return 'NONE';
-      case RideStatus.accepted:
-        return 'ACCEPTED';
-      case RideStatus.declined:
-        return 'DECLINED';
-      case RideStatus.unresponsive:
-        return 'UNRESPONSIVE';
-      case RideStatus.arrivedAtPickup:
-        return 'ARRIVED_AT_PICKUP';
-      case RideStatus.pickedUp:
-        return 'PICKEDUP';
-      case RideStatus.arrivedAtDropOff:
-        return 'ARRIVED_AT_DROPOFF';
-      case RideStatus.delivered:
-        return 'COMPLETED';
-      case RideStatus.ontrip:
-        return 'ON_TRIP';
-      case RideStatus.cancel:
-        return 'CANCELLED_BY_DRIVER';
-      case RideStatus.started:
-        return 'STARTED';
-      case RideStatus.returnTrip:
-        return 'RETURNED';
-      case null:
-        return 'STARTED';
-    }
-  }
-
-  /// Progression mapping: "What's the next status for the UI?"
-  String get toValue {
-    switch (this) {
-      case RideStatus.started:
-        return 'ARRIVED';
-      case RideStatus.arrivedAtPickup:
-        return 'PICKEDUP';
-      case RideStatus.pickedUp:
-        return 'REACHED';
-      case RideStatus.arrivedAtDropOff:
-        return 'COMPLETED';
-      case RideStatus.returnTrip:
-        return 'RETURNED';
-      default:
-        return 'ARRIVED';
     }
   }
 }

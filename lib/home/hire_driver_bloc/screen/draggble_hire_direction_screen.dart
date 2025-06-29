@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travelx_driver/home/models/distance_matrix_model.dart';
@@ -8,12 +9,12 @@ import 'package:travelx_driver/shared/constants/app_styles/app_styles.dart';
 import 'package:travelx_driver/shared/utils/image_loader/image_loader.dart';
 import 'package:travelx_driver/shared/utils/utilities.dart';
 import 'package:travelx_driver/shared/widgets/container_with_border/container_with_border.dart';
-import 'package:travelx_driver/shared/widgets/custom_sized_box/custom_sized_box.dart';
 
 import '../../../shared/constants/app_colors/app_colors.dart';
 import '../../../shared/constants/imagePath/image_paths.dart';
 import '../../../shared/widgets/buttons/blue_button.dart';
 import '../../../shared/widgets/size_config/size_config.dart';
+import '../cubit/hire_driver_cubit.dart';
 import '../entity/upcoming_ontrip_ride_res.dart';
 
 class HireDraggableRideCardScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class HireDraggableRideCardScreen extends StatelessWidget {
   final bool showReturnButton;
   final String? rideType;
 
-  HireDraggableRideCardScreen({
+  const HireDraggableRideCardScreen({
     Key? key,
     required this.rideSequence,
     required this.onArrival,
@@ -60,223 +61,170 @@ class HireDraggableRideCardScreen extends StatelessWidget {
   }
 
   String getButtonText() {
-    if (showReturnButton && rideType == "return") {
-      return 'Start Return Trip';
+    final type = rideSequence?.type;
+
+    if (rideType == "return") {
+      if (type == "pickup") {
+        if (status == RideStatus.started) return "Arrived";
+        if (status == RideStatus.arrivedAtPickup) return "Picked Up";
+      }
+
+      if (type == "dropoff") {
+        if (status == RideStatus.pickedUp) return "Reached";
+        if (status == RideStatus.arrivedAtDropOff) return "Return";
+      }
+
+      if (type == "pickup_re") {
+        if (status == RideStatus.returnTrip) return "Reached"; // ✅ FIXED
+        if (status == RideStatus.arrivedAtPickup) return "Picked Up";
+      }
+
+      if (type == "dropoff_re") {
+        if (status == RideStatus.pickedUp) return "Reached";
+        if (status == RideStatus.arrivedAtDropOff) return "Complete";
+      }
+    } else {
+      // One-way trip
+      if (type == "pickup") {
+        if (status == RideStatus.started) return "Arrived";
+        if (status == RideStatus.arrivedAtPickup) return "Picked Up";
+      }
+
+      if (type == "dropoff") {
+        if (status == RideStatus.pickedUp) return "Reached";
+        if (status == RideStatus.arrivedAtDropOff) return "Complete";
+      }
     }
-    switch (status) {
-      case RideStatus.started:
-        return 'Arrived';
-      case RideStatus.returnTrip:
-        return rideType == "return" ? 'Return' : 'Arrived';
-      case RideStatus.arrivedAtPickup:
-        return 'Picked Up';
-      case RideStatus.pickedUp:
-        return 'Reached';
-      case RideStatus.arrivedAtDropOff:
-        return 'Complete Ride';
-      default:
-        return 'Continue';
-    }
+
+    return "Continue";
   }
 
   bool isButtonEnabled() {
-    return !isLoading && status != RideStatus.delivered;
+    final type = rideSequence?.type;
+
+    return !isLoading &&
+        (status == RideStatus.started && type == "pickup" ||
+            status == RideStatus.arrivedAtPickup && type == "pickup" ||
+            status == RideStatus.pickedUp &&
+                (type == "dropoff" || type == "dropoff_re") ||
+            status == RideStatus.arrivedAtDropOff && type == "dropoff" ||
+            status == RideStatus.returnTrip && type == "dropoff_re" ||
+            status == RideStatus.arrivedAtPickup && type == "pickup_re");
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double maxChildSize = 0.48;
-    double minChildSize = 0.45;
-    double initialChildSize = 0.45;
-    double? remainingDistance = double.tryParse(
-      distanceMatrix?.distance?.split(' ').first ?? '',
-    );
+    final h = SizeConfig.heightMultiplier!;
+    final w = SizeConfig.widthMultiplier!;
+    final t = SizeConfig.textMultiplier!;
+    final height = MediaQuery.of(context).size.height;
+    final hasName = (rideSequence?.firstName?.trim().isNotEmpty ?? false);
 
     return SizedBox(
       height: height,
       child: DraggableScrollableActuator(
         child: DraggableScrollableSheet(
-          initialChildSize: initialChildSize,
-          maxChildSize: maxChildSize,
-          minChildSize: minChildSize,
-          builder: (BuildContext context, myScrollController) {
+          initialChildSize: 0.45,
+          maxChildSize: 0.48,
+          minChildSize: 0.45,
+          builder: (context, scrollController) {
             return Container(
               color: AppColors.kWhite,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 15 * SizeConfig.heightMultiplier!),
-                  Center(
-                    child: SizedBox(
-                      height: 20 * SizeConfig.heightMultiplier!,
-                      width: 62 * SizeConfig.widthMultiplier!,
-                      child: Divider(
-                        color: AppColors.kBlackTextColor,
-                        thickness: 3,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15 * SizeConfig.heightMultiplier!),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      distanceMatrix?.duration == 'Arriving Soon'
-                          ? ContainerWithBorder(
-                            child: Text('Arriving Soon', style: textStyle()),
-                          )
-                          : ContainerWithBorder(
-                            width: 300 * SizeConfig.widthMultiplier!,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  distanceMatrix?.duration ?? '--',
-                                  style: textStyle(),
-                                ),
-                                SizedBox(
-                                  width: 15 * SizeConfig.widthMultiplier!,
-                                ),
-                                SvgPicture.asset(ImagePath.cartIcon),
-                                SizedBox(
-                                  width: 15 * SizeConfig.widthMultiplier!,
-                                ),
-                                Text(
-                                  distanceMatrix?.distance ?? '--',
-                                  style: textStyle(),
-                                ),
-                              ],
-                            ),
-                          ),
-                      CustomSizedBox(width: 10),
-                      InkWell(
-                        onTap: refreshTap,
-                        child: ImageLoader.svgPictureAssetImage(
-                          imagePath: ImagePath.refereshIcon,
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 15 * h),
+                    Center(
+                      child: SizedBox(
+                        height: 20 * h,
+                        width: 62 * w,
+                        child: Divider(
+                          color: AppColors.kBlackTextColor,
+                          thickness: 3,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 15 * SizeConfig.heightMultiplier!),
-                  Text(
-                    "(${getLocationTypeText()})",
-                    style: TextStyle(
-                      color: AppColors.kBlackTextColor,
-                      fontSize: 14 * SizeConfig.textMultiplier!,
-                      fontWeight: FontWeight.w700,
                     ),
-                  ),
-                  SizedBox(height: 10 * SizeConfig.heightMultiplier!),
-                  if (rideSequence?.firstName?.isNotEmpty == true)
+                    SizedBox(height: 15 * h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ImageLoader.svgPictureAssetImage(
-                          imagePath: ImagePath.userIcon,
-                        ),
-                        CustomSizedBox(width: 5),
-                        Text(
-                          rideSequence?.firstName?.capitalize() ?? "",
-                          style: AppTextStyle.text14black0000W700?.copyWith(
-                            color: AppColors.kBlackTextColor.withOpacity(0.70),
+                        _buildDistanceWidget(t, w),
+                        SizedBox(width: 10),
+                        InkWell(
+                          onTap: refreshTap,
+                          child: ImageLoader.svgPictureAssetImage(
+                            imagePath: ImagePath.refereshIcon,
                           ),
                         ),
                       ],
                     ),
-                  SizedBox(height: 10 * SizeConfig.heightMultiplier!),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 25 * SizeConfig.widthMultiplier!,
-                    ),
-                    child: Text(
-                      rideSequence?.address ?? '',
-                      style: AppTextStyle.text14black0000W500,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 15 * SizeConfig.heightMultiplier!),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          try {
-                            final LatLng destination = LatLng(
-                              rideSequence?.position.latitude ?? 0,
-                              rideSequence?.position.longitude ?? 0,
-                            );
-                            Utils.openDirections(destination: destination);
-                          } catch (e) {
-                            log(e.toString());
-                          }
-                        },
-                        child: Container(
-                          width: 188 * SizeConfig.widthMultiplier!,
-                          height: 36 * SizeConfig.heightMultiplier!,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: AppColors.kBlue3D6,
-                              width: 1.5 * SizeConfig.widthMultiplier!,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(ImagePath.directionIcon),
-                              SizedBox(width: 9 * SizeConfig.widthMultiplier!),
-                              Text(
-                                "Directions",
-                                style: TextStyle(
-                                  color: AppColors.kBlue3D6,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16 * SizeConfig.textMultiplier!,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                    SizedBox(height: 15 * h),
+                    Text(
+                      "(${getLocationTypeText()})",
+                      style: TextStyle(
+                        color: AppColors.kBlackTextColor,
+                        fontSize: 14 * t,
+                        fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(width: 7 * SizeConfig.widthMultiplier!),
-                      if (rideSequence?.phoneNumber != null)
-                        GestureDetector(
-                          onTap: () {
-                            try {
-                              Utils.launchPhoneDialer(
-                                rideSequence?.phoneNumber ?? '',
-                              );
-                            } catch (e) {
-                              log(e.toString());
-                            }
-                          },
-                          child: SvgPicture.asset(ImagePath.callIconBlue),
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: 25 * SizeConfig.heightMultiplier!),
-                  if (distanceMatrix?.duration == 'Arriving Soon' ||
-                      showReturnButton ||
-                      status != RideStatus.delivered)
+                    ),
+                    SizedBox(height: 10 * h),
+                    if (hasName) _buildNameRow(w),
+                    SizedBox(height: 10 * h),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20 * SizeConfig.widthMultiplier!,
-                      ),
-                      child: BlueButton(
-                        isLoading: isLoading,
-                        wantMargin: false,
-                        title: getButtonText(),
-                        onTap:
-                            isButtonEnabled()
-                                ? (showReturnButton && rideType == "return"
-                                    ? onReturn
-                                    : onArrival)
-                                : null,
+                      padding: EdgeInsets.symmetric(horizontal: 25 * w),
+                      child: Text(
+                        rideSequence?.address ?? '',
+                        style: AppTextStyle.text14black0000W500,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                ],
+                    SizedBox(height: 15 * h),
+                    _buildNavigationButtons(h, w, t),
+                    SizedBox(height: 25 * h),
+
+                    if (_shouldShowActionButton())
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20 * w),
+                        child: BlueButton(
+                          isLoading: isLoading,
+                          wantMargin: false,
+                          title: getButtonText(),
+                          buttonIsEnabled: isButtonEnabled(),
+                          onTap:
+                              isButtonEnabled()
+                                  ? () async {
+                                    final type = rideSequence?.type;
+
+                                    final isDropoffForward = type == 'dropoff';
+                                    final isPickupReturn = type == 'pickup_re';
+                                    final isDropoffReturn =
+                                        type == 'dropoff_re';
+
+                                    if (rideType == "return") {
+                                      if (showReturnButton &&
+                                          status ==
+                                              RideStatus.arrivedAtDropOff &&
+                                          isDropoffForward) {
+                                        context
+                                            .read<HireDriverCubit>()
+                                            .startReturnTrip();
+                                        onReturn?.call();
+                                      } else {
+                                        onArrival();
+                                      }
+                                    } else {
+                                      onArrival();
+                                    }
+                                  }
+                                  : null,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             );
           },
@@ -285,19 +233,111 @@ class HireDraggableRideCardScreen extends StatelessWidget {
     );
   }
 
-  divider() {
-    return Divider(
-      color: AppColors.kBlackTextColor.withOpacity(0.61),
-      indent: 20 * SizeConfig.widthMultiplier!,
-      endIndent: 20 * SizeConfig.widthMultiplier!,
+  Widget _buildDistanceWidget(double t, double w) {
+    if (distanceMatrix?.duration == 'Arriving Soon') {
+      return ContainerWithBorder(
+        child: Text('Arriving Soon', style: textStyle(t)),
+      );
+    }
+
+    return ContainerWithBorder(
+      width: 300 * w,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(distanceMatrix?.distance ?? '--', style: textStyle(t)),
+          SizedBox(width: 15 * w),
+          SvgPicture.asset(ImagePath.cartIcon),
+          SizedBox(width: 15 * w),
+          Text(distanceMatrix?.duration ?? '--', style: textStyle(t)),
+        ],
+      ),
     );
   }
 
-  textStyle() {
+  Widget _buildNameRow(double w) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ImageLoader.svgPictureAssetImage(imagePath: ImagePath.userIcon),
+        SizedBox(width: 5),
+        Text(
+          rideSequence?.firstName?.capitalize() ?? '',
+          style: AppTextStyle.text14black0000W700?.copyWith(
+            color: AppColors.kBlackTextColor.withOpacity(0.70),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNavigationButtons(double h, double w, double t) {
+    final lat = rideSequence?.position.latitude;
+    final lng = rideSequence?.position.longitude;
+    final isValidLocation = lat != null && lng != null && lat != 0 && lng != 0;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            if (isValidLocation) {
+              Utils.openDirections(destination: LatLng(lat!, lng!));
+            } else {
+              log("Invalid coordinates for navigation");
+            }
+          },
+          child: Container(
+            width: 188 * w,
+            height: 36 * h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: AppColors.kBlue3D6, width: 1.5 * w),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(ImagePath.directionIcon),
+                SizedBox(width: 9 * w),
+                Text(
+                  "Directions",
+                  style: TextStyle(
+                    color: AppColors.kBlue3D6,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16 * t,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(width: 7 * w),
+        if (rideSequence?.phoneNumber != null)
+          GestureDetector(
+            onTap: () {
+              try {
+                Utils.launchPhoneDialer(rideSequence?.phoneNumber ?? '');
+              } catch (e) {
+                log(e.toString());
+              }
+            },
+            child: SvgPicture.asset(ImagePath.callIconBlue),
+          ),
+      ],
+    );
+  }
+
+  bool _shouldShowActionButton() {
+    return distanceMatrix?.duration == 'Arriving Soon' ||
+        showReturnButton ||
+        status != RideStatus.delivered;
+  }
+
+  TextStyle textStyle(double t) {
     return TextStyle(
       color: AppColors.kBlackTextColor,
       fontWeight: FontWeight.w600,
-      fontSize: 16 * SizeConfig.textMultiplier!,
+      fontSize: 16 * t,
     );
   }
 }
