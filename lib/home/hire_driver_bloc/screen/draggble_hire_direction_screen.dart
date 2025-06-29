@@ -67,7 +67,7 @@ class HireDraggableRideCardScreen extends StatelessWidget {
       case RideStatus.started:
         return 'Arrived';
       case RideStatus.returnTrip:
-        return rideType == "return" ? 'Return' : 'Arrived';
+        return rideType == "return" ? 'Arrived at Return Pickup' : 'Arrived';
       case RideStatus.arrivedAtPickup:
         return 'Picked Up';
       case RideStatus.pickedUp:
@@ -256,7 +256,7 @@ class HireDraggableRideCardScreen extends StatelessWidget {
                         ),
                     ],
                   ),
-                  SizedBox(height: 25 * SizeConfig.heightMultiplier!),
+                  SizedBox(height: 15 * SizeConfig.heightMultiplier!),
                   if (distanceMatrix?.duration == 'Arriving Soon' ||
                       showReturnButton ||
                       status != RideStatus.delivered)
