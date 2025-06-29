@@ -24,6 +24,8 @@ class ImagePath {
       'images/app_icons/mayiltrackdriver/app_icon.png';
   static String splashTravelsxIcon =
       'images/app_icons/travelsxdriver/app_icon.png';
+  static String splashGoogulTaxiIcon =
+      'images/app_icons/googultaxidriver/app_icon.png';
   static String splashOorugoDriverIcon = 'assets/icons/oorugo-driver-icon.png';
   static String splashPrithviDriverIcon = 'assets/icons/oorugo-driver-icon.png';
   static String giglyDriverSplashLogoFinal1 =

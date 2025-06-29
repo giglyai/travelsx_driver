@@ -27,6 +27,13 @@ flavors:
       applicationId: "com.travelx.driver.mayiltrack"
     ios:
       bundleId: "com.travelx.driver.mayiltrack"
+  googultaxidriver:
+    app:
+      name: "Googul Taxi Driver"
+    android:
+      applicationId: "com.travelx.driver.googul"
+    ios:
+      bundleId: "com.travelx.driver.googul"
   travelsxdriver:
     app:
       name: "TravelsX Driver"

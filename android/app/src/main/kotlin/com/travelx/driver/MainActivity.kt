@@ -72,9 +72,9 @@ override fun onCreate(savedInstanceState: Bundle?) {
                 "travelsx_driver_ride_alert"
             )
             else -> Triple(
-                "default_alert_channel",
+                "defaut_driver_alert_channel",
                 "Default Alerts",
-                "default_alert"
+                "default_driver_ride_alert"
             )
         }
 

@@ -14,6 +14,7 @@ import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_goguldriver.dart';
+import 'package:travelx_driver/config/firebase/firebase_options_googultaxidriver.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_kurinjidriver.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_mayiltrackdriver.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_travelsxdriver.dart';
@@ -88,6 +89,12 @@ Future<void> main({Flavor? flavor}) async {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         options: TravelsXDriverFirebaseOptions.currentPlatform,
+      );
+    }
+  } else if (flavor == Flavor.googultaxidriver) {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: GoogulTaxiFirebaseOptions.currentPlatform,
       );
     }
   }

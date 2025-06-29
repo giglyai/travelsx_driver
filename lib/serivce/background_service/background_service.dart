@@ -63,6 +63,8 @@ void onStart(ServiceInstance service) async {
     title = "Kurinji Driver";
   } else if (currentFlavor.contains('travelsxdriver')) {
     title = "TravelsX Driver";
+  } else if (currentFlavor.contains('googultaxidriver')) {
+    title = "Googul Taxi Driver";
   } else {
     title = "TravelsX Driver";
   }

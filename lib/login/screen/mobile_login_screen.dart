@@ -154,6 +154,12 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                     height: 200 * SizeConfig.heightMultiplier!,
                     width: 196 * SizeConfig.widthMultiplier!,
                   )
+                else if (F.appFlavor == Flavor.googultaxidriver)
+                  ImageLoader.assetImage(
+                    imagePath: ImagePath.splashGoogulTaxiIcon,
+                    height: 200 * SizeConfig.heightMultiplier!,
+                    width: 196 * SizeConfig.widthMultiplier!,
+                  )
                 else
                   ImageLoader.svgPictureAssetImage(
                     imagePath: ImagePath.giglyDriverSplashLogoFinal,

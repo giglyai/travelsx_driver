@@ -92,6 +92,12 @@ class SplashScreenState extends State<SplashScreen> {
                 height: 200 * SizeConfig.heightMultiplier!,
                 width: 196 * SizeConfig.widthMultiplier!,
               );
+            } else if (F.appFlavor == Flavor.googultaxidriver) {
+              return ImageLoader.assetImage(
+                imagePath: ImagePath.splashGoogulTaxiIcon,
+                height: 200 * SizeConfig.heightMultiplier!,
+                width: 196 * SizeConfig.widthMultiplier!,
+              );
             } else {
               return ImageLoader.assetImage(
                 imagePath: JpImagePath.splashIcon,

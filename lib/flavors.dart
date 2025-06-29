@@ -3,6 +3,7 @@ enum Flavor {
   goguldriver,
   uzhavandriver,
   mayiltrackdriver,
+  googultaxidriver,
   travelsxdriver,
 }
 
@@ -21,6 +22,8 @@ class F {
         return 'Uzhavan Taxi Driver';
       case Flavor.mayiltrackdriver:
         return 'Mayiltrack Driver';
+      case Flavor.googultaxidriver:
+        return 'Googul Taxi Driver';
       case Flavor.travelsxdriver:
         return 'TravelsX Driver';
       default:

@@ -13,6 +13,8 @@ class AppConfig {
       return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRyYXZlbHN4ZHJpdmVyQGdpZ2x5LmFpLmNvbSIsIm5hbWUiOiJ0cmF2ZWxzeC1kcml2ZXIiLCJscF9pZCI6NjYzMTgyLCJhZ2dyX2lkIjo2NjMxODIsImlhdCI6MTc1MDMyODE3NH0.QHuqzT88z9EcdYDXJLnE70oWenvnA7uJvpEeYpFLDVM";
     } else if (F.appFlavor == Flavor.mayiltrackdriver) {
       return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRyYXZlbHN4ZHJpdmVyQGdpZ2x5LmFpLmNvbSIsIm5hbWUiOiJ0cmF2ZWxzeC1kcml2ZXIiLCJscF9pZCI6NTA4Nzk1LCJhZ2dyX2lkIjo1MDg3OTUsImlhdCI6MTc1MDU4MjU2NH0.6paIEeD_C7CvTihTxKoCMBB2sgjZMpMgAJ9iAcxLmsk";
+    } else if (F.appFlavor == Flavor.googultaxidriver) {
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRyYXZlbHN4ZHJpdmVyQGdpZ2x5LmFpLmNvbSIsIm5hbWUiOiJ0cmF2ZWxzeC1kcml2ZXIiLCJscF9pZCI6MzYzMjMzLCJhZ2dyX2lkIjozNjMyMzMsImlhdCI6MTc1MTE5MDE5NX0.Q-jTv0RDr-4btfFm3JQNpPzYlyiQKbL_0u75VIBx27M";
     } else if (F.appFlavor == Flavor.travelsxdriver) {
       //travelsx-driver
       //return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRyYXZlbHN4ZHJpdmVyQGdpZ2x5LmFpLmNvbSIsIm5hbWUiOiJ0cmF2ZWxzeC1kcml2ZXIiLCJscF9pZCI6NTYxNzgyLCJhZ2dyX2lkIjo1NjE3ODIsImlhdCI6MTc0NzM3MTg3NH0.iBVDfOXN4QJ_kJj1ZkOoW9igExslZg6c1tO_EGPFuSw";
