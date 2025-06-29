@@ -33,7 +33,7 @@ class NotificationService {
     );
   }
 
-  Future<void> showNotifications(RemoteMessage? message) async {
+  Future<void> showNotifications__(RemoteMessage? message) async {
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'GiglyAI Driver',
@@ -44,6 +44,36 @@ class NotificationService {
           playSound: true,
           enableVibration: true,
           //sound: RawResourceAndroidNotificationSound('alert_sound'),
+        );
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidDetails,
+    );
+
+    final title = message?.notification?.title ?? "";
+    final payload = title; // use title as payload for routing
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      message?.notification?.body,
+      notificationDetails,
+      payload: payload,
+    );
+  }
+
+  Future<void> showNotifications(RemoteMessage? message) async {
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'driver_alert_channel',
+          'TravelsX Ride Alert Alerts',
+          channelDescription:
+              'Notification channel for TravelsX Partner alerts',
+          sound: RawResourceAndroidNotificationSound('driver_alert_sound'),
+          importance: Importance.max,
+          priority: Priority.high,
+          playSound: true,
+          enableVibration: true,
         );
 
     const NotificationDetails notificationDetails = NotificationDetails(
