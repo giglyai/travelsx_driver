@@ -154,7 +154,7 @@ class _NewDriverHomeScreenState extends State<NewDriverHomeScreen>
     // Fetch data concurrently to reduce waiting time
     Future.microtask(() async {
       await Future.wait([
-        // mainHomeCubit.getAppVersion(),
+        mainHomeCubit.getAppVersion(),
         mainHomeCubit.updateDeviceToken(),
         mainHomeCubit.getUserData(),
         //  mainHomeCubit.getDriverBusinessOverview(),

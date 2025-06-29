@@ -641,9 +641,7 @@ class TripSequence {
   String? countryCode;
   String? phoneNumber;
   String? pickupTime;
-  String? routeOneway;
   String? dropoffTime;
-  String? routeReturn;
 
   TripSequence({
     this.type,
@@ -656,9 +654,7 @@ class TripSequence {
     this.countryCode,
     this.phoneNumber,
     this.pickupTime,
-    this.routeOneway,
     this.dropoffTime,
-    this.routeReturn,
   });
 
   factory TripSequence.fromJson(Map<String, dynamic> json) => TripSequence(
@@ -672,9 +668,7 @@ class TripSequence {
     countryCode: json["country_code"],
     phoneNumber: json["phone_number"],
     pickupTime: json["pickup_time"],
-    routeOneway: json["route_oneway"],
     dropoffTime: json["dropoff_time"],
-    routeReturn: json["route_return"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -688,9 +682,7 @@ class TripSequence {
     "country_code": countryCode,
     "phone_number": phoneNumber,
     "pickup_time": pickupTime,
-    "route_oneway": routeOneway,
     "dropoff_time": dropoffTime,
-    "route_return": routeReturn,
   };
 }
 
