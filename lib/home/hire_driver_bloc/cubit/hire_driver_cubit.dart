@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:travelx_driver/config/phone_pay/phone_pay_payment.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/entity/accepted_hire_ride.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/entity/get_final_ride_details.dart';
 import 'package:travelx_driver/home/hire_driver_bloc/entity/upcoming_ontrip_ride_res.dart'
@@ -76,23 +77,24 @@ class HireState extends Equatable {
   });
 
   static HireState init() => HireState(
-    driverApiStatus: ApiStatus.init,
-    acceptedHireRides: const [],
-    rideStatus: RideStatus.none,
-    distanceMatrix: DistanceMatrix(duration: '', distance: '', routePath: ''),
-    distanceMatrixStatus: ApiStatus.init,
-    driverMutateRideStatus: ApiStatus.init,
-    cancelDriverMutateRideStatus: ApiStatus.init,
-    actingDriverRides: const [],
-    actingDriverRideApiStatus: ApiStatus.init,
-    upComingRideApiStatus: ApiStatus.init,
-    upComingRideData: upComing.UpcomingOntripRideRes(),
-    onGoingRideStatus: null,
-    manualRideMessage: "",
-    errorOtpMessage: "",
-    getFinalRideFullDetails: GetFinalRideFullDetails(),
-    otp: FieldState.initial(value: TextEditingController()),
-  );
+        driverApiStatus: ApiStatus.init,
+        acceptedHireRides: const [],
+        rideStatus: RideStatus.none,
+        distanceMatrix:
+            DistanceMatrix(duration: '', distance: '', routePath: ''),
+        distanceMatrixStatus: ApiStatus.init,
+        driverMutateRideStatus: ApiStatus.init,
+        cancelDriverMutateRideStatus: ApiStatus.init,
+        actingDriverRides: const [],
+        actingDriverRideApiStatus: ApiStatus.init,
+        upComingRideApiStatus: ApiStatus.init,
+        upComingRideData: upComing.UpcomingOntripRideRes(),
+        onGoingRideStatus: null,
+        manualRideMessage: "",
+        errorOtpMessage: "",
+        getFinalRideFullDetails: GetFinalRideFullDetails(),
+        otp: FieldState.initial(value: TextEditingController()),
+      );
 
   HireState copyWith({
     ApiStatus? driverApiStatus,
@@ -139,23 +141,23 @@ class HireState extends Equatable {
 
   @override
   List<Object?> get props => [
-    driverApiStatus,
-    acceptedHireRides,
-    rideStatus,
-    distanceMatrix,
-    distanceMatrixStatus,
-    driverMutateRideStatus,
-    cancelDriverMutateRideStatus,
-    actingDriverRides,
-    actingDriverRideApiStatus,
-    upComingRideApiStatus,
-    upComingRideData,
-    onGoingRideStatus,
-    manualRideMessage,
-    getFinalRideFullDetails,
-    otp,
-    errorOtpMessage,
-  ];
+        driverApiStatus,
+        acceptedHireRides,
+        rideStatus,
+        distanceMatrix,
+        distanceMatrixStatus,
+        driverMutateRideStatus,
+        cancelDriverMutateRideStatus,
+        actingDriverRides,
+        actingDriverRideApiStatus,
+        upComingRideApiStatus,
+        upComingRideData,
+        onGoingRideStatus,
+        manualRideMessage,
+        getFinalRideFullDetails,
+        otp,
+        errorOtpMessage,
+      ];
 }
 
 class HireDriverCubit extends Cubit<HireState> {
@@ -179,14 +181,17 @@ class HireDriverCubit extends Cubit<HireState> {
     bool isFromHomeScreen = false,
   }) async {
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
       User rideUser = User(deviceToken: userDeviceToken ?? "");
       Payment payment = Payment(
-        amount: userAmount,
-        mode: userMode,
-        status: userPaymentStatus,
-        currency: userCurrency,
-      );
+          amount: userAmount,
+          mode: userMode,
+          status: userPaymentStatus,
+          currency: userCurrency);
 
       final currentLocation = await Utils.getCurrentLocation();
       final response = await HireRepository.hireDriverMutateRide(
@@ -196,9 +201,8 @@ class HireDriverCubit extends Cubit<HireState> {
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        ),
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude),
         deviceToken: UserRepository.getDeviceToken ?? '',
         rideID: rideID,
         rideStatus: rideStatus.getRideStatusString,
@@ -212,7 +216,11 @@ class HireDriverCubit extends Cubit<HireState> {
       );
 
       if (response['status'] == "error") {
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
         rideAcceptedByOtherDriver(
           context: navigatorKey.currentState!.context,
           message: response['message'],
@@ -227,17 +235,24 @@ class HireDriverCubit extends Cubit<HireState> {
         if (isFromHomeScreen == true) {
           // getUpcomingOnTripRideData();
           goToRideStatusRoute(state.rideStatus, index!);
-          final rides = List<upComing.UpcomingRide>.from(
-            state.acceptedHireRides ?? [],
-          );
+          final rides =
+              List<upComing.UpcomingRide>.from(state.acceptedHireRides ?? []);
           rides.removeWhere((element) => element.rideId == rideID);
-          emit(state.copyWith(acceptedHireRides: rides));
+          emit(
+            state.copyWith(
+              acceptedHireRides: rides,
+            ),
+          );
         }
 
         return true;
       }
     } catch (e) {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -256,15 +271,18 @@ class HireDriverCubit extends Cubit<HireState> {
     ride_model.RideCommn? rideCommn,
   }) async {
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
 
       User rideUser = User(deviceToken: userDeviceToken ?? "");
       Payment payment = Payment(
-        amount: userAmount,
-        mode: userMode,
-        status: userPaymentStatus,
-        currency: userCurrency,
-      );
+          amount: userAmount,
+          mode: userMode,
+          status: userPaymentStatus,
+          currency: userCurrency);
 
       final currentLocation = await Utils.getCurrentLocation();
       final response = await HireRepository.acceptDriverMutateRide(
@@ -274,9 +292,8 @@ class HireDriverCubit extends Cubit<HireState> {
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        ),
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude),
         deviceToken: UserRepository.getDeviceToken ?? '',
         rideID: rideID,
         rideStatus: rideStatus.getRideStatusString,
@@ -291,7 +308,11 @@ class HireDriverCubit extends Cubit<HireState> {
       );
 
       if (response['status'] == "error") {
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
         rideAcceptedByOtherDriver(
           context: navigatorKey.currentState!.context,
           message: response['message'],
@@ -307,7 +328,11 @@ class HireDriverCubit extends Cubit<HireState> {
         return true;
       }
     } catch (e) {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -360,7 +385,11 @@ class HireDriverCubit extends Cubit<HireState> {
     }
 
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
 
       User rideUser = User(deviceToken: userDeviceToken ?? "");
       Payment payment = Payment(
@@ -379,12 +408,17 @@ class HireDriverCubit extends Cubit<HireState> {
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        ),
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude),
         deviceToken: UserRepository.getDeviceToken ?? '',
         rideID: rideID,
+<<<<<<< HEAD
         rideStatus: nextStatus.getRideStatusString,
+=======
+        rideStatus: isFromFinalBottomsheet == true
+            ? RideStatus.delivered.getRideStatusString
+            : nextStatus.getRideStatusString,
+>>>>>>> parent of cb83ec3 (updated)
         mutationReason: mutationReason,
         firstName: ProfileRepository.getFirstName ?? '',
         vehicleModel: ProfileRepository.getVehicleModel ?? '',
@@ -396,6 +430,7 @@ class HireDriverCubit extends Cubit<HireState> {
 
       if (response['status'] == 'success') {
         if (response['message'] == "Trip STARTED successfully") {
+<<<<<<< HEAD
           await showVerifyOtp(
             rideID: rideID,
             startDist: startDist ?? 0,
@@ -410,6 +445,21 @@ class HireDriverCubit extends Cubit<HireState> {
             state.copyWith(
               driverMutateRideStatus: ApiStatus.success,
               onGoingRideStatus: RideStatus.arrivedAtPickup,
+=======
+          showVerifyOtp(
+              rideID: rideID ?? "",
+              startDist: startDist ?? 0,
+              endDist: endDist ?? 0,
+              userAmount: userAmount,
+              userCurrency: userCurrency,
+              userDeviceToken: userDeviceToken,
+              userMode: userMode,
+              userPaymentStatus: userPaymentStatus);
+        } else if (isFromFinalBottomsheet == true) {
+          emit(
+            state.copyWith(
+              driverMutateRideStatus: ApiStatus.success,
+>>>>>>> parent of cb83ec3 (updated)
             ),
           );
         } else {
@@ -422,12 +472,27 @@ class HireDriverCubit extends Cubit<HireState> {
         }
         return true;
       } else {
+<<<<<<< HEAD
         emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
         return false;
       }
     } catch (e) {
       emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
       return false;
+=======
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
+>>>>>>> parent of cb83ec3 (updated)
     }
   }
 
@@ -451,7 +516,11 @@ class HireDriverCubit extends Cubit<HireState> {
     bool? isFromFinalBottomsheet,
   }) async {
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
 
       User rideUser = User(deviceToken: userDeviceToken ?? "");
       Payment payment = Payment(
@@ -470,9 +539,8 @@ class HireDriverCubit extends Cubit<HireState> {
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        ),
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude),
         deviceToken: UserRepository.getDeviceToken ?? '',
         rideID: rideID,
         rideStatus: RideStatus.delivered.getRideStatusString,
@@ -486,13 +554,25 @@ class HireDriverCubit extends Cubit<HireState> {
       );
 
       if (response['status'] == 'success') {
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.success));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.success,
+          ),
+        );
         return true;
       } else {
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
       }
     } catch (e) {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -507,7 +587,9 @@ class HireDriverCubit extends Cubit<HireState> {
       );
     } else {
       emit(
-        state.copyWith(otp: state.otp.copyWith(errorColor: AppColors.kBlue3D6)),
+        state.copyWith(
+          otp: state.otp.copyWith(errorColor: AppColors.kBlue3D6),
+        ),
       );
     }
 
@@ -525,33 +607,29 @@ class HireDriverCubit extends Cubit<HireState> {
     int? endDist,
   }) async {
     await showModalBottomSheet(
-      isScrollControlled: true,
-      isDismissible: false,
-      enableDrag: false,
-      backgroundColor: Colors.black.withOpacity(0.7),
-      context: navigatorKey.currentState!.context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
-      ),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState1) {
+        isScrollControlled: true,
+        isDismissible: false,
+        enableDrag: false,
+        backgroundColor: Colors.black.withOpacity(0.7),
+        context: navigatorKey.currentState!.context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState1) {
             return PopScope(
               canPop: true,
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: AppColors.kWhite,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                      topRight: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                    ),
-                  ),
+                      color: AppColors.kWhite,
+                      borderRadius: BorderRadius.only(
+                          topLeft:
+                              Radius.circular(15 * SizeConfig.widthMultiplier!),
+                          topRight: Radius.circular(
+                              15 * SizeConfig.widthMultiplier!))),
                   height: 240 * SizeConfig.heightMultiplier!,
                   child: BlocBuilder<HireDriverCubit, HireState>(
                     builder: (context, state) {
@@ -559,15 +637,16 @@ class HireDriverCubit extends Cubit<HireState> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          CustomSizedBox(height: 20),
+                          CustomSizedBox(
+                            height: 20,
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
-                                  left: 30 * SizeConfig.widthMultiplier!,
-                                ),
+                                    left: 30 * SizeConfig.widthMultiplier!),
                                 child: Text(
                                   'Verify OTP',
                                   style: AppTextStyle.text20black0000W600,
@@ -576,10 +655,8 @@ class HireDriverCubit extends Cubit<HireState> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  AnywhereDoor.pushNamed(
-                                    context,
-                                    routeName: RouteName.helpScreen,
-                                  );
+                                  AnywhereDoor.pushNamed(context,
+                                      routeName: RouteName.helpScreen);
                                 },
                                 child: Container(
                                   width: 101 * SizeConfig.widthMultiplier!,
@@ -592,11 +669,10 @@ class HireDriverCubit extends Cubit<HireState> {
                                             .withOpacity(0.15),
                                         blurRadius: 3, // soften the shadow
                                         spreadRadius: 1.0, //extend the shadow
-                                      ),
+                                      )
                                     ],
                                     borderRadius: BorderRadius.circular(
-                                      42 * SizeConfig.widthMultiplier!,
-                                    ),
+                                        42 * SizeConfig.widthMultiplier!),
                                   ),
                                   child: Row(
                                     crossAxisAlignment:
@@ -607,22 +683,26 @@ class HireDriverCubit extends Cubit<HireState> {
                                         "Help",
                                         style: AppTextStyle.text16black0000W400,
                                       ),
-                                      CustomSizedBox(width: 4),
-                                      ImageLoader.svgPictureAssetImage(
-                                        imagePath: ImagePath.helpIcon,
+                                      CustomSizedBox(
+                                        width: 4,
                                       ),
+                                      ImageLoader.svgPictureAssetImage(
+                                          imagePath: ImagePath.helpIcon),
                                     ],
                                   ),
                                 ),
                               ),
-                              CustomSizedBox(width: 10),
+                              CustomSizedBox(
+                                width: 10,
+                              ),
                             ],
                           ),
-                          CustomSizedBox(height: 23),
+                          CustomSizedBox(
+                            height: 23,
+                          ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 20 * SizeConfig.widthMultiplier!,
-                            ),
+                                horizontal: 20 * SizeConfig.widthMultiplier!),
                             child: CustomPinTextField(
                               pinController: state.otp.value,
                               obscureText: false,
@@ -656,18 +736,16 @@ class HireDriverCubit extends Cubit<HireState> {
                           if (state.errorOtpMessage?.isNotEmpty == true)
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 30 * SizeConfig.widthMultiplier!,
-                              ),
-                              child: Text(
-                                state.errorOtpMessage ?? "",
-                                style: AppTextStyle.text12kRedF24141W300,
-                              ),
+                                  left: 30 * SizeConfig.widthMultiplier!),
+                              child: Text(state.errorOtpMessage ?? "",
+                                  style: AppTextStyle.text12kRedF24141W300),
                             ),
-                          CustomSizedBox(height: 16),
+                          CustomSizedBox(
+                            height: 16,
+                          ),
                           Padding(
                             padding: EdgeInsets.only(
-                              left: 30 * SizeConfig.widthMultiplier!,
-                            ),
+                                left: 30 * SizeConfig.widthMultiplier!),
                             child: Text(
                               "We have sent a otp to the passenger .",
                               style: AppTextStyle.text12black0000W400?.copyWith(
@@ -692,10 +770,8 @@ class HireDriverCubit extends Cubit<HireState> {
                 ),
               ),
             );
-          },
-        );
-      },
-    );
+          });
+        });
   }
 
   Future<bool?> verifyRideOtp({
@@ -710,7 +786,11 @@ class HireDriverCubit extends Cubit<HireState> {
     int? endDist,
   }) async {
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
       User rideUser = User(deviceToken: userDeviceToken ?? "");
       Payment payment = Payment(
         amount: userAmount,
@@ -729,9 +809,8 @@ class HireDriverCubit extends Cubit<HireState> {
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        ),
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude),
         deviceToken: UserRepository.getDeviceToken ?? '',
         mutationReason: "",
         firstName: ProfileRepository.getFirstName ?? '',
@@ -794,7 +873,11 @@ class HireDriverCubit extends Cubit<HireState> {
     // final nextStatus = RideStatus.fromString(status.toValue);
 
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
       final response = await HireRepository.startMeterPost(
         startDist: startDist ?? 0,
         lpId: UserRepository.getLpID ?? "",
@@ -804,7 +887,11 @@ class HireDriverCubit extends Cubit<HireState> {
       );
 
       if (response['status'] == "error") {
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
       } else {
         // await postUserCurrentLocation();
         emit(
@@ -816,7 +903,11 @@ class HireDriverCubit extends Cubit<HireState> {
         return true;
       }
     } catch (e) {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -829,7 +920,11 @@ class HireDriverCubit extends Cubit<HireState> {
     // final nextStatus = RideStatus.fromString(status.toValue);
 
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
       final response = await HireRepository.endMeterPost(
         endDist: endDist ?? 0,
         lpId: UserRepository.getLpID ?? "",
@@ -839,7 +934,11 @@ class HireDriverCubit extends Cubit<HireState> {
       );
 
       if (response['status'] == "error") {
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
       } else {
         // await postUserCurrentLocation();
         emit(
@@ -851,7 +950,11 @@ class HireDriverCubit extends Cubit<HireState> {
         return true;
       }
     } catch (e) {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -869,7 +972,11 @@ class HireDriverCubit extends Cubit<HireState> {
     // final status = state.onGoingRideStatus;
     // final nextStatus = RideStatus.fromString(status.toValue);
     try {
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
       final response = await HireRepository.getRideFinalDetails(
         lpId: UserRepository.getLpID ?? "",
         userId: UserRepository.getUserID ?? "",
@@ -878,12 +985,15 @@ class HireDriverCubit extends Cubit<HireState> {
       if (response['status'] == "error") {
         updateRideStatus(RideStatus.pickedUp);
 
-        emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+        emit(
+          state.copyWith(
+            driverMutateRideStatus: ApiStatus.failure,
+          ),
+        );
       } else {
         // await postUserCurrentLocation();
-        final getFinalRideFullDetails = GetFinalRideFullDetails.fromJson(
-          response,
-        );
+        final getFinalRideFullDetails =
+            GetFinalRideFullDetails.fromJson(response);
         emit(
           state.copyWith(
             driverMutateRideStatus: ApiStatus.success,
@@ -905,7 +1015,11 @@ class HireDriverCubit extends Cubit<HireState> {
     } catch (e) {
       updateRideStatus(RideStatus.pickedUp);
 
-      emit(state.copyWith(driverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          driverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -928,15 +1042,18 @@ class HireDriverCubit extends Cubit<HireState> {
     String? mode,
   }) async {
     try {
-      emit(state.copyWith(cancelDriverMutateRideStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          cancelDriverMutateRideStatus: ApiStatus.loading,
+        ),
+      );
 
       User rideUser = User(deviceToken: userDeviceToken ?? "");
       Payment payment = Payment(
-        amount: userAmount,
-        mode: userMode,
-        status: userPaymentStatus,
-        currency: userCurrency,
-      );
+          amount: userAmount,
+          mode: userMode,
+          status: userPaymentStatus,
+          currency: userCurrency);
 
       final currentLocation = await Utils.getCurrentLocation();
       final response = await HireRepository.hireDriverMutateRide(
@@ -946,9 +1063,8 @@ class HireDriverCubit extends Cubit<HireState> {
         countryCode: UserRepository.getCountryCode ?? '',
         phoneNumber: UserRepository.getPhoneNumber ?? '',
         position: DriverPosition(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        ),
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude),
         deviceToken: UserRepository.getDeviceToken ?? '',
         rideID: rideID,
         rideStatus: rideStatus.getRideStatusString,
@@ -962,9 +1078,8 @@ class HireDriverCubit extends Cubit<HireState> {
       );
 
       if (response['status'] == "success") {
-        final rides = List<upComing.UpcomingRide>.from(
-          state.acceptedHireRides ?? [],
-        );
+        final rides =
+            List<upComing.UpcomingRide>.from(state.acceptedHireRides ?? []);
 
         rides.removeWhere((element) => element.rideId == rideID);
 
@@ -978,7 +1093,11 @@ class HireDriverCubit extends Cubit<HireState> {
         return true;
       }
     } catch (e) {
-      emit(state.copyWith(cancelDriverMutateRideStatus: ApiStatus.failure));
+      emit(
+        state.copyWith(
+          cancelDriverMutateRideStatus: ApiStatus.failure,
+        ),
+      );
     }
   }
 
@@ -990,12 +1109,11 @@ class HireDriverCubit extends Cubit<HireState> {
         Navigator.pushReplacementNamed(
           navigatorKey.currentState!.context,
           arguments: HireDriverRideDirectionsScreenParams(
-            ride:
-                state.upComingRideData?.data?.ontripRide?.firstOrNull ??
-                upComing.OntripRide.fromJson(
-                  state.upComingRideData?.data?.upcomingRide?[index].toJson() ??
-                      {},
-                ),
+            ride: state.upComingRideData?.data?.ontripRide?.firstOrNull ??
+                upComing.OntripRide.fromJson(state
+                        .upComingRideData?.data?.upcomingRide?[index]
+                        .toJson() ??
+                    {}),
           ),
           RouteName.hireDriverRideDirectionsScreen,
         );
@@ -1045,9 +1163,8 @@ class HireDriverCubit extends Cubit<HireState> {
 
       emit(
         state.copyWith(
-          distanceMatrixStatus: ApiStatus.success,
-          distanceMatrix: distanceMatrix,
-        ),
+            distanceMatrixStatus: ApiStatus.success,
+            distanceMatrix: distanceMatrix),
       );
     } on ApiException catch (e) {
       log(e.toString());
@@ -1058,15 +1175,18 @@ class HireDriverCubit extends Cubit<HireState> {
 
   Future<void> getUpcomingOnTripRideData() async {
     try {
-      emit(state.copyWith(upComingRideApiStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          upComingRideApiStatus: ApiStatus.loading,
+        ),
+      );
       final response = await HireRepository.getUpcomingOnTripRideData(
         lpId: UserRepository.getLpID ?? '',
         userId: UserRepository.getUserID ?? '',
         user: 'travelsx-driver',
       );
-      final upcomingOntripRideRes = upComing.UpcomingOntripRideRes.fromJson(
-        response,
-      );
+      final upcomingOntripRideRes =
+          upComing.UpcomingOntripRideRes.fromJson(response);
 
       if (upcomingOntripRideRes.data?.upcomingRide?.isNotEmpty == true &&
           upcomingOntripRideRes.data?.ontripRide?.isEmpty == true) {
@@ -1099,29 +1219,29 @@ class HireDriverCubit extends Cubit<HireState> {
     }
   }
 
-  Future<void> fetchManualRides({
-    String? searchRadius,
-    String? rideType,
-    required String feature,
-  }) async {
+  Future<void> fetchManualRides(
+      {String? searchRadius, String? rideType, required String feature}) async {
     try {
-      emit(state.copyWith(actingDriverRideApiStatus: ApiStatus.loading));
+      emit(
+        state.copyWith(
+          actingDriverRideApiStatus: ApiStatus.loading,
+        ),
+      );
       final currentPosition = await Utils.getCurrentLocation();
       final response = await HireRepository.fetchManualRides(
-        accountStatus: ProfileRepository.getAccountStatus ?? "",
-        lpId: UserRepository.getLpID ?? "",
-        userId: UserRepository.getUserID ?? "",
-        user: 'travelsx-driver',
-        countryCode: UserRepository.getCountryCode ?? "",
-        currentPosition: currentPosition,
-        searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
-        unit: "miles",
-        profile: UserRepository.getProfile ?? "",
-        url: ApiRoutes.getManualRides,
-        vechileType: ProfileRepository.getVehicleModel ?? "",
-        rideType: rideType ?? "",
-        feature: feature,
-      );
+          accountStatus: ProfileRepository.getAccountStatus ?? "",
+          lpId: UserRepository.getLpID ?? "",
+          userId: UserRepository.getUserID ?? "",
+          user: 'travelsx-driver',
+          countryCode: UserRepository.getCountryCode ?? "",
+          currentPosition: currentPosition,
+          searchRadius: int.tryParse(searchRadius ?? "100") ?? 100,
+          unit: "miles",
+          profile: UserRepository.getProfile ?? "",
+          url: ApiRoutes.getManualRides,
+          vechileType: ProfileRepository.getVehicleModel ?? "",
+          rideType: rideType ?? "",
+          feature: feature);
       if (response['status'] == "success") {
         final getDataValue = (response['data']);
         if (getDataValue is String) {
@@ -1136,9 +1256,8 @@ class HireDriverCubit extends Cubit<HireState> {
           if (manualRide.isNotEmpty == true) {
             emit(
               state.copyWith(
-                actingDriverRideApiStatus: ApiStatus.success,
-                actingDriverRides: manualRide,
-              ),
+                  actingDriverRideApiStatus: ApiStatus.success,
+                  actingDriverRides: manualRide),
             );
           } else {
             emit(
@@ -1152,7 +1271,9 @@ class HireDriverCubit extends Cubit<HireState> {
       }
     } catch (e) {
       print("yaaaaaaaar${e.toString()}");
-      state.copyWith(actingDriverRideApiStatus: ApiStatus.failure);
+      state.copyWith(
+        actingDriverRideApiStatus: ApiStatus.failure,
+      );
     }
   }
 
@@ -1161,109 +1282,103 @@ class HireDriverCubit extends Cubit<HireState> {
     String? message,
   }) {
     return showDialog(
-      context: context,
-      barrierColor: AppColors.kBlackTextColor.withOpacity(0.45),
-      barrierDismissible: true,
-      builder: (context) {
-        return Center(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: 210 * SizeConfig.heightMultiplier!,
-                left: 20 * SizeConfig.widthMultiplier!,
-                right: 20 * SizeConfig.widthMultiplier!,
-              ),
-              child: Container(
-                height: 150 * SizeConfig.heightMultiplier!,
-                width: 320 * SizeConfig.widthMultiplier!,
-                decoration: BoxDecoration(
-                  color: AppColors.kRedD32F2F,
-                  borderRadius: BorderRadius.circular(
-                    5 * SizeConfig.widthMultiplier!,
+        context: context,
+        barrierColor: AppColors.kBlackTextColor.withOpacity(0.45),
+        barrierDismissible: true,
+        builder: (context) {
+          return Center(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: 210 * SizeConfig.heightMultiplier!,
+                    left: 20 * SizeConfig.widthMultiplier!,
+                    right: 20 * SizeConfig.widthMultiplier!),
+                child: Container(
+                  height: 150 * SizeConfig.heightMultiplier!,
+                  width: 320 * SizeConfig.widthMultiplier!,
+                  decoration: BoxDecoration(
+                      color: AppColors.kRedD32F2F,
+                      borderRadius: BorderRadius.circular(
+                          5 * SizeConfig.widthMultiplier!)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 14 * SizeConfig.heightMultiplier!,
+                          left: 10 * SizeConfig.widthMultiplier!,
+                        ),
+                        child: Row(
+                          children: [
+                            ImageLoader.svgPictureAssetImage(
+                                height: 24 * SizeConfig.heightMultiplier!,
+                                width: 24 * SizeConfig.widthMultiplier!,
+                                imagePath: ImagePath.errorOutlineIcon),
+                            CustomSizedBox(
+                              width: 7,
+                            ),
+                            Expanded(
+                              child: Text(
+                                message ?? "something went wrong..",
+                                style: AppTextStyle.text16kWhiteW600,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            CustomSizedBox(
+                              width: 16,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                AnywhereDoor.pop(context);
+                              },
+                              child: ImageLoader.svgPictureAssetImage(
+                                imagePath: ImagePath.cutIcon,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 14 * SizeConfig.heightMultiplier!,
-                        left: 10 * SizeConfig.widthMultiplier!,
-                      ),
-                      child: Row(
-                        children: [
-                          ImageLoader.svgPictureAssetImage(
-                            height: 24 * SizeConfig.heightMultiplier!,
-                            width: 24 * SizeConfig.widthMultiplier!,
-                            imagePath: ImagePath.errorOutlineIcon,
-                          ),
-                          CustomSizedBox(width: 7),
-                          Expanded(
-                            child: Text(
-                              message ?? "something went wrong..",
-                              style: AppTextStyle.text16kWhiteW600,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          CustomSizedBox(width: 16),
-                          GestureDetector(
-                            onTap: () {
-                              AnywhereDoor.pop(context);
-                            },
-                            child: ImageLoader.svgPictureAssetImage(
-                              imagePath: ImagePath.cutIcon,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        });
   }
 
-  showAddMoneyBottomSheet({
-    required int totalAmount,
-    required int walletAmount,
-    required String desc,
-    required String radiusManualRide,
-    required String rideType,
-    required String feature,
-  }) async {
+  showAddMoneyBottomSheet(
+      {required int totalAmount,
+      required int walletAmount,
+      required String desc,
+      required String radiusManualRide,
+      required String rideType,
+      required String feature}) async {
     await showModalBottomSheet(
-      isScrollControlled: true,
-      isDismissible: true,
-      backgroundColor: Colors.black.withOpacity(0.7),
-      context: navigatorKey.currentState!.context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
-      ),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState1) {
+        isScrollControlled: true,
+        isDismissible: true,
+        backgroundColor: Colors.black.withOpacity(0.7),
+        context: navigatorKey.currentState!.context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState1) {
             return PopScope(
               canPop: false,
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: AppColors.kWhite,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                      topRight: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                    ),
-                  ),
+                      color: AppColors.kWhite,
+                      borderRadius: BorderRadius.only(
+                          topLeft:
+                              Radius.circular(15 * SizeConfig.widthMultiplier!),
+                          topRight: Radius.circular(
+                              15 * SizeConfig.widthMultiplier!))),
                   height: 330 * SizeConfig.heightMultiplier!,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1275,25 +1390,21 @@ class HireDriverCubit extends Cubit<HireState> {
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 20 * SizeConfig.widthMultiplier!,
-                            vertical: 10 * SizeConfig.heightMultiplier!,
-                          ),
+                              horizontal: 20 * SizeConfig.widthMultiplier!,
+                              vertical: 10 * SizeConfig.heightMultiplier!),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
                                 padding: EdgeInsets.all(
-                                  8 * SizeConfig.widthMultiplier!,
-                                ),
+                                    8 * SizeConfig.widthMultiplier!),
                                 decoration: BoxDecoration(
-                                  color: AppColors.kWhiteE5E5E5,
-                                  borderRadius: BorderRadius.circular(37),
-                                ),
+                                    color: AppColors.kWhiteE5E5E5,
+                                    borderRadius: BorderRadius.circular(37)),
                                 child: ImageLoader.svgPictureAssetImage(
-                                  imagePath: ImagePath.closeIcon,
-                                  height: 10 * SizeConfig.heightMultiplier!,
-                                ),
+                                    imagePath: ImagePath.closeIcon,
+                                    height: 10 * SizeConfig.heightMultiplier!),
                               ),
                             ],
                           ),
@@ -1309,7 +1420,9 @@ class HireDriverCubit extends Cubit<HireState> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20 * SizeConfig.heightMultiplier!),
+                      SizedBox(
+                        height: 20 * SizeConfig.heightMultiplier!,
+                      ),
                       Center(
                         child: Text(
                           "your_balance".tr,
@@ -1328,32 +1441,35 @@ class HireDriverCubit extends Cubit<HireState> {
                             "inr".tr,
                             style: AppTextStyle.text40kGreen84C4B0700,
                           ),
-                          CustomSizedBox(width: 10),
+                          CustomSizedBox(
+                            width: 10,
+                          ),
                           Text(
                             walletAmount.toString(),
                             style: AppTextStyle.text40kkBlackTextColorW700,
                           ),
                         ],
                       ),
-                      CustomSizedBox(height: 10),
+                      CustomSizedBox(
+                        height: 10,
+                      ),
                       Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 10 * SizeConfig.widthMultiplier!,
-                          vertical: 6 * SizeConfig.widthMultiplier!,
-                        ),
+                            horizontal: 10 * SizeConfig.widthMultiplier!,
+                            vertical: 6 * SizeConfig.widthMultiplier!),
                         decoration: BoxDecoration(
-                          color: AppColors.kWhiteF8F8F8,
-                          borderRadius: BorderRadius.circular(
-                            8 * SizeConfig.widthMultiplier!,
-                          ),
-                        ),
+                            color: AppColors.kWhiteF8F8F8,
+                            borderRadius: BorderRadius.circular(
+                                8 * SizeConfig.widthMultiplier!)),
                         child: Text(
                           desc,
                           style: AppTextStyle.text16black0000W400,
                         ),
                       ),
                       const Spacer(),
-                      CustomSizedBox(height: 10),
+                      CustomSizedBox(
+                        height: 10,
+                      ),
                       BlueButton(
                         title: "add_money".tr,
                         onTap: () async {
@@ -1403,16 +1519,16 @@ class HireDriverCubit extends Cubit<HireState> {
                           ;
                         },
                       ),
-                      CustomSizedBox(height: 35),
+                      CustomSizedBox(
+                        height: 35,
+                      ),
                     ],
                   ),
                 ),
               ),
             );
-          },
-        );
-      },
-    );
+          });
+        });
   }
 
   Future<void> showEnterMeterBottomSheet({
@@ -1434,6 +1550,7 @@ class HireDriverCubit extends Cubit<HireState> {
   }) async {
     TextEditingController startDist = TextEditingController();
     await showModalBottomSheet(
+<<<<<<< HEAD
       isScrollControlled: true,
       isDismissible: false,
       enableDrag: false,
@@ -1446,43 +1563,65 @@ class HireDriverCubit extends Cubit<HireState> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState1) {
             bool localIsLoading = false;
+=======
+        isScrollControlled: true,
+        isDismissible: false,
+        enableDrag: false,
+        backgroundColor: Colors.black.withOpacity(0.7),
+        context: navigatorKey.currentState!.context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState1) {
+>>>>>>> parent of cb83ec3 (updated)
             return PopScope(
               canPop: false,
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: AppColors.kWhite,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                      topRight: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                    ),
-                  ),
+                      color: AppColors.kWhite,
+                      borderRadius: BorderRadius.only(
+                          topLeft:
+                              Radius.circular(15 * SizeConfig.widthMultiplier!),
+                          topRight: Radius.circular(
+                              15 * SizeConfig.widthMultiplier!))),
                   height: 250 * SizeConfig.heightMultiplier!,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CustomSizedBox(height: 20),
+                      CustomSizedBox(
+                        height: 20,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 20 * SizeConfig.widthMultiplier!,
-                        ),
+                            left: 20 * SizeConfig.widthMultiplier!),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+<<<<<<< HEAD
                             Text(
                               "Enter your meter number",
                               style: AppTextStyle.text16black0000W600?.copyWith(
                                 color: AppColors.kBlue0D368C,
+=======
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 20 * SizeConfig.widthMultiplier!),
+                              child: Text(
+                                "Enter your meter number",
+                                style: AppTextStyle.text16black0000W600
+                                    ?.copyWith(color: AppColors.kBlue0D368C),
+>>>>>>> parent of cb83ec3 (updated)
                               ),
                             ),
-                            CustomSizedBox(width: 5),
+                            CustomSizedBox(
+                              width: 5,
+                            ),
                             ContainerWithBorder(
                               containerColor: AppColors.kGreyF0F0F0,
                               child: Text(
@@ -1495,32 +1634,32 @@ class HireDriverCubit extends Cubit<HireState> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 20 * SizeConfig.widthMultiplier!,
-                        ),
+                            left: 20 * SizeConfig.widthMultiplier!),
                         child: Text(
                           "Enter Meter number for calculating the distance",
                           style: AppTextStyle.text12black0000W300,
                         ),
                       ),
-                      CustomSizedBox(height: 14),
+                      CustomSizedBox(
+                        height: 14,
+                      ),
                       CustomTextFromField(
                         controller: startDist,
                         hintText: "Enter meter number",
                         keyboardType: TextInputType.number,
                         hintTextStyle: AppTextStyle.text24Bblack0000W600
                             ?.copyWith(
-                              color: AppColors.kBlackTextColor.withOpacity(
-                                0.40,
-                              ),
-                            ),
+                                color: AppColors.kBlackTextColor
+                                    .withOpacity(0.40)),
                         textStyle: AppTextStyle.text30kBlackTextColorW700
                             .copyWith(letterSpacing: 1),
                         topPadding: 30 * SizeConfig.heightMultiplier!,
                         margin: EdgeInsets.symmetric(
-                          horizontal: 20 * SizeConfig.widthMultiplier!,
-                        ),
+                            horizontal: 20 * SizeConfig.widthMultiplier!),
                       ),
-                      CustomSizedBox(height: 12),
+                      CustomSizedBox(
+                        height: 12,
+                      ),
                       BlocBuilder<HireDriverCubit, HireState>(
                         builder: (context, state) {
                           return BlueButton(
@@ -1552,6 +1691,7 @@ class HireDriverCubit extends Cubit<HireState> {
                               );
 
                               if (isSuccess == true) {
+<<<<<<< HEAD
                                 await BlocProvider.of<HireDriverCubit>(
                                   context,
                                 ).getDistanceMatrix(
@@ -1597,6 +1737,23 @@ class HireDriverCubit extends Cubit<HireState> {
                                     backgroundColor: Colors.red,
                                   ),
                                 );
+=======
+                                await getDistanceMatrix(
+                                    onRoute: false,
+                                    sourceLatLng: sourceLatLng,
+                                    destinationLatLng: destinationLatLng);
+                                // updateRideStatus(RideStatus.arrivedAtPickup);
+                                // await onGoingTripMutateRide(
+                                //   mutationReason: '',
+                                //   userDeviceToken: userDeviceToken,
+                                //   userAmount: userAmount,
+                                //   userCurrency: userCurrency,
+                                //   userMode: userMode,
+                                //   userPaymentStatus: userPaymentStatus,
+                                //   rideID: rideID,
+                                // );
+                                AnywhereDoor.pop(context);
+>>>>>>> parent of cb83ec3 (updated)
                               }
                             },
                           );
@@ -1607,10 +1764,8 @@ class HireDriverCubit extends Cubit<HireState> {
                 ),
               ),
             );
-          },
-        );
-      },
-    );
+          });
+        });
   }
 
   Future<void> showEnterReachedMeterBottomSheet({
@@ -1632,58 +1787,56 @@ class HireDriverCubit extends Cubit<HireState> {
   }) async {
     TextEditingController endDist = TextEditingController();
     await showModalBottomSheet(
-      isScrollControlled: true,
-      isDismissible: false,
-      enableDrag: false,
-      backgroundColor: Colors.black.withOpacity(0.7),
-      context: navigatorKey.currentState!.context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
-      ),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState1) {
+        isScrollControlled: true,
+        isDismissible: false,
+        enableDrag: false,
+        backgroundColor: Colors.black.withOpacity(0.7),
+        context: navigatorKey.currentState!.context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState1) {
             return PopScope(
               canPop: false,
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: AppColors.kWhite,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                      topRight: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                    ),
-                  ),
+                      color: AppColors.kWhite,
+                      borderRadius: BorderRadius.only(
+                          topLeft:
+                              Radius.circular(15 * SizeConfig.widthMultiplier!),
+                          topRight: Radius.circular(
+                              15 * SizeConfig.widthMultiplier!))),
                   height: 250 * SizeConfig.heightMultiplier!,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CustomSizedBox(height: 20),
+                      CustomSizedBox(
+                        height: 20,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 20 * SizeConfig.widthMultiplier!,
-                        ),
+                            left: 20 * SizeConfig.widthMultiplier!),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               "Enter your meter number",
-                              style: AppTextStyle.text16black0000W600?.copyWith(
-                                color: AppColors.kBlue0D368C,
-                              ),
+                              style: AppTextStyle.text16black0000W600
+                                  ?.copyWith(color: AppColors.kBlue0D368C),
                             ),
-                            CustomSizedBox(width: 5),
+                            CustomSizedBox(
+                              width: 5,
+                            ),
                             ContainerWithBorder(
                               containerColor: AppColors.kGreyF0F0F0,
                               child: Text(
-                                "End Point",
+                                "Start Point",
                                 style: AppTextStyle.text10black0000500,
                               ),
                             ),
@@ -1692,32 +1845,32 @@ class HireDriverCubit extends Cubit<HireState> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 20 * SizeConfig.widthMultiplier!,
-                        ),
+                            left: 20 * SizeConfig.widthMultiplier!),
                         child: Text(
                           "Enter Meter number for calculating the distance",
                           style: AppTextStyle.text12black0000W300,
                         ),
                       ),
-                      CustomSizedBox(height: 14),
+                      CustomSizedBox(
+                        height: 14,
+                      ),
                       CustomTextFromField(
                         controller: endDist,
                         hintText: "Enter meter number",
                         keyboardType: TextInputType.number,
                         hintTextStyle: AppTextStyle.text24Bblack0000W600
                             ?.copyWith(
-                              color: AppColors.kBlackTextColor.withOpacity(
-                                0.40,
-                              ),
-                            ),
+                                color: AppColors.kBlackTextColor
+                                    .withOpacity(0.40)),
                         textStyle: AppTextStyle.text30kBlackTextColorW700
                             .copyWith(letterSpacing: 1),
                         topPadding: 30 * SizeConfig.heightMultiplier!,
                         margin: EdgeInsets.symmetric(
-                          horizontal: 20 * SizeConfig.widthMultiplier!,
-                        ),
+                            horizontal: 20 * SizeConfig.widthMultiplier!),
                       ),
-                      CustomSizedBox(height: 12),
+                      CustomSizedBox(
+                        height: 12,
+                      ),
                       BlocBuilder<HireDriverCubit, HireState>(
                         builder: (context, state) {
                           return BlueButton(
@@ -1763,10 +1916,8 @@ class HireDriverCubit extends Cubit<HireState> {
                 ),
               ),
             );
-          },
-        );
-      },
-    );
+          });
+        });
   }
 
   Future<void> showFinalDetailsBottomSheet({
@@ -1783,43 +1934,40 @@ class HireDriverCubit extends Cubit<HireState> {
   }) async {
     bool isLoading = false;
     await showModalBottomSheet(
-      isScrollControlled: true,
-      isDismissible: false,
-      backgroundColor: Colors.black.withOpacity(0.7),
-      enableDrag: false,
-      context: navigatorKey.currentState!.context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
-      ),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState1) {
+        isScrollControlled: true,
+        isDismissible: false,
+        backgroundColor: Colors.black.withOpacity(0.7),
+        enableDrag: false,
+        context: navigatorKey.currentState!.context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20 * SizeConfig.widthMultiplier!),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState1) {
             return PopScope(
               canPop: false,
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: AppColors.kWhite,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                      topRight: Radius.circular(
-                        15 * SizeConfig.widthMultiplier!,
-                      ),
-                    ),
-                  ),
+                      color: AppColors.kWhite,
+                      borderRadius: BorderRadius.only(
+                          topLeft:
+                              Radius.circular(15 * SizeConfig.widthMultiplier!),
+                          topRight: Radius.circular(
+                              15 * SizeConfig.widthMultiplier!))),
                   height: 470 * SizeConfig.heightMultiplier!,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 14 * SizeConfig.widthMultiplier!,
-                    ),
+                        horizontal: 14 * SizeConfig.widthMultiplier!),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        CustomSizedBox(height: 14),
+                        CustomSizedBox(
+                          height: 14,
+                        ),
                         Center(
                           child: ContainerWithBorder(
                             borderRadius: 12 * SizeConfig.widthMultiplier!,
@@ -1829,11 +1977,10 @@ class HireDriverCubit extends Cubit<HireState> {
                             containerColor: AppColors.kBlueF4F3FF,
                             child: Padding(
                               padding: EdgeInsets.only(
-                                top: 8.0 * SizeConfig.heightMultiplier!,
-                                bottom: 8 * SizeConfig.heightMultiplier!,
-                                left: 20 * SizeConfig.widthMultiplier!,
-                                right: 20 * SizeConfig.widthMultiplier!,
-                              ),
+                                  top: 8.0 * SizeConfig.heightMultiplier!,
+                                  bottom: 8 * SizeConfig.heightMultiplier!,
+                                  left: 20 * SizeConfig.widthMultiplier!,
+                                  right: 20 * SizeConfig.widthMultiplier!),
                               child: Text(
                                 "Collect Payment",
                                 style: AppTextStyle.text16black0000W600
@@ -1843,13 +1990,14 @@ class HireDriverCubit extends Cubit<HireState> {
                           ),
                         ),
                         CustomSizedBox(
-                          height: 14 * SizeConfig.heightMultiplier!,
-                        ),
+                            height: 14 * SizeConfig.heightMultiplier!),
                         Text(
                           getFinalRideFullDetails?.data?.totalTime ?? "",
                           style: AppTextStyle.text14Black0000W600,
                         ),
-                        CustomSizedBox(height: 16),
+                        CustomSizedBox(
+                          height: 16,
+                        ),
                         Row(
                           children: [
                             Text(
@@ -1863,31 +2011,39 @@ class HireDriverCubit extends Cubit<HireState> {
                             ),
                           ],
                         ),
-                        CustomSizedBox(height: 14),
+                        CustomSizedBox(
+                          height: 14,
+                        ),
                         Row(
                           children: [
                             ImageLoader.svgPictureAssetImage(
-                              imagePath: ImagePath.rideUser,
+                                imagePath: ImagePath.rideUser),
+                            CustomSizedBox(
+                              width: 10,
                             ),
-                            CustomSizedBox(width: 10),
                             Text(
                               getFinalRideFullDetails?.data?.name ?? "",
                               style: AppTextStyle.text14black0000W500,
                             ),
                           ],
                         ),
-                        CustomSizedBox(height: 14),
+                        CustomSizedBox(
+                          height: 14,
+                        ),
                         Row(
                           children: [
                             ImageLoader.svgPictureAssetImage(
-                              imagePath: ImagePath.rideTotalDistance,
+                                imagePath: ImagePath.rideTotalDistance),
+                            CustomSizedBox(
+                              width: 10,
                             ),
-                            CustomSizedBox(width: 10),
                             Text(
                               "Total Distance",
                               style: AppTextStyle.text14black0000W500,
                             ),
-                            CustomSizedBox(width: 12),
+                            CustomSizedBox(
+                              width: 12,
+                            ),
                             ContainerWithBorder(
                               wantPadding: true,
                               containerColor: AppColors.kBlueF4F3FF,
@@ -1904,18 +2060,23 @@ class HireDriverCubit extends Cubit<HireState> {
                             ),
                           ],
                         ),
-                        CustomSizedBox(height: 14),
+                        CustomSizedBox(
+                          height: 14,
+                        ),
                         Row(
                           children: [
                             ImageLoader.svgPictureAssetImage(
-                              imagePath: ImagePath.rideTotalTime,
+                                imagePath: ImagePath.rideTotalTime),
+                            CustomSizedBox(
+                              width: 10,
                             ),
-                            CustomSizedBox(width: 10),
                             Text(
                               "Total Time",
                               style: AppTextStyle.text14black0000W500,
                             ),
-                            CustomSizedBox(width: 12),
+                            CustomSizedBox(
+                              width: 12,
+                            ),
                             ContainerWithBorder(
                               wantPadding: true,
                               containerColor: AppColors.kBlueF4F3FF,
@@ -1932,7 +2093,9 @@ class HireDriverCubit extends Cubit<HireState> {
                             ),
                           ],
                         ),
-                        CustomSizedBox(height: 14),
+                        CustomSizedBox(
+                          height: 14,
+                        ),
                         UsableSingleAddressRow(
                           padding: EdgeInsets.zero,
                           pickupAddress:
@@ -1940,14 +2103,20 @@ class HireDriverCubit extends Cubit<HireState> {
                           dropUpAddress:
                               getFinalRideFullDetails?.data?.dropoff ?? "",
                         ),
-                        CustomSizedBox(height: 12),
+                        CustomSizedBox(
+                          height: 12,
+                        ),
                         BlocBuilder<HireDriverCubit, HireState>(
                           builder: (context, state) {
                             return BlueButton(
                               wantMargin: false,
                               isLoading:
                                   state.driverMutateRideStatus.isLoading ||
+<<<<<<< HEAD
                                   isLoading,
+=======
+                                      isLoading == true,
+>>>>>>> parent of cb83ec3 (updated)
                               onTap: () async {
                                 setState1(() => isLoading = true);
                                 FocusScope.of(context).unfocus();
@@ -1963,6 +2132,7 @@ class HireDriverCubit extends Cubit<HireState> {
                                 );
                                 if (isSuccess == true) {
                                   updateRideStatus(RideStatus.delivered);
+<<<<<<< HEAD
                                   AnywhereDoor.pop(context);
                                   Navigator.pushReplacement(
                                     context,
@@ -1996,6 +2166,17 @@ class HireDriverCubit extends Cubit<HireState> {
                                       backgroundColor: Colors.red,
                                     ),
                                   );
+=======
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    AnywhereDoor.pushReplacementNamed(
+                                        navigatorKey.currentState!.context,
+                                        routeName: RouteName.homeScreen);
+                                    setState1(() {
+                                      // Here you can write your code for open new view
+                                    });
+                                  });
+>>>>>>> parent of cb83ec3 (updated)
                                 }
                               },
                             );
@@ -2007,9 +2188,7 @@ class HireDriverCubit extends Cubit<HireState> {
                 ),
               ),
             );
-          },
-        );
-      },
-    );
+          });
+        });
   }
 }

@@ -22,14 +22,13 @@ class HomeWidgets {
   static Widget floatingActionButton({
     required BuildContext context,
     required MainHomeCubit mainHomeCubit,
-    required String selectDate,
     required DraggableScrollableController newOrderController,
     required MainHomeState state,
   }) {
     if (state.upComingRideData?.data?.upcomingRide?.isNotEmpty == true ||
         state.upComingRideData?.data?.newRide?.isNotEmpty == true &&
             state.isOnTripBottomSheetIsOpen == true) {
-      return mainHomeCubit.showAcceptedRideBottomSheet(selectDate: selectDate);
+      return mainHomeCubit.showAcceptedRideBottomSheet();
 
       //else if (state.getUserProfileData != null &&
       //     state.getUserProfileData!.data != null &&
