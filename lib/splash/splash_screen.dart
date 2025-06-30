@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/location_permission/location_permission.dart';
-import 'package:travelx_driver/serivce/notification_service.dart';
+import 'package:travelx_driver/service/notification_service.dart';
 import 'package:travelx_driver/shared/constants/imagePath/jpdriver/jp_image_paths.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/user/serivce/firebase_notification.dart';

@@ -1,6 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:travelx_driver/main.dart';
-import 'package:travelx_driver/serivce/notification_service.dart';
+import 'package:travelx_driver/service/notification_service.dart';
 import 'package:travelx_driver/shared/local_storage/log_in_status.dart';
 import 'package:travelx_driver/shared/local_storage/user_repository.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
@@ -80,6 +80,7 @@ class FireBaseApi {
   }
 }
 
+@pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling background message: ${message.messageId}');
 }

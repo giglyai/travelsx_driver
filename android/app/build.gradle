@@ -19,7 +19,7 @@ android {
         goguldriver {
             dimension "flavor-type"
             applicationId "com.travelx.driver.gogul"
-            resValue "string", "app_name", "Gogul Cabs Driver"
+            resValue "string", "app_name", "Gogul Driver"
         }
         uzhavandriver {
             dimension "flavor-type"
@@ -34,7 +34,7 @@ android {
         googultaxidriver {
             dimension "flavor-type"
             applicationId "com.travelx.driver.googul"
-            resValue "string", "app_name", "Googul Taxi Driver"
+            resValue "string", "app_name", "Googul Driver"
         }
         travelsxdriver {
             dimension "flavor-type"

@@ -10,6 +10,7 @@ import 'package:travelx_driver/home/revamp/bloc/main_home_cubit.dart';
 import 'package:travelx_driver/login/entity/country_list/country_list.dart';
 import 'package:travelx_driver/login/screen/verify_bottomsheet/verify_bottomsheet.dart';
 import 'package:travelx_driver/login/screen/verify_otp_screen.dart';
+import 'package:travelx_driver/login_data.dart';
 import 'package:travelx_driver/main.dart';
 import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/local_storage/auth_repository.dart';
@@ -19,7 +20,7 @@ import 'package:travelx_driver/shared/routes/named_routes.dart';
 import 'package:travelx_driver/user/user_details/user_details_data.dart';
 
 import '../../../../shared/api_client/api_exception.dart';
-import '../data/login_data.dart';
+
 import '../entity/country_code_model.dart';
 import '../entity/otp_model.dart';
 import '../entity/otp_response_model.dart';
