@@ -47,7 +47,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   bool isMapVisible = false;
 
   GoogleMapPolyline googleMapPolyline = GoogleMapPolyline(
-    apiKey: "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo",
+    apiKey: "AIzaSyCuAHr8HMbgZNsEN6MKmwyeka_8mwGmjD4",
   );
   // GoogleMapPolyline googleMapPolyline = GoogleMapPolyline(
   //   apiKey: initializeMapApi(),

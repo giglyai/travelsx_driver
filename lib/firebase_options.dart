@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBODXF7KvIuaTPfVLI3X1E_KuXwQ4yOOnE',
-    appId: '1:444627600115:android:8488e56fa016bc98226d86',
-    messagingSenderId: '444627600115',
-    projectId: 'travelsx-driver',
-    storageBucket: 'travelsx-driver.firebasestorage.app',
+    apiKey: 'AIzaSyA2ZRTcZLdj5Lyd5nDloYI_cRmoMwoXc0U',
+    appId: '1:1085048373266:android:d90dfb1c76a57dc751d8cb',
+    messagingSenderId: '1085048373266',
+    projectId: 'travelx-driver',
+    storageBucket: 'travelx-driver.firebasestorage.app',
   );
 }

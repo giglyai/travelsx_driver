@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main_sreedroptaxidriver.dart
+ASSET_PREFIX=sreedroptaxidriver
+BUNDLE_NAME=Sree Drop Taxi
+BUNDLE_DISPLAY_NAME=Sree Drop Taxi

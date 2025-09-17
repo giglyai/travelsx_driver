@@ -76,6 +76,11 @@ override fun onCreate(savedInstanceState: Bundle?) {
                 "TravelsX Alerts",
                 "driver_alert_sound"
             )
+            "com.travelx.driver.oorvandi" -> Triple(
+                "driver_alert_channel",
+                "TravelsX Alerts",
+                "driver_alert_sound"
+            )
             else -> Triple(
                 "driver_alert_channel",
                 "Default Alerts",

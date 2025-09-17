@@ -6,12 +6,12 @@ import '../../../shared/api_client/api_client.dart';
 import '../model/location_model.dart';
 
 class PlaceApiProvider {
-  // static const String androidKey = "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo";
-  // static const String iosKey = "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo";
+  // static const String androidKey = "AIzaSyCuAHr8HMbgZNsEN6MKmwyeka_8mwGmjD4";
+  // static const String iosKey = "AIzaSyCuAHr8HMbgZNsEN6MKmwyeka_8mwGmjD4";
 
   // ignore: prefer_typing_uninitialized_variables
   static var apiKey =
-      "AIzaSyBtDSlrpYHSR41NjrwcYW5dp9_mia0ZFzo"; //Platform.isAndroid ? androidKey : iosKey;
+      "AIzaSyCuAHr8HMbgZNsEN6MKmwyeka_8mwGmjD4"; //Platform.isAndroid ? androidKey : iosKey;
 
   // static Future<void> initializeMapApi() async {
   //   final prefs = await SharedPreferences.getInstance();

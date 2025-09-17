@@ -5,6 +5,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelx_driver/config/config.dart';
+import 'package:travelx_driver/core/flavor_config/logo_image_flavor.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/shared/constants/app_name/app_name.dart';
 import 'package:travelx_driver/shared/routes/named_routes.dart';
@@ -130,48 +131,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
                 const Spacer(),
 
-                if (F.appFlavor == Flavor.kurinjidriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashKurinjiIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.goguldriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashGogulDriverIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.googultaxidriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashGoogulTaxiIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.uzhavandriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashUzhavanDriverIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.mayiltrackdriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashMayiltrackDriverIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.travelsxdriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashTravelsxIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else
-                  ImageLoader.svgPictureAssetImage(
-                    imagePath: ImagePath.giglyDriverSplashLogoFinal,
-                    height: 110 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  ),
+                LogoImageProvider.getSplashImage(F.appFlavor!),
                 const Spacer(),
 
                 Column(

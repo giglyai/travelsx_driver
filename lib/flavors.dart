@@ -1,10 +1,6 @@
 enum Flavor {
-  kurinjidriver,
-  goguldriver,
-  uzhavandriver,
-  mayiltrackdriver,
-  googultaxidriver,
   travelsxdriver,
+  sreedroptaxidriver,
 }
 
 class F {
@@ -14,18 +10,10 @@ class F {
 
   static String get title {
     switch (appFlavor) {
-      case Flavor.kurinjidriver:
-        return 'Kurinji Driver';
-      case Flavor.goguldriver:
-        return 'Gogul Cabs Driver';
-      case Flavor.uzhavandriver:
-        return 'Uzhavan Taxi Driver';
-      case Flavor.mayiltrackdriver:
-        return 'Mayiltrack Driver';
-      case Flavor.googultaxidriver:
-        return 'Googul Taxi Driver';
       case Flavor.travelsxdriver:
         return 'TravelsX Driver';
+      case Flavor.sreedroptaxidriver:
+        return 'Sree Drop Taxi';
       default:
         return 'title';
     }

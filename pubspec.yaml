@@ -100,7 +100,7 @@ dependencies:
   shared_preferences: ^2.3.2
   custom_refresh_indicator: ^4.0.1
   cached_network_image: ^3.4.1
-#  install_plugin: ^2.1.0
+  #  install_plugin: ^2.1.0
   path_provider: ^2.1.5
   #payu_checkoutpro_flutter: ^1.3.0
   open_file: ^3.3.2
@@ -133,13 +133,14 @@ flutter:
     - images/
     - images/splash/
     - images/login/
-    - android/app/src/kurinjidriver/res/raw/
-    - images/app_icons/kurinjidriver/
-    - images/app_icons/goguldriver/
-    - images/app_icons/uzhavandriver/
-    - images/app_icons/mayiltrackdriver/
-    - images/app_icons/googultaxidriver/
-    - images/app_icons/travelsxdriver/
+    - images/app_icons/sreedroptaxidriver/
+    #- images/app_icons/oorvandidriver/
+    # - images/app_icons/kurinjidriver/
+    # - images/app_icons/goguldriver/
+    # - images/app_icons/uzhavandriver/
+    # - images/app_icons/mayiltrackdriver/
+    # - images/app_icons/googultaxidriver/
+    #- images/app_icons/travelsxdriver/
     - images/common_images/
     - images/dragabble_images/
     - images/snackbar/
@@ -148,12 +149,6 @@ flutter:
     - assets/icons/
     - assets/audio/
     - images/ride_home/
-    - images/prithavi/
-    - images/prithavi/common_images/
-    - images/jp_image/
-    - images/jp_image/common_images/
-    - images/kurinji/
-    - images/kurinji/common_images/
     - images/revamp/
     - images/revamp/home/
     - images/revamp/home/tabs/

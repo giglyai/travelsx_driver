@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "954490661427",
+    "project_id": "travelsx-user",
+    "storage_bucket": "travelsx-user.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954490661427:android:3410aa67d285b892119146",
+        "android_client_info": {
+          "package_name": "com.travelsx.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLrTj3j6bot7MpYGRE0p3OQyyOnD0bDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954490661427:android:c718c38322b9b7c5119146",
+        "android_client_info": {
+          "package_name": "com.travelsx.user.gigly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLrTj3j6bot7MpYGRE0p3OQyyOnD0bDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954490661427:android:bfd1b58736aa3f9e119146",
+        "android_client_info": {
+          "package_name": "com.travelsx.user.giglytaxi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLrTj3j6bot7MpYGRE0p3OQyyOnD0bDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954490661427:android:af657484b6758941119146",
+        "android_client_info": {
+          "package_name": "com.travelsx.user.gogul"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLrTj3j6bot7MpYGRE0p3OQyyOnD0bDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954490661427:android:70a272822077ef11119146",
+        "android_client_info": {
+          "package_name": "com.travelsx.user.gogultaxi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLrTj3j6bot7MpYGRE0p3OQyyOnD0bDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954490661427:android:f8170adb41ad1d57119146",
+        "android_client_info": {
+          "package_name": "com.travelsx.user.oorvandi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLrTj3j6bot7MpYGRE0p3OQyyOnD0bDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

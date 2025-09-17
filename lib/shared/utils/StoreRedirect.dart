@@ -6,7 +6,7 @@ import '../../flavors.dart';
 
 class StoreRedirect {
   static void openStore() {
-    if (F.appFlavor == Flavor.kurinjidriver) {
+    if (F.appFlavor == Flavor.travelsxdriver) {
       launchUrl(
         Uri.parse(
           Platform.isAndroid

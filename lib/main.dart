@@ -13,12 +13,8 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_goguldriver.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_googultaxidriver.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_kurinjidriver.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_mayiltrackdriver.dart';
+import 'package:travelx_driver/config/firebase/firebase_options_sreedroptaxi.dart';
 import 'package:travelx_driver/config/firebase/firebase_options_travelsxdriver.dart';
-import 'package:travelx_driver/config/firebase/firebase_options_uzhavandriver.dart';
 import 'package:travelx_driver/core/remote_config/remote_config.dart';
 import 'package:travelx_driver/documents/bloc/document_cubit.dart';
 import 'package:travelx_driver/flavors.dart';
@@ -61,43 +57,50 @@ Future<void> main({Flavor? flavor}) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString('flavor', F.appFlavor.toString());
 
-  if (flavor == Flavor.kurinjidriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: KurinjiDriverFirebaseOptions.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.goguldriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: GogulDriverFirebaseOptions.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.uzhavandriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: UzhavanDriverFirebaseOptions.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.mayiltrackdriver) {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: MayiltrackDriverFirebaseOptions.currentPlatform,
-      );
-    }
-  } else if (flavor == Flavor.travelsxdriver) {
+  if (flavor == Flavor.travelsxdriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         options: TravelsXDriverFirebaseOptions.currentPlatform,
       );
     }
-  } else if (flavor == Flavor.googultaxidriver) {
+  } else if (flavor == Flavor.sreedroptaxidriver) {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
-        options: GoogulTaxiFirebaseOptions.currentPlatform,
+        options: SreeDropTaxiFirebaseOptions.currentPlatform,
       );
     }
   }
+  // else if (flavor == Flavor.oorvandidriver) {
+  //   if (Firebase.apps.isEmpty) {
+  //     await Firebase.initializeApp(
+  //       options: OorvandiDriverFirebaseOptions.currentPlatform,
+  //     );
+  //   }
+  // } else if (flavor == Flavor.goguldriver) {
+  //   if (Firebase.apps.isEmpty) {
+  //     await Firebase.initializeApp(
+  //       options: GogulDriverFirebaseOptions.currentPlatform,
+  //     );
+  //   }
+  // } else if (flavor == Flavor.uzhavandriver) {
+  //   if (Firebase.apps.isEmpty) {
+  //     await Firebase.initializeApp(
+  //       options: UzhavanDriverFirebaseOptions.currentPlatform,
+  //     );
+  //   }
+  // } else if (flavor == Flavor.mayiltrackdriver) {
+  //   if (Firebase.apps.isEmpty) {
+  //     await Firebase.initializeApp(
+  //       options: MayiltrackDriverFirebaseOptions.currentPlatform,
+  //     );
+  //   }
+  // } else if (flavor == Flavor.googultaxidriver) {
+  //   if (Firebase.apps.isEmpty) {
+  //     await Firebase.initializeApp(
+  //       options: GoogulTaxiFirebaseOptions.currentPlatform,
+  //     );
+  //   }
+  // }
 
   await RemoteConfigHelper.init();
 

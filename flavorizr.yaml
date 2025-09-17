@@ -1,39 +1,46 @@
 flavors:
-  kurinjidriver:
-    app:
-      name: "Kurinji Driver"
-    android:
-      applicationId: "com.travelx.driver.kurinji"
-    ios:
-      bundleId: "com.travelx.driver.kurinji"
-  goguldriver:
-    app:
-      name: "Gogul Cabs Driver"
-    android:
-      applicationId: "com.travelx.driver.gogul"
-    ios:
-      bundleId: "com.travelx.driver.gogul"
-  uzhavandriver:
-    app:
-      name: "Uzhavan Taxi Driver"
-    android:
-      applicationId: "com.travelx.driver.uzhavan"
-    ios:
-      bundleId: "com.travelx.driver.uzhavan"
-  mayiltrackdriver:
-    app:
-      name: "Mayiltrack Driver"
-    android:
-      applicationId: "com.travelx.driver.mayiltrack"
-    ios:
-      bundleId: "com.travelx.driver.mayiltrack"
-  googultaxidriver:
-    app:
-      name: "Googul Taxi Driver"
-    android:
-      applicationId: "com.travelx.driver.googul"
-    ios:
-      bundleId: "com.travelx.driver.googul"
+  # kurinjidriver:
+  #   app:
+  #     name: "Kurinji Driver"
+  #   android:
+  #     applicationId: "com.travelx.driver.kurinji"
+  #   ios:
+  #     bundleId: "com.travelx.driver.kurinji"
+  # goguldriver:
+  #   app:
+  #     name: "Gogul Cabs Driver"
+  #   android:
+  #     applicationId: "com.travelx.driver.gogul"
+  #   ios:
+  #     bundleId: "com.travelx.driver.gogul"
+  # oorvandidriver:
+  #   app:
+  #     name: "OorVandi Driver"
+  #   android:
+  #     applicationId: "com.travelx.driver.oorvandi"
+  #   ios:
+  #     bundleId: "com.travelx.driver.oorvandi"
+  # uzhavandriver:
+  #   app:
+  #     name: "Uzhavan Taxi Driver"
+  #   android:
+  #     applicationId: "com.travelx.driver.uzhavan"
+  #   ios:
+  #     bundleId: "com.travelx.driver.uzhavan"
+  # mayiltrackdriver:
+  #   app:
+  #     name: "Mayiltrack Driver"
+  #   android:
+  #     applicationId: "com.travelx.driver.mayiltrack"
+  #   ios:
+  #     bundleId: "com.travelx.driver.mayiltrack"
+  # googultaxidriver:
+  #   app:
+  #     name: "Googul Taxi Driver"
+  #   android:
+  #     applicationId: "com.travelx.driver.googul"
+  #   ios:
+  #     bundleId: "com.travelx.driver.googul"
   travelsxdriver:
     app:
       name: "TravelsX Driver"
@@ -41,3 +48,10 @@ flavors:
       applicationId: "com.travelx.driver"
     ios:
       bundleId: "com.travelx.driver"
+  sreedroptaxidriver:
+    app:
+      name: "Sree Drop Taxi"
+    android:
+      applicationId: "com.travelx.driver.sreedroptaxi"
+    ios:
+      bundleId: "com.travelx.driver.sreedroptaxi"

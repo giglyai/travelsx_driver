@@ -160,12 +160,9 @@ class UpdateBottomSheet {
       final filePath = "${dir.path}/app-update.apk";
 
       String apkUrl = "";
-      if (F.appFlavor == Flavor.goguldriver) {
+      if (F.appFlavor == Flavor.travelsxdriver) {
         apkUrl =
-            "https://giglyusers.blob.core.windows.net/apk/gogulcabtaxi/app-goguldriver-release.apk";
-      } else if (F.appFlavor == Flavor.uzhavandriver) {
-        apkUrl =
-            "https://giglyusers.blob.core.windows.net/apk/uzhavantaxi/app-uzhavandriver-release.apk";
+            "https://giglyusers.blob.core.windows.net/apk/travelsx-driver/app-travelsxdriver-release.apk";
       } else if (F.appFlavor == Flavor.travelsxdriver) {
         apkUrl =
             "https://giglyusers.blob.core.windows.net/apk/travelsx-driver/app-travelsxdriver-release.apk";

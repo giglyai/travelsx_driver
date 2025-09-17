@@ -5,24 +5,12 @@
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
-  'Debug-kurinjidriver' => :debug,
-  'Profile-kurinjidriver' => :release,
-  'Release-kurinjidriver' => :release,
-  'Debug-goguldriver' => :debug,
-  'Profile-goguldriver' => :release,
-  'Release-goguldriver' => :release,
-  'Debug-uzhavandriver' => :debug,
-  'Profile-uzhavandriver' => :release,
-  'Release-uzhavandriver' => :release,
-  'Debug-mayiltrackdriver' => :debug,
-  'Profile-mayiltrackdriver' => :release,
-  'Release-mayiltrackdriver' => :release,
-  'Debug-googultaxidriver' => :debug,
-  'Profile-googultaxidriver' => :release,
-  'Release-googultaxidriver' => :release,
   'Debug-travelsxdriver' => :debug,
   'Profile-travelsxdriver' => :release,
   'Release-travelsxdriver' => :release,
+  'Debug-sreedroptaxidriver' => :debug,
+  'Profile-sreedroptaxidriver' => :release,
+  'Release-sreedroptaxidriver' => :release,
 }
 
 def flutter_root

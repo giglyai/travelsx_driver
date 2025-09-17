@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:travelx_driver/core/flavor_config/logo_image_flavor.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/location_permission/location_permission.dart';
 import 'package:travelx_driver/service/notification_service.dart';
@@ -62,49 +63,7 @@ class SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Builder(
           builder: (context) {
-            if (F.appFlavor == Flavor.kurinjidriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashKurinjiIcon,
-                height: 200 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.goguldriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashGogulDriverIcon,
-                height: 200 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.uzhavandriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashUzhavanDriverIcon,
-                height: 200 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.mayiltrackdriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashMayiltrackDriverIcon,
-                height: 200 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.travelsxdriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashTravelsxIcon,
-                height: 200 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else if (F.appFlavor == Flavor.googultaxidriver) {
-              return ImageLoader.assetImage(
-                imagePath: ImagePath.splashGoogulTaxiIcon,
-                height: 200 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            } else {
-              return ImageLoader.assetImage(
-                imagePath: JpImagePath.splashIcon,
-                height: 110 * SizeConfig.heightMultiplier!,
-                width: 196 * SizeConfig.widthMultiplier!,
-              );
-            }
+            return LogoImageProvider.getSplashImage(F.appFlavor!);
           },
         ),
       ),

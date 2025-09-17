@@ -14,20 +14,23 @@ class ImagePath {
   static String giglyDriverSplashLogoFinal =
       'images/common_images/splashDriverRideFinal2.svg';
   static String splashBmtIcon = 'assets/icons/bmt-icon.png';
+
+  static String logoSreeDropTaxi = 'images/app_icons/sreedroptaxidriver/app_icon.png';
+
   static String splashKurinjiIcon =
       'images/app_icons/kurinjidriver/app_icon.png';
-  static String splashGogulDriverIcon =
-      'images/app_icons/goguldriver/app_icon.png';
-  static String splashUzhavanDriverIcon =
+
+  static String logoOorvandiDriver =
+      'images/app_icons/oorvandidriver/app_icon.png';
+
+  static String logoGogulDriver = 'images/app_icons/goguldriver/app_icon.png';
+  static String logoUzhavanDriver =
       'images/app_icons/uzhavandriver/app_icon.png';
-  static String splashMayiltrackDriverIcon =
+  static String logoMayiltrackDriver =
       'images/app_icons/mayiltrackdriver/app_icon.png';
-  static String splashTravelsxIcon =
-      'images/app_icons/travelsxdriver/app_icon.png';
-  static String splashGoogulTaxiIcon =
+  static String logoTravelsx = 'images/app_icons/travelsxdriver/app_icon.png';
+  static String logoGoogulTaxi =
       'images/app_icons/googultaxidriver/app_icon.png';
-  static String splashOorugoDriverIcon = 'assets/icons/oorugo-driver-icon.png';
-  static String splashPrithviDriverIcon = 'assets/icons/oorugo-driver-icon.png';
   static String giglyDriverSplashLogoFinal1 =
       'images/common_images/splash__img_driver_ride.svg';
   static String mainLogoBlack = 'images/common_images/gigly_logo_black.png';

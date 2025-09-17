@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:shimmer/shimmer.dart';
+import 'package:travelx_driver/core/flavor_config/logo_image_flavor.dart';
 import 'package:travelx_driver/flavors.dart';
 import 'package:travelx_driver/shared/routes/navigator.dart';
 import 'package:travelx_driver/shared/utils/image_loader/image_loader.dart';
@@ -90,14 +91,14 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
       backgroundColor: AppColors.kWhite,
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImagePath.loginBackground),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Container(
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage(ImagePath.loginBackground),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
 
           // Hidden long press dev trigger
           Positioned(
@@ -124,49 +125,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                if (F.appFlavor == Flavor.kurinjidriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashKurinjiIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.goguldriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashGogulDriverIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.uzhavandriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashUzhavanDriverIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.mayiltrackdriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashMayiltrackDriverIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.travelsxdriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashTravelsxIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else if (F.appFlavor == Flavor.googultaxidriver)
-                  ImageLoader.assetImage(
-                    imagePath: ImagePath.splashGoogulTaxiIcon,
-                    height: 200 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  )
-                else
-                  ImageLoader.svgPictureAssetImage(
-                    imagePath: ImagePath.giglyDriverSplashLogoFinal,
-                    height: 110 * SizeConfig.heightMultiplier!,
-                    width: 196 * SizeConfig.widthMultiplier!,
-                  ),
-
+                LogoImageProvider.getSplashImage(F.appFlavor!),
                 const Spacer(),
 
                 /// Input Label
@@ -296,7 +255,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                         Radius.circular(5 * SizeConfig.widthMultiplier!),
                       ),
                       borderSide: BorderSide(
-                        color: AppColors.kWhiteFFFF,
+                        color: AppColors.kBlack010101,
                         width: 1,
                       ),
                     ),
@@ -305,7 +264,7 @@ class _MobileNumberLoginScreenState extends State<MobileNumberLoginScreen> {
                         Radius.circular(5 * SizeConfig.widthMultiplier!),
                       ),
                       borderSide: BorderSide(
-                        color: AppColors.kWhiteFFFF,
+                        color: AppColors.kBlack010101,
                         width: 1,
                       ),
                     ),

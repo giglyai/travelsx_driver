@@ -5,19 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "kurinji_driver",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "debug",
-      "program": "lib/main_kurinjidriver.dart",
-      "args": [
-        "--flavor",
-        "kurinjidriver",
-        "target",
-        "lib/main_kurinjidriver.dart"
-      ]
-    },
-    {
       "name": "travelx_driver",
       "request": "launch",
       "type": "dart",
@@ -28,6 +15,19 @@
         "travelsxdriver",
         "target",
         "lib/main_travelsxdriver.dart"
+      ]
+    },
+    {
+      "name": "sreedroptaxi_driver",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "program": "lib/main_sreedroptaxidriver.dart",
+      "args": [
+        "--flavor",
+        "sreedroptaxidriver",
+        "target",
+        "lib/main_sreedroptaxidriver.dart"
       ]
     }
   ]
